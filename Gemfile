@@ -14,6 +14,7 @@ gem 'pg'
 gem 'omniauth'
 gem 'omniauth-stackexchange'
 gem 'omniauth-github'
+gem 'omniauth-gitlab'
 
 # Makes your rails console WAY prettier
 gem 'pry-rails'
