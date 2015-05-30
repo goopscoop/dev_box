@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pro: MyText
+  con: MyText
+  rating: 1
+  tool_id: 
+  user_id: 
+
+two:
+  pro: MyText
+  con: MyText
+  rating: 1
+  tool_id: 
+  user_id: 
