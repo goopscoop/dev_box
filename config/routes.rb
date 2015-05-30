@@ -5,6 +5,16 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'site#index'
 
+  get 'login' => 'sessions#new'
+  post 'login' => 'sessions#create'
+
+  delete 'logout' => 'sessions#destroy'
+  # get 'logout' => 'sessions#destroy'
+
+  get 'auth/logout' => 'auth#logout'
+  get 'auth/failure' => 'auth#failure'
+  get 'auth/:provider/callback' => 'auth#callback'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
@@ -16,7 +26,7 @@ Rails.application.routes.draw do
 
   resources :tools do
       resources :tvotes, :only => [:create,:destroy]
-      resources :reviews, :only => [:create,:update]
+      resources :reviews, :only => [:create,:update,:destroy]
   end
   resources :users
   resources :tags, :only => [:create]
