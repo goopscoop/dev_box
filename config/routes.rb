@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'site#index'
+  # get '*path' => 'site#index'
 
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
