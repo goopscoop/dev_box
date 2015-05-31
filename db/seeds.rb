@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Create Users
-Nick = User.create({name: 'Nick', email: 'nick@email.com'})
+Nick = User.create({name: 'Nick', email: 'nick@ncronquist.com'})
 Cody = User.create({name: 'Cody', email: 'codybarrus@gmail.com'})
 
 
@@ -61,7 +61,6 @@ frontend.tools << t11
 frontend.tools << t12
 frontend.tools << t22
 
-
 backend = Tag.create({tag:'backend'})
 backend.tools << t13
 backend.tools << t14
@@ -82,8 +81,6 @@ comandline.tools << t18
 comandline.tools << t19
 comandline.tools << t27
 comandline.tools << t29
-
-
 
 # Create Categories
 # Associate Tools to Categories
@@ -110,7 +107,6 @@ library.tools << t25
 library.tools << t27
 library.tools << t28
 library.tools << t29
-
 
 framework = Category.create({category: 'framework'})
 framework.tools << t12
