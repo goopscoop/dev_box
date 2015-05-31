@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+# class UsersController < ApiController
 
   # users GET
   def index
