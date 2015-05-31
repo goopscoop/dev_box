@@ -7,6 +7,12 @@ Rails.application.routes.draw do
   # get '*path' => 'site#index'
   #   constraints: /^\/api\/.*$/
 
+  # oAuth Routes
+  get 'auth/logout' => 'auth#logout'
+  get 'auth/failure' => 'auth#failure'
+  get 'auth/:provider/callback' => 'auth#callback'
+
+
   # The following routes will all be API only routes. They will only return
   # a json object and will not render pages.
   scope '/api', defaults: {format: :json} do
@@ -16,9 +22,9 @@ Rails.application.routes.draw do
     delete 'logout' => 'sessions#destroy'
     # get 'logout' => 'sessions#destroy'
 
-    get 'auth/logout' => 'auth#logout'
-    get 'auth/failure' => 'auth#failure'
-    get 'auth/:provider/callback' => 'auth#callback'
+    # get 'auth/logout' => 'auth#logout'
+    # get 'auth/failure' => 'auth#failure'
+    # get 'auth/:provider/callback' => 'auth#callback'
 
     resources :tools do
         resources :tvotes, :only => [:create,:destroy]
