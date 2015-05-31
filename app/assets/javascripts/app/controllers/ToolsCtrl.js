@@ -1,3 +1,3 @@
-myApp.controller('ToolsCtrl',['$scope',function($scope,){
+DevBox.controller('ToolsCtrl',['$scope',function($scope){
 
 }]);

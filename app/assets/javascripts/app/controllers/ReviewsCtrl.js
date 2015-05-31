@@ -1,3 +1,3 @@
-myApp.controller('ReviewsCtrl',['$scope',function($scope,){
+DevBox.controller('ReviewsCtrl',['$scope',function($scope){
 
 }]);

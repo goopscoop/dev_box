@@ -1,3 +1,3 @@
-myApp.controller('StaticCtrl',['$scope',function($scope,){
+DevBox.controller('StaticCtrl',['$scope',function($scope){
 
 }]);

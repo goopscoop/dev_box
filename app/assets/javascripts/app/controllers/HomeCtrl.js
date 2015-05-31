@@ -1,3 +1,3 @@
-myApp.controller('HomeCtrl',['$scope',function($scope,){
+DevBox.controller('HomeCtrl',['$scope',function($scope){
 
 }]);

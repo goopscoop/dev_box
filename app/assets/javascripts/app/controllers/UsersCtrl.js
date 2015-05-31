@@ -1,3 +1,3 @@
-myApp.controller('UsersCtrl',['$scope',function($scope,){
+DevBox.controller('UsersCtrl',['$scope',function($scope){
 
 }]);

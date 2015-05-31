@@ -1,3 +1,3 @@
-myApp.controller('SessionsCtrl',['$scope',function($scope,){
+DevBox.controller('SessionsCtrl',['$scope',function($scope){
 
 }]);
