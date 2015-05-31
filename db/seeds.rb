@@ -43,7 +43,50 @@ t27 = Tool.create({title: 'Easy table', description: 'Nice utility for rendering
 t28 = Tool.create({title: 'Sequelize', description: 'Sequelize is a promise-based ORM for Node.js and io.js. It supports the dialects PostgreSQL, MySQL, MariaDB, SQLite and MSSQL and features solid transaction support, relations, read replication and more.', language: 'javascript', is_free: 1, web_url: 'http://docs.sequelizejs.com', repo_url: 'https://github.com/sequelize/sequelize'})
 t29 = Tool.create({title: 'sequelize/cli', description: 'The Sequelize Command Line Interface', language: 'javascript', is_free: 1, web_url: '', repo_url: 'https://github.com/sequelize/cli'})
 
+# Create Tags
+
+frontend = Tag.create({tag:'frontend'})
+
+frontend.tools << t1
+frontend.tools << t2
+frontend.tools << t3
+frontend.tools << t4
+frontend.tools << t5
+frontend.tools << t6
+frontend.tools << t7
+frontend.tools << t8
+frontend.tools << t9
+frontend.tools << t10
+frontend.tools << t11
+frontend.tools << t12
+frontend.tools << t22
+
+
+backend = Tag.create({tag:'backend'})
+backend.tools << t13
+backend.tools << t14
+backend.tools << t15
+backend.tools << t16
+backend.tools << t17
+backend.tools << t20
+backend.tools << t21
+backend.tools << t23
+backend.tools << t24
+backend.tools << t25
+backend.tools << t26
+backend.tools << t28
+
+
+comandline = Tag.create({tag:'commandline'})
+comandline.tools << t18
+comandline.tools << t19
+comandline.tools << t27
+comandline.tools << t29
+
+
+
 # Create Categories
+# Associate Tools to Categories
 
 library = Category.create({category: 'library'})
 library.tools << t1
@@ -83,7 +126,3 @@ assets.tools << t5
 packageManager = Category.create({category: 'package manager'})
 packageManager.tools << t18
 
-
-# Associate Tools to Categories
-
-# Create Tags
