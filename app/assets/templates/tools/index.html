@@ -1,7 +1,23 @@
+<div class="row">
+  <div class="input-field col m4 offset-m4">
+    <!-- <input id="search_tools" type="text" class="validate"> -->
+    <!-- <label for="search_tools">Search</label> -->
+  <md-autocomplete md-selected-item="selectedTool" placeholder="Search (at least 3 chars)" md-delay="250" md-min-length="3" md-search-text="toolSearchText" md-items="tool in getMatches(toolSearchText)" md-item-text="tool.title" md-no-cache="true">
+    <md-item-template>
+      <span md-highlight-text="searchText">{{tool.title}}</span>
+    </md-item-template>
+    <md-not-found>
+      No matches found.
+    </md-not-found>
+  </md-autocomplete>
 
+  </div>
+
+
+</div>
   <div class="row">
     <div class="col m8 offset-m2">
-      <h2>Tools Index</h2>
+
       <div class="section" ng-repeat="tool in tools">
         <div class="row">
           <h4><a ng-href="/tool/{{tool.id}}">{{tool.title}}</a></h4>

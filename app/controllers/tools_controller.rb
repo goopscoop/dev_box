@@ -2,24 +2,48 @@ class ToolsController < ApplicationController
 
   # tools GET
   def index
-    all_tools = Tool.all
-    tool_info = {}
 
-    all_tools.each do |tool|
+    tool_info = []
+    search_term = params[:q]
 
-      cats = []
-      tool.categories.each do |cat|
-        cats.push({ id:cat.id , category:cat.category })
+    if search_term
+      searchMatch = Tool.where('title ilike ?', "%#{search_term}%")
+      searchMatch.each do |tool|
+        cats = []
+        tool.categories.each do |cat|
+          cats.push({ id: cat[:id] , category: cat[:category] })
+        end
+        tags = []
+        tool.tags.each do |tag|
+          tags.push({ id: tag[:id] , tag: tag[:tag]})
+        end
+        tool_info.push({title: tool.title, tags: tags, categories: cats})
       end
 
-      tags = []
-      tool.tags.each do |tag|
-        tags.push({ id:tag.id , tag:tag.tag})
+        render json: tool_info
+
+    else
+
+      all_tools = Tool.all
+
+      all_tools.each do |tool|
+
+        cats = []
+        tool.categories.each do |cat|
+          cats.push({ id: cat[:id] , category: cat[:category] })
+        end
+
+        tags = []
+        tool.tags.each do |tag|
+          tags.push({ id: tag[:id] , tag: tag[:tag]})
+        end
+
+        tool_info.push({ title: tool.title, tags: tags, categories: cats })
       end
 
-      tool_info[tool.title] = { title: tool.title, tags: tags, categories: cats }
+      render json: tool_info
+
     end
-    render json: tool_info
   end
 
   # tool GET
