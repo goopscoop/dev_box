@@ -9,47 +9,47 @@ DevBox.config(['$routeProvider', '$locationProvider', function($routeProvider, $
 
   $routeProvider
   .when('/', {
-    templateUrl:'/views/home.html',
+    templateUrl:'assets/home.html',
     controller: 'HomeCtrl'
   })
   .when('/about', {
-    templateUrl: '/views/about.html',
+    templateUrl: 'assets/about.html',
     controller: 'StaticCtrl'
   })
   .when('/tools/', {
-    templateUrl: '/views/tools/index.html',
+    templateUrl: 'assets/tools/index.html',
     controller: 'ToolsCtrl'
   })
   .when('/tool/:id', {
-    templateUrl: '/views/tools/show.html',
+    templateUrl: 'assets/tools/show.html',
     controller: 'ToolsCtrl'
   })
   .when('/tools/new', {
-    templateUrl: '/views/tools/new.html',
+    templateUrl: 'assets/tools/new.html',
     controller: 'ToolsCtrl'
   })
   .when('/tools/:id/edit', {
-    templateUrl: '/views/tools/edit.html',
+    templateUrl: 'assets/tools/edit.html',
     controller: 'ToolsCtrl'
   })
   .when('/users/:id', {
-    templateUrl: '/views/users/show.html',
+    templateUrl: 'assets/users/show.html',
     controller: 'UsersCtrl'
   })
   .when('/users/:id/edit', {
-    templateUrl: '/views/users/edit.html',
+    templateUrl: 'assets/users/edit.html',
     controller: 'UsersCtrl'
   })
   .when('/tools/:id/reviews/:id/edit', {
-    templateUrl: '/views/reviews/edit.html',
+    templateUrl: 'assets/reviews/edit.html',
     controller: 'ReviewsCtrl'
   })
   .when('/login', {
-    templateUrl: '/views/sessions/new.html',
+    templateUrl: 'assets/sessions/new.html',
     controller: 'SessionsCtrl'
   })
   .when('/404', {
-    templateUrl: '/views/404.html',
+    templateUrl: 'assets/404.html',
     controller: 'StaticCtrl'
   })
   .otherwise({redirectTo: '/404'});

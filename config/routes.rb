@@ -22,10 +22,6 @@ Rails.application.routes.draw do
     delete 'logout' => 'sessions#destroy'
     # get 'logout' => 'sessions#destroy'
 
-    # get 'auth/logout' => 'auth#logout'
-    # get 'auth/failure' => 'auth#failure'
-    # get 'auth/:provider/callback' => 'auth#callback'
-
     resources :tools do
         resources :tvotes, :only => [:create,:destroy]
         resources :reviews, :only => [:create,:update,:destroy]
@@ -34,7 +30,8 @@ Rails.application.routes.draw do
     resources :tags, :only => [:create]
   end
 
-  root to: 'site#index', anchor: false
+  root to: 'site#index'#, anchor: false
+  match '*path' => 'site#index', via: :all
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
