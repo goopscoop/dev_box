@@ -1,0 +1,7 @@
+/*
+  Navbar Responsive-Image (Profile Pic
+  Force height to nav bar height
+*/
+nav img.responsive-img {
+    height: 64px;
+}

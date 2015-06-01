@@ -8,8 +8,19 @@ class SessionsController < ApplicationController
   def create
   end
 
+  # check GET
+  def check
+
+    render json: {user: @current_user || false}
+
+  end
+
   # logout DELETE
-  def destory
+  def destroy
+
+    session[:user_id] = nil
+    render json: {result: true}
+
   end
 
 end

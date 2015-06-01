@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   #   constraints: /^\/api\/.*$/
 
   # oAuth Routes
-  get 'auth/logout' => 'auth#logout'
+  # get 'auth/logout' => 'auth#logout'
   get 'auth/failure' => 'auth#failure'
   get 'auth/:provider/callback' => 'auth#callback'
 
@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   scope '/api', defaults: {format: :json} do
     get 'login' => 'sessions#new'
     post 'login' => 'sessions#create'
-
+    get 'check' => 'sessions#check'
     delete 'logout' => 'sessions#destroy'
     # get 'logout' => 'sessions#destroy'
 

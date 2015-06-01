@@ -1,22 +1,25 @@
-<nav>
+<nav ng-controller='NavCtrl'>
   <div class="nav-wrapper">
     <a href="/" class="brand-logo">{ DevBox }</a>
     <a href="#" data-activates="mobile_sidebar" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
     <ul class="right hide-on-med-and-down">
       <li><a href="/about">About</a></li>
-      <!-- <li ng-show="currentUser">{{currentUser.firstName || 'User'}}</li> -->
-      <!-- <li> -->
-        <!-- <a href="#" ng-click="showLogin($event)" ng-hide="currentUser">Login</a> -->
-        <!-- <a href="#" ng-click="logout()" ng-show="currentUser">Logout</a> -->
-      <!-- </li> -->
+      <li ng-show="currentUser">{{currentUser.firstName || 'User'}}</li>
+      <li>
+        <a href="/login" ng-hide="currentUser">Login</a>
+        <a href="#" ng-click="logout()" ng-show="currentUser">Logout</a>
+      </li>
+      <li>
+        <img src="{{currentUser.image_url}}" ng-show="currentUser" class="nav responsive-img">
+      </li>
     </ul>
     <ul class="side-nav" id="mobile_sidebar">
       <li><a href="/about">About</a></li>
-      <!-- <li ng-show="currentUser">{{currentUser.firstName || 'User'}}</li> -->
-      <!-- <li> -->
-        <!-- <a href="#" ng-click="showLogin($event)" ng-hide="currentUser">Login</a> -->
-        <!-- <a href="#" ng-click="logout()" ng-show="currentUser">Logout</a> -->
-      <!-- </li> -->
+      <li ng-show="currentUser">{{currentUser.firstName || 'User'}}</li>
+      <li>
+        <a href="/login" ng-hide="currentUser">Login</a>
+        <a href="#" ng-click="logout()" ng-show="currentUser">Logout</a>
+      </li>
     </ul>
   </div>
 </nav>

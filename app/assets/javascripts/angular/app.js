@@ -1,8 +1,13 @@
 var DevBox = angular.module('DevBox',['ngRoute', 'ngResource', 'ngMaterial']);
 
-DevBox.run(function(){
+DevBox.run(['$rootScope', 'UserService', function($rootScope, UserService) {
   console.log("I am running!")
-})
+
+  UserService.check(function(err, data) {
+    console.log('Check', err, data);
+  })
+
+}])
 
 DevBox.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   $locationProvider.html5Mode(true);

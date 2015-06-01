@@ -1,8 +1,57 @@
 class AuthController < ApplicationController
 
-  # auth_logout GET
-  def logout
+  # GET
+  def callback
+
+    provider_user = request.env['omniauth.auth']
+    # render json: {params: params, provider_user: provider_user}
+
+    if params[:provider] == "github"
+
+      user = User.find_or_initialize_by(provider_id: provider_user['uid'], provider: params[:provider])
+
+      user.provider_hash = provider_user['credentials']['token']
+      user.name = provider_user['info']['name']
+      user.email = provider_user['info']['email']
+      user.image_url = provider_user['info']['image']
+      user.save
+
+    elsif params[:provider] == "stackexchange"
+
+      user = User.find_or_initialize_by(provider_id: provider_user['uid'], provider: params[:provider])
+
+      user.provider_hash = provider_user['credentials']['token']
+      user.name = provider_user['info']['nickname']
+      # StackExchange does not send user email in their api
+      user.email = ''
+      user.image_url = provider_user['info']['image']
+      user.save
+
+    elsif params[:provider] == "gitlab"
+
+      user = User.find_or_initialize_by(provider_id: provider_user['uid'], provider: params[:provider])
+
+      user.provider_hash = provider_user['credentials']['token']
+      user.name = provider_user['info']['name']
+      user.email = provider_user['info']['email']
+      user.image_url = provider_user['extra']['raw_info']['avatar_url']
+      user.save
+
+    end
+
+    # Create user session
+    session[:user_id] = user.id
+
+    # Send user to home page
+    redirect_to root_path
+
   end
+
+  # auth_logout GET
+  # def logout
+  #   session[:user_id] = nil
+  #   redirect_to root_path
+  # end
 
   # auth_failure GET
   def failure
@@ -10,136 +59,5 @@ class AuthController < ApplicationController
     render json: failure
   end
 
-  # GET
-  def callback
-
-    puts "AUTH CALLBACK HIT"
-    provider_user = request.env['omniauth.auth']
-    render json: provider_user
-
-  end
 
 end
-
-
-# GitHub Reply
-
-# {
-#   provider: "github",
-#   uid: "6178896",
-#   info: {
-#     nickname: "ncronquist",
-#     email: "nick@ncronquist.com",
-#     name: "Nicholas Cronquist",
-#     image: "https://avatars.githubusercontent.com/u/6178896?v=3",
-#     urls: {
-#       GitHub: "https://github.com/ncronquist",
-#       Blog: ""
-#     }
-#   },
-#   credentials: {
-#     token: "9132e59031dbd48cfb25f82142c16ecaf194dc8a",
-#     expires: false
-#   },
-#   extra: {
-#     raw_info: {
-#       login: "ncronquist",
-#       id: 6178896,
-#       avatar_url: "https://avatars.githubusercontent.com/u/6178896?v=3",
-#       gravatar_id: "",
-#       url: "https://api.github.com/users/ncronquist",
-#       html_url: "https://github.com/ncronquist",
-#       followers_url: "https://api.github.com/users/ncronquist/followers",
-#       following_url: "https://api.github.com/users/ncronquist/following{/other_user}",
-#       gists_url: "https://api.github.com/users/ncronquist/gists{/gist_id}",
-#       starred_url: "https://api.github.com/users/ncronquist/starred{/owner}{/repo}",
-#       subscriptions_url: "https://api.github.com/users/ncronquist/subscriptions",
-#       organizations_url: "https://api.github.com/users/ncronquist/orgs",
-#       repos_url: "https://api.github.com/users/ncronquist/repos",
-#       events_url: "https://api.github.com/users/ncronquist/events{/privacy}",
-#       received_events_url: "https://api.github.com/users/ncronquist/received_events",
-#       type: "User",
-#       site_admin: false,
-#       name: "Nicholas Cronquist",
-#       company: "",
-#       blog: "",
-#       location: "Seattle, WA",
-#       email: "nick@ncronquist.com",
-#       hireable: true,
-#       bio: null,
-#       public_repos: 16,
-#       public_gists: 6,
-#       followers: 1,
-#       following: 0,
-#       created_at: "2013-12-13T14:11:45Z",
-#       updated_at: "2015-05-30T06:57:28Z",
-#       private_gists: 1,
-#       total_private_repos: 1,
-#       owned_private_repos: 0,
-#       disk_usage: 13528,
-#       collaborators: 0,
-#       plan: {
-#         name: "free",
-#         space: 976562499,
-#         collaborators: 0,
-#         private_repos: 0
-#       }
-#     }
-#   }
-# }
-
-################################################################################
-################################################################################
-
-# Stack Overflow Reply
-
-# {
-#   provider: "stackexchange",
-#   uid: 925848,
-#   info: {
-#     nickname: "ncronquist",
-#     image: "https://www.gravatar.com/avatar/dcc1de21ce06e8c03ba373c95b4b0590?s=128&d=identicon&r=PG",
-#     urls: {
-#       stackoverflow: "http://stackoverflow.com/users/925848/ncronquist"
-#       },
-#       name: "ncronquist"
-#       },
-#       credentials: {
-#         token: "Ei*StANXFGUIz2wsIRx0Jg))",
-# expires_at: 1433183216,
-# expires: true
-# },
-# extra: {
-#   raw_info: {
-#     badge_counts: {
-#       bronze: 2,
-#       silver: 0,
-#       gold: 0
-#       },
-#       account_id: 886531,
-#       is_employee: false,
-#       last_modified_date: 1433095253,
-#       last_access_date: 1433094989,
-#       age: 28,
-#       reputation_change_year: 10,
-#       reputation_change_quarter: 0,
-#       reputation_change_month: 0,
-#       reputation_change_week: 0,
-#       reputation_change_day: 0,
-#       reputation: 11,
-#       creation_date: 1314989356,
-#       user_type: "registered",
-#       user_id: 925848,
-#       location: "Seattle, WA",
-#       website_url: "http://ncronquist.com",
-#       link: "http://stackoverflow.com/users/925848/ncronquist",
-#       profile_image: "https://www.gravatar.com/avatar/dcc1de21ce06e8c03ba373c95b4b0590?s=128&d=identicon&r=PG",
-#       display_name: "ncronquist"
-#     }
-#   }
-# }
-
-################################################################################
-################################################################################
-
-
