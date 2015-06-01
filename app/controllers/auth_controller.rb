@@ -1,17 +1,5 @@
 class AuthController < ApplicationController
 
-  # auth_logout GET
-  def logout
-    session[:user_id] = nil
-    redirect_to root_path
-  end
-
-  # auth_failure GET
-  def failure
-    failure = {failure: "Uh oh! Looks like something didn't go quite right."}
-    render json: failure
-  end
-
   # GET
   def callback
 
@@ -58,5 +46,18 @@ class AuthController < ApplicationController
     redirect_to root_path
 
   end
+
+  # auth_logout GET
+  # def logout
+  #   session[:user_id] = nil
+  #   redirect_to root_path
+  # end
+
+  # auth_failure GET
+  def failure
+    failure = {failure: "Uh oh! Looks like something didn't go quite right."}
+    render json: failure
+  end
+
 
 end
