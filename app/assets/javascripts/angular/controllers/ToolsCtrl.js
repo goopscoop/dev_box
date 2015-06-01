@@ -25,12 +25,10 @@ DevBox.controller( 'ToolsCtrl' , [ '$scope' , '$http', '$resource' ,
       $http.get( '/api/tools?q=' + toolSearchText ).success( function( data ){
         // returns an array of objects with Tools and associated categories and tags
          $scope.searchTools = data
-        // for( tool in data ){
-        //   $scope.searchTools.push(data[tool]);
-        // }
       })
+        console.log($scope.searchTools)
         return $scope.searchTools
-        // filterArr( $scope.searchTools, toolSearchText );
+
     }
 
     $http.get( '/api/tools' ).success( function( data ){
