@@ -2,6 +2,32 @@
   Navbar Responsive-Image (Profile Pic
   Force height to nav bar height
 */
+
+/* FONTS */
+body {
+  background: #37474f;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Source Code Pro' ;
+}
+
 nav img.responsive-img {
     height: 64px;
+}
+
+.mySidebar {
+  height: auto;
+}
+
+.mySidebar h3 {
+  color: #e91e63;
+}
+
+.mySidebar h4 {
+  color: #c6ff00;
+}
+
+.mySidebar li a {
+  color: #ffe082;
 }

@@ -1,31 +1,48 @@
 <div class="row">
-  <div class="input-field col m4 offset-m4">
-    <!-- <input id="search_tools" type="text" class="validate"> -->
-    <!-- <label for="search_tools">Search</label> -->
-  <md-autocomplete md-selected-item="selectedTool" placeholder="Search (at least 3 chars)" md-delay="250" md-min-length="3" md-search-text="toolSearchText" md-items="tool in getMatches(toolSearchText)" md-item-text="tool.title" md-no-cache="true">
-    <md-item-template>
-      <span md-highlight-text="searchText">{{tool.title}}</span>
-    </md-item-template>
-    <md-not-found>
-      No matches found.
-    </md-not-found>
-  </md-autocomplete>
 
+  <div class="col m3  blue-grey darken-4 mySidebar">
+    <h3 class="pink-text">Filter By</h3>
+    <div class="divider"></div>
+    <h4>Category</h4>
+    <ul ng-repeat="cat in categories">
+        <li><a href="#" ng-click="addCat(cat.category)">{{cat.category}}</a></li>
+    </ul>
+    <div class="divider"></div>
+    <h4>Tag</h4>
+    <ul ng-repeat="tag in tags">
+        <li><a href="#">{{tag.tag}}</a></li>
+    </ul>
   </div>
 
+  <div class="col m9">
 
-</div>
-  <div class="row">
-    <div class="col m8 offset-m2">
 
-      <div class="section" ng-repeat="tool in tools">
-        <div class="row">
-          <h4><a ng-href="/tool/{{tool.id}}">{{tool.title}}</a></h4>
-        </div>
-          <ul ng-repeat="category in tool.categories">
-            <li><a ng-href="/category/{{category.id}}">{{category.category}}</a></li>
-          </ul>
-        <div class="divider"></div>
+    <div class="row">
+      <div class="input-field col m6 offset-m3">
+        <!-- <input id="search_tools" type="text" class="validate"> -->
+        <!-- <label for="search_tools">Search</label> -->
+      <md-autocomplete md-selected-item="selectedTool" placeholder="Search (at least 3 chars)" md-delay="250" md-min-length="3" md-search-text="toolSearchText" md-items="tool in getMatches(toolSearchText)" md-item-text="tool.title" md-no-cache="true">
+        <md-item-template>
+          <span md-highlight-text="searchText">{{tool.title}}</span>
+        </md-item-template>
+        <md-not-found>
+          No matches found.
+        </md-not-found>
+      </md-autocomplete>
+      </div>
+    </div>
+
+    <div class="row">
+
+  <!-- search body -->
+      <div class="section" ng-repeat="tool in searchTools">
+
+        <h4><a ng-href="/tool/{{tool.id}}">{{tool.title}}</a></h4>
+        <ul ng-repeat="category in tool.categories">
+          <li><a ng-href="/category/{{category.id}}">{{category.category}}</a></li>
+        </ul>
+      <div class="divider"></div>
       </div>
     </div>
   </div>
+</div>
