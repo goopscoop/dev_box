@@ -6,7 +6,7 @@ gem 'rails', '4.2.1'
 gem 'rails-api'
 
 gem 'spring', :group => :development
-
+gem 'sass', '~> 3.4.14'
 gem 'pg'
 
 # oAuth Gems
