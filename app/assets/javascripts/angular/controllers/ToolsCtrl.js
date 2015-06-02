@@ -53,18 +53,16 @@ DevBox.controller( 'ToolsCtrl' , [ '$scope' , '$http', '$resource' , '$location'
       // console.log( $scope.tools )
     })
 
-    $scope.addCat = function(catName){
-
-      get = buildUrl( true, $location.search().q , catName )
-      localUrl = buildUrl( false, $location.search.q, catName)
-      // $http.get( get ).success( function( data ){
-      //   console.log(localUrl)
-      //   // returns an array of objects with Tools and associated categories and tags
-      //   $scope.searchTools = data
-      // })
-        $location.search(localUrl)
+    $scope.addCat = function( catName ){
+      localUrl = buildUrl( false, $location.search().q, catName, $location.search().t);
+      $location.search(localUrl);
     }
 
+    $scope.addTag = function( tagName ){
+      localUrl = buildUrl( false, $location.search().q, $location.search().c, tagName );
+      $location.search(localUrl);
+    }
 
     init();
+
 }]);
