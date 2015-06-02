@@ -89,6 +89,24 @@ class ToolsController < ApplicationController
 
   # POST
   def create
+    # @student = Student.where(email:student_params['email'], user_id: student_params['user_id']).first_or_create(student_params)
+    # if Student.where(email:student_params['email'], user_id: student_params['user_id']).count > 0
+    #   flash[:danger] = 'Student email already exists'
+    #   redirect_to new_student_path
+    # else
+    #   Student.create(student_params)
+    #   redirect_to students_path
+    # end
+    # p {'tool_params' => tool_params}
+    # p {'params' => params}
+
+    p params
+    # p tool_params
+
+    # user = User.create(name: "David", occupation: "Code Artist")
+    tool = Tool.create(title: params[:title], description: params[:description], language: params[:language], is_open: params[:is_open], is_free: params[:is_free], web_url: params[:web_url], repo_url: params[:repo_url], doc_url: params[:doc_url] )
+
+    render json: {result: tool || false}
   end
 
   # edit_tool GET
@@ -103,5 +121,10 @@ class ToolsController < ApplicationController
   def destroy
   end
 
+  private
+
+  def tool_params
+    params.require(:tool).permit(:title,:description,:language,:is_open,:is_free,:web_url,:repo_url,:doc_url,:avg_rating)
+  end
 
 end

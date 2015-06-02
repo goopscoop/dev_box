@@ -4,7 +4,6 @@
     <a href="#" data-activates="mobile_sidebar" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
     <ul class="right hide-on-med-and-down">
       <li><a href="/about">About</a></li>
-      <li ng-show="currentUser">{{currentUser.firstName || 'User'}}</li>
       <li>
         <a href="/login" ng-hide="currentUser">Login</a>
         <a href="#" ng-click="logout()" ng-show="currentUser">Logout</a>
@@ -15,7 +14,6 @@
     </ul>
     <ul class="side-nav" id="mobile_sidebar">
       <li><a href="/about">About</a></li>
-      <li ng-show="currentUser">{{currentUser.firstName || 'User'}}</li>
       <li>
         <a href="/login" ng-hide="currentUser">Login</a>
         <a href="#" ng-click="logout()" ng-show="currentUser">Logout</a>
@@ -25,8 +23,9 @@
 </nav>
 
 <div>
+
   <!-- <alerts></alerts> -->
 
   <ng-view></ng-view>
-  <!-- <div ui-view></div> -->
+
 </div>
