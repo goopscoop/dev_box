@@ -2,6 +2,11 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
 
   console.log('New Tools Ctrl Loaded');
 
+  $scope.number = 5;
+  $scope.getNumber = function(num) {
+      return new Array(num);
+  }
+
   Tool = $resource('/api/tools/:id', null, {
     'update': { method:'PUT' }
   });
@@ -15,10 +20,5 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
   },function(err){
     console.log(err);
   });
-
-  // $http.get( '/api/tool/' + $routeParams.id ).success( function( data ){
-  //   // returns an array of objects with Tools and associated categories and tags
-  //    console.log(data);
-  // })
 
 }])

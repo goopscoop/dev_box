@@ -1,4 +1,4 @@
-var DevBox = angular.module('DevBox',['ngRoute', 'ngResource', 'ngMaterial']);
+var DevBox = angular.module('DevBox',['ngRoute', 'ngResource', 'ngMaterial', 'ui.materialize']);
 
 DevBox.run(['$rootScope', 'UserService', function($rootScope, UserService) {
   console.log("I am running!")
@@ -25,13 +25,13 @@ DevBox.config(['$routeProvider', '$locationProvider', function($routeProvider, $
     templateUrl: 'assets/tools/index.html',
     controller: 'ToolsCtrl'
   })
-  .when('/tools/:id', {
-    templateUrl: 'assets/tools/show.html',
-    controller: 'ToolsShowCtrl'
-  })
   .when('/tools/new', {
     templateUrl: 'assets/tools/new.html',
     controller: 'ToolsNewCtrl'
+  })
+  .when('/tools/:id', {
+    templateUrl: 'assets/tools/show.html',
+    controller: 'ToolsShowCtrl'
   })
   .when('/tools/:id/edit', {
     templateUrl: 'assets/tools/edit.html',

@@ -93,3 +93,26 @@ nav img.responsive-img {
   color: #ffe082;
   padding-left: 45px;
 }
+
+/* Liked is the color for the avg_rating mice */
+.liked {
+  color: #e91e63;
+}
+
+md-select.md-default-theme .md-select-label.md-placeholder {
+  color: #9e9e9e;
+}
+
+md-select.md-default-theme .md-select-label {
+  border-bottom: none;
+  /*min-width: 250px;*/
+}
+
+.md-select-label {
+  color: #9e9e9e;
+}
+
+.input-label {
+  color: #9e9e9e;
+  padding: 0 0.75rem;
+}

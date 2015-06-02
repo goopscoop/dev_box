@@ -152,6 +152,10 @@ class ToolsController < ApplicationController
 
   # new_tool GET
   def new
+    categories = Category.all
+    tags = Tag.all
+
+    render json: {result: {categories: categories, tags: tags} || false}
   end
 
   # POST

@@ -1,9 +1,21 @@
-DevBox.controller( 'NewToolsCtrl', [ '$scope' , '$resource', '$location', function( $scope, $resource, $location ){
+DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', function( $scope, $resource, $location ){
 
   console.log('New Tools Ctrl Loaded');
 
   Tool = $resource('/api/tools/', null, {
     'update': { method:'PUT' }
+  });
+
+  NewTool = $resource('/api/tools/new', null, {
+    'update': { method: 'PUT' }
+  })
+
+  NewTool.get(function(data) {
+    console.log(data);
+    $scope.categories = data.result.categories;
+    $scope.tags = data.result.tags
+  },function(err){
+    console.log(err);
   });
 
   $scope.saveTool = function() {
