@@ -62,6 +62,7 @@ frontend.tools << t12
 frontend.tools << t22
 
 backend = Tag.create({tag:'backend'})
+backend.tools << t1
 backend.tools << t13
 backend.tools << t14
 backend.tools << t15
@@ -77,6 +78,7 @@ backend.tools << t28
 
 
 comandline = Tag.create({tag:'commandline'})
+comandline.tools << t1
 comandline.tools << t18
 comandline.tools << t19
 comandline.tools << t27

@@ -35,17 +35,18 @@
     <div class="row">
 
   <!-- search body -->
-      <div class="section tool-search-results" ng-repeat="tool in searchTools">
-        <div class="col s1">
-          <a href="#"><i class="mdi-navigation-expand-less"></i></a>
+      <div ng-show="searchTools">
+        <div class="section tool-search-results" ng-repeat="tool in searchTools">
+          <div class="col s1">
+            <a href="#"><i class="mdi-navigation-expand-less"></i></a>
+          </div>
+          <div class="col s11">
+            <h4><a ng-href="/tool/{{tool.id}}">{{tool.title}}</a></h4>
+            <ul ng-repeat="category in tool.categories">
+              <li><a ng-href="/category/{{category.id}}">{{category.category}}</a></li>
+            </ul>
+          </div>
         </div>
-        <div class="col s11">
-          <h4><a ng-href="/tool/{{tool.id}}">{{tool.title}}</a></h4>
-          <ul ng-repeat="category in tool.categories">
-            <li><a ng-href="/category/{{category.id}}">{{category.category}}</a></li>
-          </ul>
-        </div>
-        <div class="divider"></div>
       </div>
     </div>
   </div>
