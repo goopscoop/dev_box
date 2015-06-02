@@ -81,6 +81,32 @@ class ToolsController < ApplicationController
 
   # tool GET
   def show
+
+    puts "*************** Show Route ************************"
+    # Post.includes([:author, :comments]).where(['comments.approved = ?', true])
+    # tool = Tool.find(params[:id]).includes([:categories, :tags])
+    tool = Tool.find(params[:id])
+    tags = tool.tags
+    categories = tool.categories
+    tool_info = {tool: tool, tags: tags, categories: categories}
+    # posts = Post.includes(:comments).limit(20)
+    # tool = Tool.includes(:tags)
+
+#     tool = Tool.find_by_sql("SELECT *
+# FROM  tools t,
+#   categories_tools ct,
+#   categories c,
+#   tags_tools tt,
+#   tags tg
+# WHERE t.id = ct.tool_id
+# AND ct.category_id = c.id
+# AND t.id = tt.tool_id
+# AND tt.tag_id = tg.id
+# AND t.id = #{params[:id]}")
+
+    p tool_info
+    render json: {result: tool_info || false}
+
   end
 
   # new_tool GET
@@ -89,21 +115,7 @@ class ToolsController < ApplicationController
 
   # POST
   def create
-    # @student = Student.where(email:student_params['email'], user_id: student_params['user_id']).first_or_create(student_params)
-    # if Student.where(email:student_params['email'], user_id: student_params['user_id']).count > 0
-    #   flash[:danger] = 'Student email already exists'
-    #   redirect_to new_student_path
-    # else
-    #   Student.create(student_params)
-    #   redirect_to students_path
-    # end
-    # p {'tool_params' => tool_params}
-    # p {'params' => params}
 
-    p params
-    # p tool_params
-
-    # user = User.create(name: "David", occupation: "Code Artist")
     tool = Tool.create(title: params[:title], description: params[:description], language: params[:language], is_open: params[:is_open], is_free: params[:is_free], web_url: params[:web_url], repo_url: params[:repo_url], doc_url: params[:doc_url] )
 
     render json: {result: tool || false}

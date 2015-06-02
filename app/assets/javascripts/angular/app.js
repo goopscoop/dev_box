@@ -25,13 +25,13 @@ DevBox.config(['$routeProvider', '$locationProvider', function($routeProvider, $
     templateUrl: 'assets/tools/index.html',
     controller: 'ToolsCtrl'
   })
-  .when('/tool/:id', {
+  .when('/tools/:id', {
     templateUrl: 'assets/tools/show.html',
-    controller: 'ToolsCtrl'
+    controller: 'ToolsShowCtrl'
   })
   .when('/tools/new', {
     templateUrl: 'assets/tools/new.html',
-    controller: 'NewToolsCtrl'
+    controller: 'ToolsNewCtrl'
   })
   .when('/tools/:id/edit', {
     templateUrl: 'assets/tools/edit.html',
