@@ -40,7 +40,7 @@ nav img.responsive-img {
 
 .tool-search-results i {
   color: white;
-  padding-left: 20px;
+  padding-left: 45px;
   font-size: 2em;
 }
 
@@ -54,13 +54,23 @@ nav img.responsive-img {
   font-size: 24px;
 }
 
-.tool-search-results ul, li {
+ .tool-search-results ul,
+ .tool-search-results li {
   padding: 0;
   margin: 0;
+  display: inline;
 }
 
-.tool-search-results li a {
-  color: #ffe082;
+.tvotes-search-results {
+  color: #78909c;
+  padding-right: 5px;
+}
+
+.tool-category {
+  color: #37474f;
+  background: #ffe082;
+  padding: 2px 4px;
+  border-radius: 2px;
 }
 
 .mySidebar {

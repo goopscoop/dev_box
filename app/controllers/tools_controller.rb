@@ -9,73 +9,99 @@ class ToolsController < ApplicationController
         tool.tags.each do |tag|
           tags.push({ id: tag[:id] , tag: tag[:tag]})
         end
-        return({ id: tool.id, title: tool.title, tags: tags, categories: cats })
+        tvotes = 0;
+        tool.tvotes.each do |vote|
+          tvotes += vote.vote
+        end
+        return({ id: tool.id, title: tool.title, tags: tags, categories: cats, votes: tvotes })
   end
 
 
 
   # tools GET
   def index
-
     tool_info = []
     search_term = params[:q]
     category = params[:c]
     tag = params[:t]
 
-
-
     # Search results for a query and category
-    # if search_term && category && tag
-    #   categoryMatch = Category.find_by_category(category)
-    #   tag_match = Tag.find_by_tag(tag)
-    #   searchMatch = categoryMatch.tools.where('title ilike ?', "%#{search_term}%")
-
-    if search_term && category
-      categoryMatch = Category.find_by_sql("SELECT  *
-            FROM  tools t,
-              categories_tools ct,
-              categories c,
-              tags_tools tt,
-              tags tg
-            WHERE t.id = ct.tool_id
-            AND ct.category_id = c.id
-            AND t.id = tt.tool_id
-            AND tt.tag_id = tg.id
-            AND c.category = '#{category}'
-            AND tg.tag = '#{tag}'
-            AND t.title ilike '#{tag}' ")
-
-
-      # Add tools to json + associated tags and categories
+    if search_term && category && tag
+      search_match = Tool.find_by_sql("SELECT  *
+      FROM  tools t,
+        categories_tools ct,
+        categories c,
+        tags_tools tt,
+        tags tg
+      WHERE t.id = ct.tool_id
+      AND ct.category_id = c.id
+      AND t.id = tt.tool_id
+      AND tt.tag_id = tg.id
+      AND c.category = '#{category}'
+      AND tg.tag = '#{tag}'
+      AND t.title ilike '%#{search_term}%'")
+      search_match.each do |tool|
+        tool_info.push(add_tool_info tool)
+      end
+      render json: tool_info
+    elsif search_term && tag
+      tag_match = Tag.find_by_tag(tag)
+      search_match = tag_match.tools.where('title ilike ?', "%#{search_term}%")
       searchMatch.each do |tool|
         tool_info.push(add_tool_info tool)
       end
-
+      render json: tool_info
+    elsif search_term && category
+      category_match = Category.find_by_category(category)
+      search_match = category_match.tools.where('title ilike ?', "%#{search_term}%")
+      # Add tools to json + associated tags and categories
+      search_match.each do |tool|
+        tool_info.push(add_tool_info tool)
+      end
+      render json: tool_info
+    elsif category && tag
+      search_match = Tool.find_by_sql("SELECT  *
+      FROM  tools t,
+        categories_tools ct,
+        categories c,
+        tags_tools tt,
+        tags tg
+      WHERE t.id = ct.tool_id
+      AND ct.category_id = c.id
+      AND t.id = tt.tool_id
+      AND tt.tag_id = tg.id
+      AND c.category = '#{category}'
+      AND tg.tag = '#{tag}'")
+      # Add tools to json + associated tags and categories
+      search_match.each do |tool|
+        tool_info.push(add_tool_info tool)
+      end
       render json: tool_info
     elsif category
       # Just a category search
-      categoryMatch = Category.find_by_category(category)
-      searchMatch = categoryMatch.tools
-
+      category_match = Category.find_by_category(category)
+      search_match = category_match.tools
+      search_match.each do |tool|
+        tool_info.push(add_tool_info tool)
+      end
+      render json: tool_info
+    elsif tag
+      tag_match = Tag.find_by_tag(tag)
+      search_match = tag_match.tools
       searchMatch.each do |tool|
         tool_info.push(add_tool_info tool)
       end
-
       render json: tool_info
-
     elsif search_term
     # Search results for just a query (no categories or tags)
-      searchMatch = Tool.where('title ilike ?', "%#{search_term}%")
-      tagMatch = Tag.where('tag ilike ?', "%#{search_term}%")
-
+      search_match = Tool.where('title ilike ?', "%#{search_term}%")
+      tag_match = Tag.where('tag ilike ?', "%#{search_term}%")
       # Add tools to json + associated tags and categories
-      searchMatch.each do |tool|
+      search_match.each do |tool|
         tool_info.push(add_tool_info tool)
       end
-
       # Add tags to seach results then add associated tools and categories
-      tagMatch.each do |tag|
-
+      tag_match.each do |tag|
         tag.tools.each do |tool|
           # Searches for an instance of this tool in current results, returns object if there, else returns nil
           # if nil, end loop
@@ -85,16 +111,12 @@ class ToolsController < ApplicationController
             tool_info.push(add_tool_info tool)
           end
         end
-
       end
       render json: tool_info
-
     else
-
       all_categories = Category.all
       all_tags = Tag.all
       render json: { categories: all_categories, tags: all_tags }
-
     end
   end
 

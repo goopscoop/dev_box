@@ -1,8 +1,29 @@
-DevBox.controller( 'ToolsCtrl' , [ '$scope' , '$http', '$resource' , '$location',
-  function( $scope , $http , $resource , $location ){
+DevBox.controller( 'ToolsCtrl' , [ '$scope' , '$http', '$resource' , '$location', '$rootScope',
+  function( $scope , $http , $resource , $location , $rootScope ){
+
+    console.log('auth',$rootScope.isAuthenticated )
+
+    $scope.categories = [];
+    // String the search bar is binding to.
+    $scope.toolSearchText;
+    // Object returned after search is completed
+    $scope.selectedTool = {};
+    $scope.searchTools = [];
+
+    function isEmpty(ob){
+       for(var i in ob){ return true;}
+      return false;
+    }
+
+    $http.get( '/api/tools' ).success( function( data ){
+      // returns an array of objects with Tools and associated categories and tags
+      $scope.categories = data.categories;
+      $scope.tags = data.tags;
+      // console.log( $scope.tools )
+    })
 
     var init = function(){
-      if($location.search()) {
+      if( isEmpty($location.search()) ) {
         get = buildUrl(true, $location.search().q, $location.search().c, $location.search().t)
           $http.get( get ).success( function( data ){
           // returns an array of objects with Tools and associated categories and tags
@@ -27,31 +48,14 @@ DevBox.controller( 'ToolsCtrl' , [ '$scope' , '$http', '$resource' , '$location'
       return url
     }
 
-    $scope.categories = [];
-
-    // String the search bar is binding to.
-    $scope.toolSearchText;
-
-    // Object returned after search is completed
-    $scope.selectedTool = {};
-    $scope.searchTools = [];
-
     $scope.getMatches = function( toolSearchText ){
-
       $http.get( '/api/tools?q=' + toolSearchText ).success( function( data ){
         // returns an array of objects with Tools and associated categories and tags
          $scope.searchTools = data
       })
-        console.log($scope.searchTools)
+        console.log("get matches function",$scope.searchTools)
         return $scope.searchTools
     }
-
-    $http.get( '/api/tools' ).success( function( data ){
-      // returns an array of objects with Tools and associated categories and tags
-      $scope.categories = data.categories;
-      $scope.tags = data.tags;
-      // console.log( $scope.tools )
-    })
 
     $scope.addCat = function( catName ){
       localUrl = buildUrl( false, $location.search().q, catName, $location.search().t);
@@ -63,6 +67,19 @@ DevBox.controller( 'ToolsCtrl' , [ '$scope' , '$http', '$resource' , '$location'
       $location.search(localUrl);
     }
 
-    init();
+    $scope.upVote = function( toolId ){
+      if ($rootScope.isAuthenticated){
+        $http.post( '/api/tools/' + toolId + '/tvotes' ).success( function( data ){
+          // returns an array of objects with Tools and associated categories and tags
+           for ( var i = 0; i < $scope.searchTools.length; i++ ) {
+              if( $scope.searchTools[i].id === toolId ) {
+                $scope.searchTools[i].votes = data.votes
+                return
+              }
+           }
+        })
+      }
+    }
 
+    init();
 }]);
