@@ -22,10 +22,29 @@ class ToolsController < ApplicationController
     category = params[:c]
     tag = params[:t]
 
+
+
     # Search results for a query and category
+    # if search_term && category && tag
+    #   categoryMatch = Category.find_by_category(category)
+    #   tag_match = Tag.find_by_tag(tag)
+    #   searchMatch = categoryMatch.tools.where('title ilike ?', "%#{search_term}%")
+
     if search_term && category
-      categoryMatch = Category.find_by_category(category)
-      searchMatch = categoryMatch.tools.where('title ilike ?', "%#{search_term}%")
+      categoryMatch = Category.find_by_sql("SELECT  *
+            FROM  tools t,
+              categories_tools ct,
+              categories c,
+              tags_tools tt,
+              tags tg
+            WHERE t.id = ct.tool_id
+            AND ct.category_id = c.id
+            AND t.id = tt.tool_id
+            AND tt.tag_id = tg.id
+            AND c.category = '#{category}'
+            AND tg.tag = '#{tag}'
+            AND t.title ilike '#{tag}' ")
+
 
       # Add tools to json + associated tags and categories
       searchMatch.each do |tool|
