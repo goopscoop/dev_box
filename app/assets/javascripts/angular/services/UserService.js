@@ -1,4 +1,5 @@
-DevBox.factory('UserService', ['$http', function($http) {
+DevBox.factory('UserService', ['$http', '$rootScope', function( $http , $rootScope ) {
+  $rootScope.isAuthenticated = false;
   return {
 
     check: function(callback) {
@@ -9,8 +10,10 @@ DevBox.factory('UserService', ['$http', function($http) {
       .success(function(data) {
         if (data && data.user) {
           self.currentUser = data.user;
+          $rootScope.isAuthenticated = true;
         } else {
           self.currentUser = false;
+          $rootScope.isAuthenticated = false;
         }
         callback(null, data);
       })

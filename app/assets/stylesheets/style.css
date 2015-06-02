@@ -4,16 +4,73 @@
 */
 
 /* FONTS */
-body {
-  background: #37474f;
+body, html {
+  background-color: #37474f;
 }
 
 h1, h2, h3, h4, h5 {
   font-family: 'Source Code Pro' ;
 }
 
+h1 {
+  color: white;
+}
+
+h2 {
+  color: white;
+}
+
+h3 {
+  color: #c6ff00;
+}
+
+h4 {
+   color: #c6ff00;
+}
+
+p, li, h6 {
+  font-family: 'Anonymous Pro' ;
+}
+
 nav img.responsive-img {
     height: 64px;
+}
+
+/* Tools#Index page */
+
+.tool-search-results i {
+  color: white;
+  padding-left: 45px;
+  font-size: 2em;
+}
+
+.tool-search-results h4 a {
+  color: #c6ff00;
+}
+
+.tool-search-results h4 {
+  padding: 0;
+  margin: 0;
+  font-size: 24px;
+}
+
+ .tool-search-results ul,
+ .tool-search-results li {
+  padding: 0;
+  margin: 0;
+  display: inline;
+}
+
+.tvotes-search-results {
+  color: #78909c;
+  padding-right: 5px;
+}
+
+.tool-category {
+  color: #37474f;
+  background: #ffe082;
+  padding: 2px 4px;
+  border-radius: 2px;
 }
 
 .mySidebar {
@@ -22,12 +79,17 @@ nav img.responsive-img {
 
 .mySidebar h3 {
   color: #e91e63;
+  font-size: 32px;
+  padding-left: 15px;
 }
 
 .mySidebar h4 {
   color: #c6ff00;
+  font-size: 28px;
+  padding-left: 30px;
 }
 
 .mySidebar li a {
   color: #ffe082;
+  padding-left: 45px;
 }
