@@ -1,14 +1,14 @@
 DevBox.controller( 'ToolsCtrl' , [ '$scope' , '$http', '$resource' , '$location', '$rootScope',
   function( $scope , $http , $resource , $location , $rootScope ){
 
-    console.log('auth',$rootScope.isAuthenticated )
-
     $scope.categories = [];
     // String the search bar is binding to.
     $scope.toolSearchText;
     // Object returned after search is completed
     $scope.selectedTool = {};
     $scope.searchTools = [];
+    $scope.activeCategory;
+    $scope.activeTag;
 
     function isEmpty(ob){
        for(var i in ob){ return true;}
@@ -23,9 +23,12 @@ DevBox.controller( 'ToolsCtrl' , [ '$scope' , '$http', '$resource' , '$location'
     })
 
     var init = function(){
-      if( isEmpty($location.search()) ) {
-        get = buildUrl(true, $location.search().q, $location.search().c, $location.search().t)
-          $http.get( get ).success( function( data ){
+      if( isEmpty( $location.search() ) ){
+        $scope.activeCategory = $location.search().c || null;
+        $scope.activeTag = $location.search().t || null;
+        console.log($scope.activeCategory)
+        get = buildUrl( true, $location.search().q, $location.search().c, $location.search().t )
+        $http.get( get ).success( function( data ){
           // returns an array of objects with Tools and associated categories and tags
           $scope.searchTools = data
         })
@@ -48,6 +51,10 @@ DevBox.controller( 'ToolsCtrl' , [ '$scope' , '$http', '$resource' , '$location'
       return url
     }
 
+    $scope.clearSearch = function(){
+      $location.search("")
+    }
+
     $scope.getMatches = function( toolSearchText ){
       $http.get( '/api/tools?q=' + toolSearchText ).success( function( data ){
         // returns an array of objects with Tools and associated categories and tags
@@ -68,15 +75,33 @@ DevBox.controller( 'ToolsCtrl' , [ '$scope' , '$http', '$resource' , '$location'
     }
 
     $scope.upVote = function( toolId ){
-      if ($rootScope.isAuthenticated){
+      if ( $rootScope.isAuthenticated ){
         $http.post( '/api/tools/' + toolId + '/tvotes' ).success( function( data ){
           // returns an array of objects with Tools and associated categories and tags
            for ( var i = 0; i < $scope.searchTools.length; i++ ) {
               if( $scope.searchTools[i].id === toolId ) {
-                $scope.searchTools[i].votes = data.votes
+                $scope.searchTools[i].votes = data.votes;
+                $scope.searchTools[i].voteId = data.voteId;
+                $scope.searchTools[i].hasVoted = true;
                 return
               }
            }
+        })
+      }
+    }
+
+    $scope.removeVote = function( toolId, tvoteId ){
+      if ( $rootScope.isAuthenticated ){
+        $http.delete( '/api/tools/' + toolId + '/tvotes/' + tvoteId ).success( function( data ){
+           for ( var i = 0; i < $scope.searchTools.length; i++ ) {
+              if( $scope.searchTools[i].id === toolId ) {
+                $scope.searchTools[i].votes = data.votes
+                $scope.searchTools[i].voteId = null;
+                $scope.searchTools[i].hasVoted = false;
+                return
+              }
+           }
+           console.log(data)
         })
       }
     }

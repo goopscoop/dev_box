@@ -39,9 +39,24 @@ nav img.responsive-img {
 /* Tools#Index page */
 
 .tool-search-results i {
-  color: white;
   padding-left: 45px;
   font-size: 2em;
+}
+
+.button-holder {
+  width: 100%;
+}
+#clear-search-btn {
+  width: 100%;
+  margin: 15px auto 0;
+}
+
+.not-voted {
+  color: white;
+}
+
+.has-voted {
+  color: #64b5f6;
 }
 
 .tool-search-results h4 a {
@@ -77,6 +92,17 @@ nav img.responsive-img {
   height: auto;
 }
 
+.activeSidebar {
+  background: #7e57c2;
+  padding: 4px 16px;
+  border-radius: 2px;
+
+}
+
+.activeSidebar a {
+  color: white !important;
+}
+
 .mySidebar h3 {
   color: #e91e63;
   font-size: 32px;
@@ -91,7 +117,7 @@ nav img.responsive-img {
 
 .mySidebar li a {
   color: #ffe082;
-  padding-left: 45px;
+  margin-left: 45px;
 }
 
 /* Liked is the color for the avg_rating mice */
@@ -116,3 +142,4 @@ md-select.md-default-theme .md-select-label {
   color: #9e9e9e;
   padding: 0 0.75rem;
 }
+

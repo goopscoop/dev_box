@@ -9,12 +9,20 @@ class ToolsController < ApplicationController
         tool.tags.each do |tag|
           tags.push({ id: tag[:id] , tag: tag[:tag]})
         end
-        tvotes = 0;
+        tvotes = 0
+        has_voted = false
+        vote_id = nil
         tool.tvotes.each do |vote|
           tvotes += vote.vote
+          if vote.user_id == current_user.id
+            has_voted = true
+            vote_id = vote.id
+          end
         end
-        return({ id: tool.id, title: tool.title, tags: tags, categories: cats, votes: tvotes })
+
+        return({ id: tool.id, title: tool.title, tags: tags, categories: cats, votes: tvotes, hasVoted: has_voted, voteId: vote_id })
   end
+
 
 
 
@@ -27,22 +35,25 @@ class ToolsController < ApplicationController
 
     # Search results for a query and category
     if search_term && category && tag
-      search_match = Tool.find_by_sql("SELECT  *
-      FROM  tools t,
-        categories_tools ct,
-        categories c,
-        tags_tools tt,
-        tags tg
-      WHERE t.id = ct.tool_id
-      AND ct.category_id = c.id
-      AND t.id = tt.tool_id
-      AND tt.tag_id = tg.id
-      AND c.category = '#{category}'
-      AND tg.tag = '#{tag}'
-      AND t.title ilike '%#{search_term}%'")
+      search_match = Tool.find_by_sql(["SELECT  t.*
+            FROM  tools t,
+              categories_tools ct,
+              categories c,
+              tags_tools tt,
+              tags tg
+            WHERE t.id = ct.tool_id
+            AND ct.category_id = c.id
+            AND t.id = tt.tool_id
+            AND tt.tag_id = tg.id
+            AND c.category = ?
+            AND tg.tag = ?
+            AND t.title ilike ?",category,tag,search_term])
+
       search_match.each do |tool|
         tool_info.push(add_tool_info tool)
       end
+
+      tool_info.sort!{ |a,b| b[:votes].to_i <=> a[:votes].to_i }
       render json: tool_info
     elsif search_term && tag
       tag_match = Tag.find_by_tag(tag)
@@ -50,6 +61,7 @@ class ToolsController < ApplicationController
       searchMatch.each do |tool|
         tool_info.push(add_tool_info tool)
       end
+      tool_info.sort!{ |a,b| b[:votes].to_i <=> a[:votes].to_i }
       render json: tool_info
     elsif search_term && category
       category_match = Category.find_by_category(category)
@@ -58,9 +70,11 @@ class ToolsController < ApplicationController
       search_match.each do |tool|
         tool_info.push(add_tool_info tool)
       end
+      tool_info.sort!{ |a,b| b[:votes].to_i <=> a[:votes].to_i }
       render json: tool_info
     elsif category && tag
-      search_match = Tool.find_by_sql("SELECT  *
+
+      search_match = Tool.find_by_sql(["SELECT  t.*
       FROM  tools t,
         categories_tools ct,
         categories c,
@@ -70,20 +84,27 @@ class ToolsController < ApplicationController
       AND ct.category_id = c.id
       AND t.id = tt.tool_id
       AND tt.tag_id = tg.id
-      AND c.category = '#{category}'
-      AND tg.tag = '#{tag}'")
+      AND c.category = ?
+      AND tg.tag = ?",category,tag])
+      print search_match
       # Add tools to json + associated tags and categories
       search_match.each do |tool|
         tool_info.push(add_tool_info tool)
       end
+
+      tool_info.sort!{ |a,b| b[:votes].to_i <=> a[:votes].to_i }
       render json: tool_info
+
     elsif category
       # Just a category search
       category_match = Category.find_by_category(category)
+
       search_match = category_match.tools
+
       search_match.each do |tool|
         tool_info.push(add_tool_info tool)
       end
+      tool_info.sort!{ |a,b| b[:votes].to_i <=> a[:votes].to_i }
       render json: tool_info
     elsif tag
       tag_match = Tag.find_by_tag(tag)
@@ -91,6 +112,7 @@ class ToolsController < ApplicationController
       searchMatch.each do |tool|
         tool_info.push(add_tool_info tool)
       end
+      tool_info.sort!{ |a,b| b[:votes].to_i <=> a[:votes].to_i }
       render json: tool_info
     elsif search_term
     # Search results for just a query (no categories or tags)
@@ -112,6 +134,7 @@ class ToolsController < ApplicationController
           end
         end
       end
+      tool_info.sort!{ |a,b| b[:votes].to_i <=> a[:votes].to_i }
       render json: tool_info
     else
       all_categories = Category.all
