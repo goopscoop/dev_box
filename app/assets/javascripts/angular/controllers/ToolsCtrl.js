@@ -1,5 +1,7 @@
-DevBox.controller( 'ToolsCtrl' , [ '$scope' , '$http', '$resource' , '$location',
-  function( $scope , $http , $resource , $location ){
+DevBox.controller( 'ToolsCtrl' , [ '$scope' , '$http', '$resource' , '$location', '$rootScope',
+  function( $scope , $http , $resource , $location , $rootScope ){
+
+    console.log('auth',$rootScope.isAuthenticated )
 
     $scope.categories = [];
     // String the search bar is binding to.
@@ -65,7 +67,19 @@ DevBox.controller( 'ToolsCtrl' , [ '$scope' , '$http', '$resource' , '$location'
       $location.search(localUrl);
     }
 
-    console.log("Before init",$scope.searchTools)
+    $scope.upVote = function( toolId ){
+      if ($rootScope.isAuthenticated){
+        $http.post( '/api/tools/' + toolId + '/tvotes' ).success( function( data ){
+          // returns an array of objects with Tools and associated categories and tags
+           for ( var i = 0; i < $scope.searchTools.length; i++ ) {
+              if( $scope.searchTools[i].id === toolId ) {
+                $scope.searchTools[i].votes = data.votes
+                return
+              }
+           }
+        })
+      }
+    }
+
     init();
-    console.log("after init",$scope.searchTools)
 }]);

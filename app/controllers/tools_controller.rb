@@ -9,7 +9,11 @@ class ToolsController < ApplicationController
         tool.tags.each do |tag|
           tags.push({ id: tag[:id] , tag: tag[:tag]})
         end
-        return({ id: tool.id, title: tool.title, tags: tags, categories: cats })
+        tvotes = 0;
+        tool.tvotes.each do |vote|
+          tvotes += vote.vote
+        end
+        return({ id: tool.id, title: tool.title, tags: tags, categories: cats, votes: tvotes })
   end
 
 

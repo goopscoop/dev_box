@@ -38,12 +38,13 @@
       <div ng-show="searchTools">
         <div class="section tool-search-results" ng-repeat="tool in searchTools">
           <div class="col s1">
-            <a href="#"><i class="mdi-navigation-expand-less"></i></a>
+            <a href="#" ng-click="upVote(tool.id)"><i class="mdi-navigation-expand-less"></i></a>
           </div>
           <div class="col s11">
             <h4><a ng-href="/tool/{{tool.id}}">{{tool.title}}</a></h4>
+            <span class="tvotes-search-results"><strong>{{tool.votes}}</strong> up votes</span>
             <ul ng-repeat="category in tool.categories">
-              <li><a ng-href="/category/{{category.id}}">{{category.category}}</a></li>
+              <li><a href="#" class="tool-category" ng-click="addCat(category.category)">{{category.category}}</a></li>
             </ul>
           </div>
         </div>
