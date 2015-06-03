@@ -146,29 +146,11 @@ class ToolsController < ApplicationController
   # tool GET
   def show
 
-    puts "*************** Show Route ************************"
-    # Post.includes([:author, :comments]).where(['comments.approved = ?', true])
-    # tool = Tool.find(params[:id]).includes([:categories, :tags])
     tool = Tool.find(params[:id])
     tags = tool.tags
     categories = tool.categories
     tool_info = {tool: tool, tags: tags, categories: categories}
-    # posts = Post.includes(:comments).limit(20)
-    # tool = Tool.includes(:tags)
 
-#     tool = Tool.find_by_sql("SELECT *
-# FROM  tools t,
-#   categories_tools ct,
-#   categories c,
-#   tags_tools tt,
-#   tags tg
-# WHERE t.id = ct.tool_id
-# AND ct.category_id = c.id
-# AND t.id = tt.tool_id
-# AND tt.tag_id = tg.id
-# AND t.id = #{params[:id]}")
-
-    p tool_info
     render json: {result: tool_info || false}
 
   end
@@ -177,16 +159,44 @@ class ToolsController < ApplicationController
   def new
     categories = Category.all
     tags = Tag.all
+    tag_tags = tags.map do |tag|
+      {tag: tag[:tag]}
+    end
 
-    render json: {result: {categories: categories, tags: tags} || false}
+    render json: {result: {categories: categories, tags: tag_tags} || false}
+
   end
 
   # POST
   def create
 
-    tool = Tool.create(title: params[:title], description: params[:description], language: params[:language], is_open: params[:is_open], is_free: params[:is_free], web_url: params[:web_url], repo_url: params[:repo_url], doc_url: params[:doc_url] )
+    # Create the tool
+    tool = Tool.create(title: params[:title], description: params[:description],
+                      language: params[:language], is_open: params[:is_open],
+                      is_free: params[:is_free], web_url: params[:web_url],
+                      repo_url: params[:repo_url], doc_url: params[:doc_url] )
+
+    # Associate the categories to the new tool
+    params[:categories].each do |cid|
+      c = Category.find(cid)
+      tool.categories << c
+    end
+
+    # Associate existing tags to the new tool
+    # If a tag does not already exist; create it
+    # and then associate it to the new tool
+    params[:tags].each do |tag_obj|
+      t = Tag.find_by_tag(tag_obj[:tag].downcase)
+
+      unless t
+        t = Tag.create(tag: tag_obj[:tag].downcase)
+      end
+
+      tool.tags << t
+    end
 
     render json: {result: tool || false}
+
   end
 
   # edit_tool GET
