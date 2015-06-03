@@ -6,98 +6,30 @@
     </div>
 
     <div class="row">
-      <div class="col m10 offset-m1">
+      <div class="col m10 offset-m1 s12">
         <div class="card-panel blue-grey darken-2">
-          <ul ng-repeat="tool in tools">
-            <li><a ng-href="/tools/{{tool.id}}">{{tool.title}}</a> |
-              <a ng-href="{{tool.web_url}}">
+          <ul class="collection" >
+            <li ng-repeat="tool in tools" class="collection-item">
+            <span class="user-tool-title"><a ng-href="/tools/{{tool.id}}">{{tool.title}}<md-tooltip md-direction="left">tool page</md-tooltip></a></span>
+              <a href="#" ng-click="removeTool(tool.id)" class="secondary-content btn-floating waves-effect waves-light pink"><i class="mdi-content-clear "></i><md-tooltip>remove from toolbox</md-tooltip></a>
+            <br>
+            <span class="tool-category">{{tool.language}}</span>
+              <a class="user-tool-link" ng-href="{{tool.web_url}}">
                 <i class="mdi-social-public"></i>
+                <md-tooltip>website</md-tooltip>
               </a>
-              <a ng-href="{{tool.repo_url}}">
+              <a class="user-tool-link" ng-show="tool.repo_url" ng-href="{{tool.repo_url}}">
                 <i class="mdi-communication-call-split"></i>
+                <md-tooltip>repo</md-tooltip>
               </a>
-              <a ng-href="{{tool.doc_url}}">
+              <a class="user-tool-link" ng-show="tool.doc_url" ng-href="{{tool.doc_url}}">
                 <i class="mdi-action-description"></i>
+                <md-tooltip>docs</md-tooltip>
               </a>
             </li>
           </ul>
-          <p>{{tool.tool.description}}</p>
         </div>
       </div>
     </div>
-
-
-    <div class="row">
-      <div class="col m6">
-        <div class="card-panel blue-grey darken-2">
-          <h5>Categories</h5>
-          <ul class="tool-search-results">
-            <li ng-repeat="category in tool.categories" class="tool-search-results">
-              <a href="#" class="tool-category">{{category.category}}</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="col m6">
-        <div class="card-panel blue-grey darken-2">
-          <h5>Tags</h5>
-          <ul class="tool-search-results">
-            <li ng-repeat="tag in tool.tags" class="tool-search-results">
-              <a href="#" class="tool-category">{{tag.tag}}</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col m6">
-        <div class="card-panel blue-grey darken-2">
-          <h5>Information</h5>
-          <table>
-            <tbody>
-              <tr>
-                <th>Language</th>
-                <td>{{tool.tool.language}}</td>
-              </tr>
-              <tr>
-                <th>Cost</th>
-                <td>{{tool.tool.is_free}}</td>
-              </tr>
-              <tr>
-                <th>Open-Source</th>
-                <td>{{tool.tool.is_open}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="col m6">
-        <div class="card-panel blue-grey darken-2">
-          <h5>Links</h5>
-          <table>
-            <tbody>
-              <tr>
-                <th>Web Site</th>
-                <td>{{tool.tool.web_url}}</td>
-              </tr>
-              <tr>
-                <th>Documentation Url</th>
-                <td>{{tool.tool.doc_url}}</td>
-              </tr>
-              <tr>
-                <th>Repository Url</th>
-                <td>{{tool.tool.repo_url}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <h3>Reviews</h3>
-    </div>
-
   </div>
 </div>

@@ -1,1 +1,28 @@
-<h2>Home</h2>
+<div class="row">
+
+  <div class="col m3  blue-grey darken-4 mySidebar">
+    <h3 class="pink-text">Browse the Toolbox</h3>
+    <div class="divider"></div>
+    <h4>Category</h4>
+    <ul ng-repeat="cat in categories">
+        <li ng-class="{activeSidebar: activeCategory === cat.category}"><a  href="#" ng-click="addCat(cat.category)">{{cat.category}}</a></li>
+    </ul>
+    <div class="divider"></div>
+    <h4>Popular Tags</h4>
+    <ul ng-repeat="tag in tags">
+        <li ng-class="{activeSidebar: activeTag === tag.tag}"><a href="#" ng-click="addTag(tag.tag)">{{tag.tag}}</a></li>
+    </ul>
+  </div>
+  <div class="col m9 offset-m3">
+    <div class="col m8 offset-m2">
+      <div class="row">
+        <h3>Welcome to</h2>
+        <h1 class="right-align">{ DevBox }.tools</h1>
+      </div>
+      <div class="row">
+        <p class="center-align">discover the tools / libraries / frameworks you need<br> to get any job done</p>
+      </div>
+    </div>
+  </div>
+
+</div>

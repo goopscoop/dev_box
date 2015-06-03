@@ -7,6 +7,8 @@
 
 body, html {
   background-color: #37474f;
+  min-height: 100%;
+  height: 100%;
 }
 
 
@@ -45,8 +47,32 @@ p {
 th, td {
   color: white;
 }
+
 nav img.responsive-img {
     height: 64px;
+}
+
+.divider {
+  background-color: #455a64;
+}
+
+/* Users#Show page */
+
+.user-tool-title a {
+  color: #c6ff00;
+}
+
+.user-tool-link  {
+  color: #ffe082;
+}
+
+.collection .collection-item {
+  background-color: #546e7a;
+  border-bottom: 1px solid #455a64;
+}
+
+.collection {
+  border: 1px solid #455a64;
 }
 
 /* Tools#Index page */
@@ -123,6 +149,8 @@ nav img.responsive-img {
   padding-right: 5px;
 }
 
+
+
 .tool-category {
   color: #37474f;
   background: #ffe082;
@@ -131,7 +159,10 @@ nav img.responsive-img {
 }
 
 .mySidebar {
-  height: auto;
+  height: 100%;
+  top: 64px;
+  bottom: 0;
+  position: absolute;
 }
 
 .activeSidebar {

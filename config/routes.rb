@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     get 'check' => 'sessions#check'
     delete 'logout' => 'sessions#destroy'
     # get 'logout' => 'sessions#destroy'
-
+    get 'home' => 'static#index'
     resources :tools do
         resources :tvotes, :only => [:create,:destroy]
         resources :reviews, :only => [:create,:update,:destroy]
