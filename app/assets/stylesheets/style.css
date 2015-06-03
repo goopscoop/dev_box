@@ -262,3 +262,7 @@ md-chips.md-default-theme .md-chips {
 .show-page-mice {
   padding-top: 25px;
 }
+
+#save-tool-btn {
+  width: 100%;
+}
