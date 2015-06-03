@@ -5,7 +5,10 @@
       <div class="col m1">
         <br>
         <br>
-        <a ng-if="$root.isAuthenticated" ng-click="addTool(tool.tool.id)" class="btn-floating waves-effect waves-light pink"><i class="mdi-content-add"></i></a>
+        <a ng-if="$root.isAuthenticated" ng-click="addTool(tool.tool.id)" class="btn-floating waves-effect waves-light pink">
+          <i class="mdi-content-add"></i>
+          <md-tooltip>add to your toolbox</md-tooltip>
+        </a>
         <a ng-if="$root.isAuthenticated === false" class="btn-floating waves-effect waves-light pink">
           <i class="mdi-content-add"></i>
           <md-tooltip>log in to add to toolbox</md-tooltip>
