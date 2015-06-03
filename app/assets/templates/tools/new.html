@@ -1,21 +1,25 @@
 <div class="row">
-  <form ng-submit="saveTool()" class="col s12 m6 offset-m3">
+  <form class="col s12 m6 offset-m3 card-panel blue-grey darken-2 big-text">
     <h4>Add a New Tool</h4>
+
     <div class="row">
       <div class="input-field col s12">
-        <input ng-model="title" id="title" type="text" class="validate">
+        <input ng-model="title" id="title" type="text">
         <label for="title">Title</label>
       </div>
     </div>
+
     <div class="row">
       <div class="input-field col s12">
         <textarea ng-model="description" id="description" class="materialize-textarea"></textarea>
         <label for="description">Description</label>
       </div>
     </div>
+
     <div class="row input-label">
       Choose up to three categories
     </div>
+
     <div class="row">
       <div class="col m4">
         <md-select ng-model="category01" placeholder="Category">
@@ -33,28 +37,32 @@
         </md-select>
       </div>
     </div>
+
     <div class="row">
-      <div class="input-field col s6">
-        <select>
-          <option value="" disabled selected>Choose your option</option>
-          <option value="1">Option 1</option>
-          <option value="2">Option 2</option>
-          <option value="3">Option 3</option>
-        </select>
-        <label>Materialize Select</label>
-      </div>
-      <div class="col s6">
-        <select class="" ng-model="category04" material-select>
-          <option ng-repeat="category in categories" value="{{category.id}}">{{category.category}}</option>
-        </select>
-      </div>
+      <md-chips ng-model="selectedTags" md-on-append="newTag($chip)" md-autocomplete-snap>
+        <md-autocomplete
+            md-selected-item="selectedTag"
+            md-search-text="searchText"
+            md-items="item in querySearch(searchText)"
+            md-item-text="item.tag"
+            placeholder="Tag Your Tool">
+          <span md-highlight-text="searchText">{{item.tag}}</span>
+        </md-autocomplete>
+        <md-chip-template>
+          <span>
+            <strong>{{$chip.tag || $chip}}</strong>
+          </span>
+        </md-chip-template>
+      </md-chips>
     </div>
+
     <div class="row">
       <div class="input-field col s12">
-        <input ng-model="language" id="language" type="text" class="validate">
+        <input ng-model="language" id="language" type="text">
         <label for="language">Language</label>
       </div>
     </div>
+
     <div class="row">
       <div class="input-field col s12">
         <div class="switch">
@@ -66,41 +74,46 @@
         </div>
       </div>
     </div>
+
     <div class="row">
       <div class="input-field col s6">
-        <input ng-model="is_free" name="is_free" type="radio" value="1" id="free" />
+        <input ng-model="is_free" class="with-gap" name="is_free" type="radio" value="1" id="free" />
         <label for="free">Free</label>
       </div>
       <div class="input-field col s12">
-        <input ng-model="is_free" name="is_free" type="radio" value="0" id="paid" />
+        <input ng-model="is_free" class="with-gap" name="is_free" type="radio" value="0" id="paid" />
         <label for="paid">Paid</label>
       </div>
       <div class="input-field col s12">
-        <input ng-model="is_free" name="is_free" type="radio" value="-1" id="freemium" />
+        <input ng-model="is_free" class="with-gap" name="is_free" type="radio" value="-1" id="freemium" />
         <label for="freemium">Freemium</label>
       </div>
     </div>
+
     <div class="row">
       <div class="input-field col s12">
-        <input ng-model="web_url" id="web_url" type="text" class="validate">
+        <input ng-model="web_url" id="web_url" type="text">
         <label for="web_url">Website Url</label>
       </div>
     </div>
+
     <div class="row">
       <div class="input-field col s12">
-        <input ng-model="doc_url" id="doc_url" type="text" class="validate">
+        <input ng-model="doc_url" id="doc_url" type="text">
         <label for="doc_url">Documentation Url</label>
       </div>
     </div>
+
     <div class="row">
       <div class="input-field col s12">
-        <input ng-model="repo_url" id="repo_url" type="text" class="validate">
+        <input ng-model="repo_url" id="repo_url" type="text">
         <label for="repo_url">Repository Url</label>
       </div>
     </div>
+
     <div class="row">
       <div class="col s12">
-        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+        <button ng-click="saveTool()" class="btn waves-effect waves-light" type="button">Submit
           <i class="mdi-content-send right"></i>
         </button>
       </div>
