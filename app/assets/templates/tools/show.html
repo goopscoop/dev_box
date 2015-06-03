@@ -1,13 +1,14 @@
 <div class="row">
-  <div class="col s12 m8 offset-m3 card-panel blue-grey darken-2">
+  <div class="col s12 m8 offset-m3 card-panel blue-grey darken-1">
 
     <div class="row">
       <div class="col m1">
         <br>
         <br>
         <a ng-if="$root.isAuthenticated" ng-click="addTool(tool.tool.id)" class="btn-floating waves-effect waves-light pink">
-          <i class="mdi-content-add"></i>
-          <md-tooltip>add to your toolbox</md-tooltip>
+          <i ng-class="{'mdi-content-add': tool.favorited === false, 'mdi-content-clear': tool.favorited === true}"></i>
+          <md-tooltip ng-if="tool.favorited === true">remove from your toolbox</md-tooltip>
+          <md-tooltip ng-if="tool.favorited === false">add to your toolbox</md-tooltip>
         </a>
         <a ng-if="$root.isAuthenticated === false" class="btn-floating waves-effect waves-light pink">
           <i class="mdi-content-add"></i>

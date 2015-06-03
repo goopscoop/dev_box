@@ -9,6 +9,8 @@ class UsersController < ApplicationController
 
   # user GET
   def show
+    tools = current_user.tools
+    render json: { tools: tools }
   end
 
   # new_user GET

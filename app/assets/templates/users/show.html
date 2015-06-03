@@ -8,6 +8,19 @@
     <div class="row">
       <div class="col m10 offset-m1">
         <div class="card-panel blue-grey darken-2">
+          <ul ng-repeat="tool in tools">
+            <li><a ng-href="/tools/{{tool.id}}">{{tool.title}}</a> |
+              <a ng-href="{{tool.web_url}}">
+                <i class="mdi-social-public"></i>
+              </a>
+              <a ng-href="{{tool.repo_url}}">
+                <i class="mdi-communication-call-split"></i>
+              </a>
+              <a ng-href="{{tool.doc_url}}">
+                <i class="mdi-action-description"></i>
+              </a>
+            </li>
+          </ul>
           <p>{{tool.tool.description}}</p>
         </div>
       </div>
