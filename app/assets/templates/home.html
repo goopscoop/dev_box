@@ -1,28 +1,109 @@
 <div class="row">
-
   <div class="col m3  blue-grey darken-4 mySidebar">
     <h3 class="pink-text">Browse the Toolbox</h3>
     <div class="divider"></div>
     <h4>Category</h4>
     <ul ng-repeat="cat in categories">
-        <li ng-class="{activeSidebar: activeCategory === cat.category}"><a  href="#" ng-click="addCat(cat.category)">{{cat.category}}</a></li>
+        <li><a ng-href="/tools/?c={{cat.category}}" ng-click="addCat(cat.category)">{{cat.category}}</a></li>
     </ul>
     <div class="divider"></div>
     <h4>Popular Tags</h4>
     <ul ng-repeat="tag in tags">
-        <li ng-class="{activeSidebar: activeTag === tag.tag}"><a href="#" ng-click="addTag(tag.tag)">{{tag.tag}}</a></li>
+        <li><a ng-href="/tools/?t={{tag.tag}}" ng-click="addTag(tag.tag)">{{tag.tag}}</a></li>
     </ul>
   </div>
+  <!-- END SIDEBAR START CONTENT -->
   <div class="col m9 offset-m3">
-    <div class="col m8 offset-m2">
-      <div class="row">
-        <h3>Welcome to</h2>
-        <h1 class="right-align">{ DevBox }.tools</h1>
+    <div class="row">
+      <div class="col m8 offset-m2">
+        <div class="row">
+          <br>
+          <h3>Welcome to</h3>
+          <h1 class="right-align">{ DevBox }.tools</h1>
+        </div>
+        <div class="row">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <p class="center-align">discover the tools || libraries || frameworks you need<br> to get any job done</p>
+              <a class="btn waves-effect waves-light" id="home-search-btn" href="/tools">search now</a>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="row">
-        <p class="center-align">discover the tools / libraries / frameworks you need<br> to get any job done</p>
+    </div>
+    <div class="col m10 offset-m1">
+    <div class="row popular-section">
+        <h4 class="home-section-title">Popular Tools</h4>
+        <div ng-show="popular ">
+        <div class="section tool-search-results" ng-repeat="tool in popular">
+          <div class="col s1">
+            <div ng-if="$root.isAuthenticated === false"><a class="not-voted" href="#" ><i class="mdi-navigation-expand-less up-vote"></i><md-tooltip>log in to vote</md-tooltip></a></div>
+            <div ng-if="tool.hasVoted === false && $root.isAuthenticated"><a class="not-voted" href="#" ng-click="upVote(tool.id)"><i class="mdi-navigation-expand-less up-vote"></i></a></div>
+            <div ng-if="tool.hasVoted === true && $root.isAuthenticated"><a class="has-voted" href="#" ng-click="removeVote(tool.id, tool.voteId)"><i class="mdi-navigation-expand-less up-vote"></i></a></div>
+          </div>
+          <div class="col s11">
+            <div class="row">
+              <div class="col m8">
+                <h4 class="tool-title"><a ng-href="/tools/{{tool.id}}">{{tool.title}}</a></h4><span class="tool-language">[ {{tool.language}} ]</span>
+              </div>
+              <div class="col m4 rev-wrapper">
+                <span class="avg-rating" ng-repeat="i in getNumber(5) track by $index">
+                  <i ng-if="tool.avg_rating >= $index + 1" id={{$index}} class="search-mouse mdi-hardware-mouse liked"></i>
+                  <i ng-if="tool.avg_rating < $index + 1" id={{$index}} class="search-mouse mdi-hardware-mouse"></i>
+                </span>
+              </div>
+            </div>
+            <div class="col m8">
+              <span class="tvotes-search-results"><strong>{{tool.votes}}</strong> up votes</span>
+              <ul>
+                <li ng-repeat="category in tool.categories"><a href="#" class="tool-category" ng-click="addCat(category.category)">{{category.category}}</a></li>
+              </ul>
+            </div>
+            <div class="col m4">
+              <span class="avg-review-tag">avg. review</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="col m10 offset-m1">
+      <div class="row recent-section">
+
+          <h4 class="home-section-title">Recently Added Tools</h4>
+          <div ng-show="popular ">
+          <div class="section tool-search-results" ng-repeat="tool in recent">
+            <div class="col s1">
+              <div ng-if="$root.isAuthenticated === false"><a class="not-voted" href="#" ><i class="mdi-navigation-expand-less up-vote"></i><md-tooltip>log in to vote</md-tooltip></a></div>
+              <div ng-if="tool.hasVoted === false && $root.isAuthenticated"><a class="not-voted" href="#" ng-click="upVote(tool.id)"><i class="mdi-navigation-expand-less up-vote"></i></a></div>
+              <div ng-if="tool.hasVoted === true && $root.isAuthenticated"><a class="has-voted" href="#" ng-click="removeVote(tool.id, tool.voteId)"><i class="mdi-navigation-expand-less up-vote"></i></a></div>
+            </div>
+            <div class="col s11">
+              <div class="row">
+                <div class="col m8">
+                  <h4 class="tool-title"><a ng-href="/tools/{{tool.id}}">{{tool.title}}</a></h4><span class="tool-language">[ {{tool.language}} ]</span>
+                </div>
+                <div class="col m4 rev-wrapper">
+                  <span class="avg-rating" ng-repeat="i in getNumber(5) track by $index">
+                    <i ng-if="tool.avg_rating >= $index + 1" id={{$index}} class="search-mouse mdi-hardware-mouse liked"></i>
+                    <i ng-if="tool.avg_rating < $index + 1" id={{$index}} class="search-mouse mdi-hardware-mouse"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="col m8">
+                <span class="tvotes-search-results"><strong>{{tool.votes}}</strong> up votes</span>
+                <ul>
+                  <li ng-repeat="category in tool.categories"><a href="#" class="tool-category" ng-click="addCat(category.category)">{{category.category}}</a></li>
+                </ul>
+              </div>
+              <div class="col m4">
+                <span class="avg-review-tag">avg. review</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
 </div>

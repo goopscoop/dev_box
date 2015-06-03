@@ -20,7 +20,7 @@ class ToolsController < ApplicationController
           end
         end
 
-        return({ id: tool.id, title: tool.title, avg_rating: tool.avg_rating, tags: tags, categories: cats, votes: tvotes, hasVoted: has_voted, voteId: vote_id })
+        return({ id: tool.id, title: tool.title, avg_rating: tool.avg_rating, language: tool.language, tags: tags, categories: cats, votes: tvotes, hasVoted: has_voted, voteId: vote_id })
   end
 
 

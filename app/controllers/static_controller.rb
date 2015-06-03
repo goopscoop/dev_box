@@ -20,7 +20,7 @@ class StaticController < ApplicationController
           end
         end
 
-        return({ id: tool.id, title: tool.title, avg_rating: tool.avg_rating, tags: tags, categories: cats, votes: tvotes, hasVoted: has_voted, voteId: vote_id })
+        return({ id: tool.id, title: tool.title, avg_rating: tool.avg_rating, language: tool.language, tags: tags, categories: cats, votes: tvotes, hasVoted: has_voted, voteId: vote_id })
   end
 
   def index
@@ -29,11 +29,19 @@ class StaticController < ApplicationController
                                 FROM tvotes
                                 Group by tool_id
                                 Order by sum(vote) desc
-                                LIMIT 20")
+                                LIMIT 5")
     popular_votes.each do |vote|
       popular_tools.push(add_tool_info Tool.find_by_id(vote.tool_id))
     end
+    recent_tools = []
+    tools = Tool.limit(5).order('id desc')
+    tools.each do |tool|
+      recent_tools.push(add_tool_info tool)
+    end
 
-    render json: {result:popular_tools}
+    categories = Category.all
+    tags = Tag.all
+
+    render json: { categories: categories, tags: tags, popular:popular_tools, recent: recent_tools }
   end
 end

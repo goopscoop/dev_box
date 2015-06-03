@@ -9,6 +9,9 @@ body, html {
   background-color: #37474f;
   min-height: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+
 }
 
 
@@ -56,6 +59,22 @@ nav img.responsive-img {
   background-color: #455a64;
 }
 
+/* Home page */
+
+.popular-section {
+  background-color: #455a64;
+  padding: 20px;
+}
+
+.recent-section {
+  background-color: #455a64;
+  padding: 20px;
+}
+
+.home-section-title {
+  color: white;
+}
+
 /* Users#Show page */
 
 .user-tool-title a {
@@ -93,6 +112,12 @@ nav img.responsive-img {
 }
 
 #clear-search-btn {
+  width: 100%;
+  margin: 15px auto 0;
+  background: #7e57c2;
+}
+
+#home-search-btn {
   width: 100%;
   margin: 15px auto 0;
   background: #7e57c2;
@@ -149,13 +174,25 @@ nav img.responsive-img {
   padding-right: 5px;
 }
 
-
+.tool-title {
+  font-size: 0.5em;
+  display: inline;
+}
 
 .tool-category {
   color: #37474f;
   background: #ffe082;
   padding: 2px 4px;
+  margin-right: 2px;
   border-radius: 2px;
+}
+
+.tool-language {
+  color: #78909c;
+  /*background: #ffe082;*/
+  padding: 2px 4px 2px 15px;
+  border-radius: 2px;
+  display: inline;
 }
 
 .mySidebar {
