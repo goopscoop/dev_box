@@ -331,6 +331,16 @@ md-chips.md-default-theme .md-chips {
   padding-top: 25px;
 }
 
-#save-tool-btn {
+#save-comment-btn, #save-tool-btn {
   width: 100%;
 }
+
+.big-header {
+  font-size: 18px;
+  padding: 12px 5px;
+}
+
+/*#save-comment-btn {
+  width: 100%;
+}
+*/
