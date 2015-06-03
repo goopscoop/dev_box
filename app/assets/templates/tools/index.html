@@ -30,7 +30,7 @@
           </md-not-found>
         </md-autocomplete>
 
-        <button ng-click="clearSearch()" id="clear-search-btn" class="btn waves-effect waves-light right">Clear Search
+        <button ng-click="clearSearch()" id="clear-search-btn" class="btn waves-effect waves-light">Clear Search
         </button>
 
       </div>
@@ -42,8 +42,9 @@
       <div ng-show="searchTools">
         <div class="section tool-search-results" ng-repeat="tool in searchTools">
           <div class="col s1">
-            <div ng-if="tool.hasVoted === false"><a class="not-voted" href="#" ng-click="upVote(tool.id)"><i class="mdi-navigation-expand-less"></i></a></div>
-            <div ng-if="tool.hasVoted === true"><a class="has-voted" href="#" ng-click="removeVote(tool.id, tool.voteId)"><i class="mdi-navigation-expand-less"></i></a></div>
+            <div ng-if="$root.isAuthenticated === false"><a class="not-voted" href="#" ng-click="upVote(tool.id)"><i class="mdi-navigation-expand-less"></i><md-tooltip>log in to vote</md-tooltip></a></div>
+            <div ng-if="tool.hasVoted === false && $root.isAuthenticated"><a class="not-voted" href="#" ng-click="upVote(tool.id)"><i class="mdi-navigation-expand-less"></i></a></div>
+            <div ng-if="tool.hasVoted === true && $root.isAuthenticated"><a class="has-voted" href="#" ng-click="removeVote(tool.id, tool.voteId)"><i class="mdi-navigation-expand-less"></i></a></div>
           </div>
           <div class="col s11">
             <h4><a ng-href="/tool/{{tool.id}}">{{tool.title}}</a></h4>

@@ -14,7 +14,7 @@ class ToolsController < ApplicationController
         vote_id = nil
         tool.tvotes.each do |vote|
           tvotes += vote.vote
-          if vote.user_id == current_user.id
+          if current_user && vote.user_id == current_user.id
             has_voted = true
             vote_id = vote.id
           end
