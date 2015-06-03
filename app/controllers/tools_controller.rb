@@ -20,7 +20,7 @@ class ToolsController < ApplicationController
           end
         end
 
-        return({ id: tool.id, title: tool.title, avg_rating: tool.avg_rating, tags: tags, categories: cats, votes: tvotes, hasVoted: has_voted, voteId: vote_id })
+        return({ id: tool.id, title: tool.title, avg_rating: tool.avg_rating, language: tool.language, tags: tags, categories: cats, votes: tvotes, hasVoted: has_voted, voteId: vote_id })
   end
 
 
@@ -109,7 +109,7 @@ class ToolsController < ApplicationController
     elsif tag
       tag_match = Tag.find_by_tag(tag)
       search_match = tag_match.tools
-      searchMatch.each do |tool|
+      search_match.each do |tool|
         tool_info.push(add_tool_info tool)
       end
       tool_info.sort!{ |a,b| b[:votes].to_i <=> a[:votes].to_i }
@@ -149,8 +149,12 @@ class ToolsController < ApplicationController
     tool = Tool.find(params[:id])
     tags = tool.tags
     categories = tool.categories
-    tool_info = {tool: tool, tags: tags, categories: categories}
-
+    if current_user
+      favorited = current_user.tools.find_by_id(params[:id]) ? true : false
+      tool_info = { tool: tool, tags: tags, categories: categories, favorited: favorited }
+    else
+      tool_info = { tool: tool, tags: tags, categories: categories, favorited: false }
+    end
     render json: {result: tool_info || false}
 
   end
