@@ -7,6 +7,12 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
       return new Array(num);
   }
 
+  $scope.addTool = function( toolId ){
+    $http.post('/api/users/' + toolId + '/tool').success( function( data ){
+      console.log(data)
+    } )
+  }
+
   Tool = $resource('/api/tools/:id', null, {
     'update': { method:'PUT' }
   });
