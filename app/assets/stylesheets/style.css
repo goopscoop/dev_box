@@ -266,3 +266,8 @@ md-chips.md-default-theme .md-chips {
 #save-tool-btn {
   width: 100%;
 }
+
+.big-header {
+  font-size: 18px;
+  padding: 12px 5px;
+}
