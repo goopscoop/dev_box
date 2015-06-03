@@ -2,20 +2,38 @@
   <div class="col s12 m8 offset-m3 card-panel blue-grey darken-2">
 
     <div class="row">
-      <h2>{{tool.tool.title}}</h2>
+      <div class="col m1">
+        <br>
+        <br>
+        <a ng-if="$root.isAuthenticated" ng-click="addTool(tool.tool.id)" class="btn-floating waves-effect waves-light pink"><i class="mdi-content-add"></i></a>
+        <a ng-if="$root.isAuthenticated === false" class="btn-floating waves-effect waves-light pink">
+          <i class="mdi-content-add"></i>
+          <md-tooltip>log in to add to toolbox</md-tooltip>
+        </a>
+      </div>
+      <div class="col m7">
+        <h2>{{tool.tool.title}} </h2>
+      </div>
+      <div class="col m4">
+        <br>
+        <span ng-repeat="i in getNumber(number) track by $index">
+          <i ng-if="tool.tool.avg_rating >= $index + 1" id={{$index}} class="small mdi-hardware-mouse liked"></i>
+          <i ng-if="tool.tool.avg_rating < $index + 1" id={{$index}} class="small mdi-hardware-mouse"></i>
+        </span><br>
+        <span class="avg-review-tag">avg. user review</span>
+      </div>
     </div>
-
+    <div class="divider"></div>
     <div class="row">
-      {{tool.tool.description}}
-    </div>
 
+    </div>
     <div class="row">
-      <span ng-repeat="i in getNumber(number) track by $index">
-        <i ng-if="tool.tool.avg_rating >= $index + 1" id={{$index}} class="small mdi-hardware-mouse liked"></i>
-        <i ng-if="tool.tool.avg_rating < $index + 1" id={{$index}} class="small mdi-hardware-mouse"></i>
-      </span>
+      <div class="col m10 offset-m1">
+        <div class="card-panel blue-grey darken-2">
+          <p>{{tool.tool.description}}</p>
+        </div>
+      </div>
     </div>
-
     <div class="row">
       <div class="col m6">
         <div class="card-panel blue-grey darken-2">
@@ -83,7 +101,7 @@
         </div>
       </div>
     </div>
-
+    <div class="divider"></div>
     <div class="row">
       <h3>Reviews</h3>
     </div>

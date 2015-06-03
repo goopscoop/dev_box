@@ -26,7 +26,9 @@ Rails.application.routes.draw do
         resources :tvotes, :only => [:create,:destroy]
         resources :reviews, :only => [:create,:update,:destroy]
     end
-    resources :users
+    resources :users do
+        resources :tool, :only => [:create]
+    end
     resources :tags, :only => [:create]
   end
 

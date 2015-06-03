@@ -4,9 +4,11 @@
 */
 
 /* FONTS */
+
 body, html {
   background-color: #37474f;
 }
+
 
 h1, h2, h3, h4, h5 {
   font-family: 'Source Code Pro' ;
@@ -17,7 +19,7 @@ h1 {
 }
 
 h2 {
-  color: white;
+  color: #c6ff00;
 }
 
 h3 {
@@ -28,17 +30,28 @@ h4 {
    color: #c6ff00;
 }
 
+h5 {
+  color: #c6ff00;
+}
+
 p, li, h6 {
   font-family: 'Anonymous Pro' ;
 }
 
+p {
+  color: white;
+}
+
+th, td {
+  color: white;
+}
 nav img.responsive-img {
     height: 64px;
 }
 
 /* Tools#Index page */
 
-.tool-search-results i {
+.up-vote {
   padding-left: 45px;
   font-size: 2em;
 }
@@ -46,9 +59,17 @@ nav img.responsive-img {
 .button-holder {
   width: 100%;
 }
+
+.avg-rating {
+  display: inline-block;
+  padding-top: 10px;
+  font-size: 1.25em;
+}
+
 #clear-search-btn {
   width: 100%;
   margin: 15px auto 0;
+  background: #7e57c2;
 }
 
 .not-voted {
@@ -74,6 +95,27 @@ nav img.responsive-img {
   padding: 0;
   margin: 0;
   display: inline;
+}
+
+.rev-wrapper{
+  display: table-cell;
+  vertical-align: top;
+}
+
+.avg-review-tag {
+  background: #78909c;
+  color: #37474f;
+  padding: 2px 4px;
+  border-radius: 2px;
+  margin-left: 6px;
+}
+
+.tool-search-results div.row {
+  margin-bottom: 0;
+}
+
+.search-mouse {
+  font-size: 1em;
 }
 
 .tvotes-search-results {
@@ -131,7 +173,6 @@ md-select.md-default-theme .md-select-label.md-placeholder {
 
 md-select.md-default-theme .md-select-label {
   border-bottom: none;
-  /*min-width: 250px;*/
 }
 
 .md-select-label {
@@ -139,7 +180,6 @@ md-select.md-default-theme .md-select-label {
 }
 
 md-select.md-default-theme:not([disabled]):focus .md-select-label.md-placeholder {
-  /*color: #9e9e9e;*/
   color: #e91e63;
 }
 
@@ -186,11 +226,6 @@ md-select.md-default-theme:not([disabled]):focus .md-select-label {
 form.big-text {
   font-size: 22px;
 }
-/*[type="radio"].with-gap:checked+label:before {
-  border-radius: 50%;
-  border: 2px solid #7e57c2;
-}
-*/
 
 .md-select-label :first-child {
   line-height: 1.6rem;
@@ -222,4 +257,8 @@ md-chips.md-default-theme .md-chips {
 
 .md-chips .md-chip-input-container input:not([type]), .md-chips .md-chip-input-container input[type=email], .md-chips .md-chip-input-container input[type=number], .md-chips .md-chip-input-container input[type=tel], .md-chips .md-chip-input-container input[type=url], .md-chips .md-chip-input-container input[type=text] {
   font-size: 1.2rem;
+}
+
+.show-page-mice {
+  padding-top: 25px;
 }

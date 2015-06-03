@@ -9,6 +9,9 @@ DevBox.controller( 'ToolsCtrl' , [ '$scope' , '$http', '$resource' , '$location'
     $scope.searchTools = [];
     $scope.activeCategory;
     $scope.activeTag;
+    $scope.getNumber = function(num) {
+          return new Array(num);
+    }
 
     function isEmpty(ob){
        for(var i in ob){ return true;}

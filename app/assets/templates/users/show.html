@@ -1,1 +1,90 @@
-<h2>User Show Page</h2>
+<div class="row">
+  <div class="col s12 m8 offset-m3 card-panel blue-grey lighten-2">
+
+    <div class="row">
+      <h2>My Toolbox</h2>
+    </div>
+
+    <div class="row">
+      <div class="col m10 offset-m1">
+        <div class="card-panel blue-grey darken-2">
+          <p>{{tool.tool.description}}</p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col m6">
+        <div class="card-panel blue-grey darken-2">
+          <h5>Categories</h5>
+          <ul class="tool-search-results">
+            <li ng-repeat="category in tool.categories" class="tool-search-results">
+              <a href="#" class="tool-category">{{category.category}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col m6">
+        <div class="card-panel blue-grey darken-2">
+          <h5>Tags</h5>
+          <ul class="tool-search-results">
+            <li ng-repeat="tag in tool.tags" class="tool-search-results">
+              <a href="#" class="tool-category">{{tag.tag}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col m6">
+        <div class="card-panel blue-grey darken-2">
+          <h5>Information</h5>
+          <table>
+            <tbody>
+              <tr>
+                <th>Language</th>
+                <td>{{tool.tool.language}}</td>
+              </tr>
+              <tr>
+                <th>Cost</th>
+                <td>{{tool.tool.is_free}}</td>
+              </tr>
+              <tr>
+                <th>Open-Source</th>
+                <td>{{tool.tool.is_open}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col m6">
+        <div class="card-panel blue-grey darken-2">
+          <h5>Links</h5>
+          <table>
+            <tbody>
+              <tr>
+                <th>Web Site</th>
+                <td>{{tool.tool.web_url}}</td>
+              </tr>
+              <tr>
+                <th>Documentation Url</th>
+                <td>{{tool.tool.doc_url}}</td>
+              </tr>
+              <tr>
+                <th>Repository Url</th>
+                <td>{{tool.tool.repo_url}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <h3>Reviews</h3>
+    </div>
+
+  </div>
+</div>
