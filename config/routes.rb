@@ -21,13 +21,13 @@ Rails.application.routes.draw do
     get 'check' => 'sessions#check'
     delete 'logout' => 'sessions#destroy'
     # get 'logout' => 'sessions#destroy'
-
+    get 'home' => 'static#index'
     resources :tools do
         resources :tvotes, :only => [:create,:destroy]
         resources :reviews, :only => [:create,:update,:destroy]
     end
     resources :users do
-        resources :tool, :only => [:create]
+        resources :tool, :only => [:create,:destroy]
     end
     resources :tags, :only => [:create]
   end

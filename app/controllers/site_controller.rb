@@ -2,7 +2,7 @@ class SiteController < ApplicationController
 
   # root GET
   def index
-    # render :JSON => 'hello Yo Gabba Gabba'
+    # render json: {result: 'hello Yo Gabba Gabba'}
   end
 
 end

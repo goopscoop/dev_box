@@ -1,6 +1,8 @@
-DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$location', '$routeParams', function( $scope, $resource, $http, $location, $routeParams ){
+DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$location', '$routeParams', '$rootScope',
+ function( $scope, $resource, $http, $location, $routeParams, $rootScope ){
 
-  console.log('New Tools Ctrl Loaded');
+  // console.log('New Tools Ctrl Loaded');
+  $scope.favorited = false;
 
   $scope.number = 5;
   $scope.getNumber = function(num) {
@@ -8,9 +10,19 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
   }
 
   $scope.addTool = function( toolId ){
-    $http.post('/api/users/' + toolId + '/tool').success( function( data ){
-      console.log(data)
-    } )
+    if ( $scope.tool.favorited === false ) {
+      $http.post('/api/users/' + toolId + '/tool').success( function( data ){
+        if (data.result === true){
+          $scope.tool.favorited = true;
+        }
+      } )
+    } else if ( $scope.tool.favorited === true ) {
+      $http.delete( '/api/users/delete/tool/' + toolId ).success( function( data ){
+        if (data.result === true){
+          $scope.tool.favorited = false;
+        }
+      } )
+    }
   }
 
   Tool = $resource('/api/tools/:id', null, {
