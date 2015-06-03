@@ -30,7 +30,7 @@
           </md-not-found>
         </md-autocomplete>
 
-        <button ng-click="clearSearch()" id="clear-search-btn" class="btn waves-effect waves-light right">Clear Search
+        <button ng-click="clearSearch()" id="clear-search-btn" class="btn waves-effect waves-light">Clear Search
         </button>
 
       </div>
@@ -42,15 +42,31 @@
       <div ng-show="searchTools">
         <div class="section tool-search-results" ng-repeat="tool in searchTools">
           <div class="col s1">
-            <div ng-if="tool.hasVoted === false"><a class="not-voted" href="#" ng-click="upVote(tool.id)"><i class="mdi-navigation-expand-less"></i></a></div>
-            <div ng-if="tool.hasVoted === true"><a class="has-voted" href="#" ng-click="removeVote(tool.id, tool.voteId)"><i class="mdi-navigation-expand-less"></i></a></div>
+            <div ng-if="$root.isAuthenticated === false"><a class="not-voted" href="#" ><i class="mdi-navigation-expand-less up-vote"></i><md-tooltip>log in to vote</md-tooltip></a></div>
+            <div ng-if="tool.hasVoted === false && $root.isAuthenticated"><a class="not-voted" href="#" ng-click="upVote(tool.id)"><i class="mdi-navigation-expand-less up-vote"></i></a></div>
+            <div ng-if="tool.hasVoted === true && $root.isAuthenticated"><a class="has-voted" href="#" ng-click="removeVote(tool.id, tool.voteId)"><i class="mdi-navigation-expand-less up-vote"></i></a></div>
           </div>
           <div class="col s11">
-            <h4><a ng-href="/tool/{{tool.id}}">{{tool.title}}</a></h4>
-            <span class="tvotes-search-results"><strong>{{tool.votes}}</strong> up votes</span>
-            <ul ng-repeat="category in tool.categories">
-              <li><a href="#" class="tool-category" ng-click="addCat(category.category)">{{category.category}}</a></li>
-            </ul>
+            <div class="row">
+              <div class="col m8">
+                <h4><a ng-href="/tools/{{tool.id}}">{{tool.title}}</a></h4>
+              </div>
+              <div class="col m4 rev-wrapper">
+                <span class="avg-rating" ng-repeat="i in getNumber(5) track by $index">
+                  <i ng-if="tool.avg_rating >= $index + 1" id={{$index}} class="search-mouse mdi-hardware-mouse liked"></i>
+                  <i ng-if="tool.avg_rating < $index + 1" id={{$index}} class="search-mouse mdi-hardware-mouse"></i>
+                </span>
+              </div>
+            </div>
+            <div class="col m8">
+              <span class="tvotes-search-results"><strong>{{tool.votes}}</strong> up votes</span>
+              <ul ng-repeat="category in tool.categories">
+                <li><a href="#" class="tool-category" ng-click="addCat(category.category)">{{category.category}}</a></li>
+              </ul>
+            </div>
+            <div class="col m4">
+              <span class="avg-review-tag">avg. review</span>
+            </div>
           </div>
         </div>
       </div>

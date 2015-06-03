@@ -4,9 +4,11 @@
 */
 
 /* FONTS */
+
 body, html {
   background-color: #37474f;
 }
+
 
 h1, h2, h3, h4, h5 {
   font-family: 'Source Code Pro' ;
@@ -17,7 +19,7 @@ h1 {
 }
 
 h2 {
-  color: white;
+  color: #c6ff00;
 }
 
 h3 {
@@ -28,17 +30,28 @@ h4 {
    color: #c6ff00;
 }
 
+h5 {
+  color: #c6ff00;
+}
+
 p, li, h6 {
   font-family: 'Anonymous Pro' ;
 }
 
+p {
+  color: white;
+}
+
+th, td {
+  color: white;
+}
 nav img.responsive-img {
     height: 64px;
 }
 
 /* Tools#Index page */
 
-.tool-search-results i {
+.up-vote {
   padding-left: 45px;
   font-size: 2em;
 }
@@ -46,9 +59,17 @@ nav img.responsive-img {
 .button-holder {
   width: 100%;
 }
+
+.avg-rating {
+  display: inline-block;
+  padding-top: 10px;
+  font-size: 1.25em;
+}
+
 #clear-search-btn {
   width: 100%;
   margin: 15px auto 0;
+  background: #7e57c2;
 }
 
 .not-voted {
@@ -74,6 +95,27 @@ nav img.responsive-img {
   padding: 0;
   margin: 0;
   display: inline;
+}
+
+.rev-wrapper{
+  display: table-cell;
+  vertical-align: top;
+}
+
+.avg-review-tag {
+  background: #78909c;
+  color: #37474f;
+  padding: 2px 4px;
+  border-radius: 2px;
+  margin-left: 6px;
+}
+
+.tool-search-results div.row {
+  margin-bottom: 0;
+}
+
+.search-mouse {
+  font-size: 1em;
 }
 
 .tvotes-search-results {
@@ -141,5 +183,9 @@ md-select.md-default-theme .md-select-label {
 .input-label {
   color: #9e9e9e;
   padding: 0 0.75rem;
+}
+
+.show-page-mice {
+  padding-top: 25px;
 }
 
