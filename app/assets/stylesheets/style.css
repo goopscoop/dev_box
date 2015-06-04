@@ -344,7 +344,10 @@ md-chips.md-default-theme .md-chips {
   padding: 12px 5px;
 }
 
-/*#save-comment-btn {
-  width: 100%;
+.review {
+  color: #9e9e9e;
 }
-*/
+
+.reviewTime {
+  color: rgba(158, 158, 158, 0.43);
+}

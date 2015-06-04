@@ -150,12 +150,18 @@ class ToolsController < ApplicationController
     tags = tool.tags
     categories = tool.categories
     reviews = tool.reviews
+    # users = []
+    reviews_users = reviews.map do |r|
+      # puts "User ID: #{r[:user_id]}"
+      user_name = User.find(r[:user_id])[:name]
+      {review: r, user_name: user_name}
+    end
 
     if current_user
       favorited = current_user.tools.find_by_id(params[:id]) ? true : false
-      tool_info = { tool: tool, tags: tags, categories: categories, reviews: reviews, favorited: favorited }
+      tool_info = { tool: tool, tags: tags, categories: categories, reviews_users: reviews_users, favorited: favorited }
     else
-      tool_info = { tool: tool, tags: tags, categories: categories, reviews: reviews, favorited: false }
+      tool_info = { tool: tool, tags: tags, categories: categories, reviews_users: reviews_users, favorited: false }
     end
     render json: {result: tool_info || false}
 

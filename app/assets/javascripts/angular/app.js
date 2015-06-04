@@ -1,4 +1,4 @@
-var DevBox = angular.module('DevBox',['ngRoute', 'ngResource', 'ngMaterial', 'ngSanitize']);
+var DevBox = angular.module('DevBox',['ngRoute', 'ngResource', 'ngMaterial', 'ngSanitize', 'angularMoment']);
 
 DevBox.run(['$rootScope', 'UserService', function($rootScope, UserService) {
   console.log("I am running!")

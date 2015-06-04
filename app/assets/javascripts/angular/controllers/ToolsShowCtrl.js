@@ -29,6 +29,10 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
     'update': { method:'PUT' }
   });
 
+  Review = $resource('/api/tools/' + $routeParams.id + '/reviews', null, {
+    'update': { method:'PUT' }
+  });
+
   console.log("RouteParams:", $routeParams.id);
   Tool.get({id:$routeParams.id},function(data) {
     // $rootScope.loading = false;
@@ -38,5 +42,22 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
   },function(err){
     console.log(err);
   });
+
+  $scope.saveReview = function() {
+    console.log("Add Review Function");
+    var content = editor.exportFile();
+    var review = new Review();
+    review.post = content;
+    review.tool_id = $routeParams.id;
+    review.$save(function(data) {
+      console.log(data);
+      // Add new comment to list
+      $scope.tool.reviews_users.push(data.result);
+
+      // Clear the editor
+      editor.edit();
+      editor.getElement('editor').body.innerHTML = '';
+    })
+  }
 
 }])
