@@ -1,6 +1,6 @@
 <div class="row">
   <form class="col s12 m6 offset-m3 card-panel blue-grey darken-2 big-text">
-    <h4>Edit {{tool.title}}</h4>
+    <h4>Edit {{title}}</h4>
 
     <div class="row">
       <div class="input-field col s12">
@@ -59,8 +59,8 @@
 
     <div class="row">
       <div class="input-field col s12">
-        <input ng-model="language" id="language" type="text">
-        <label for="language">Language</label>
+        <input placeholder="Language" ng-model="language" id="language" type="text">
+
       </div>
     </div>
 
@@ -93,22 +93,19 @@
 
     <div class="row">
       <div class="input-field col s12">
-        <input ng-model="web_url" id="web_url" type="text">
-        <label for="web_url">Website Url</label>
+        <input ng-model="web_url" id="web_url" type="text" placeholder="Website url">
       </div>
     </div>
 
     <div class="row">
       <div class="input-field col s12">
-        <input ng-model="doc_url" id="doc_url" type="text">
-        <label for="doc_url">Documentation Url</label>
+        <input ng-model="doc_url" id="doc_url" type="text" placeholder="Documentation url">
       </div>
     </div>
 
     <div class="row">
       <div class="input-field col s12">
-        <input ng-model="repo_url" id="repo_url" type="text">
-        <label for="repo_url">Repository Url</label>
+        <input ng-model="repo_url" id="repo_url" type="text" placeholder="Repository url">
       </div>
     </div>
 
