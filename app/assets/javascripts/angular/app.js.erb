@@ -14,11 +14,11 @@ DevBox.config(['$routeProvider', '$locationProvider', function($routeProvider, $
 
   $routeProvider
   .when('/', {
-    templateUrl:'assets/home.html',
+    templateUrl:'<%= asset_path("home.html") %>',
     controller: 'HomeCtrl'
   })
   .when('/about', {
-    templateUrl: 'assets/about.html',
+    templateUrl: '<%= asset_path("about.html") %>',
     controller: 'StaticCtrl'
   })
   .when('/tools/', {
