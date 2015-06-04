@@ -128,6 +128,10 @@
       </form>
     </div>
 
+    <div class="row" ng-repeat="review in tool.reviews" ng-bind-html-unsafe="review.post">
+      <div markdown="review.post"></div>
+    </div>
+
   </div>
 </div>
 

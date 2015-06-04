@@ -149,11 +149,13 @@ class ToolsController < ApplicationController
     tool = Tool.find(params[:id])
     tags = tool.tags
     categories = tool.categories
+    reviews = tool.reviews
+
     if current_user
       favorited = current_user.tools.find_by_id(params[:id]) ? true : false
-      tool_info = { tool: tool, tags: tags, categories: categories, favorited: favorited }
+      tool_info = { tool: tool, tags: tags, categories: categories, reviews: reviews, favorited: favorited }
     else
-      tool_info = { tool: tool, tags: tags, categories: categories, favorited: false }
+      tool_info = { tool: tool, tags: tags, categories: categories, reviews: reviews, favorited: false }
     end
     render json: {result: tool_info || false}
 
