@@ -145,7 +145,8 @@ class ToolsController < ApplicationController
 
   # tool GET
   def show
-
+    nav_cats = Category.all
+    nav_tags = Tag.all
     tool = Tool.find(params[:id])
     tags = tool.tags
     categories = tool.categories
@@ -155,7 +156,7 @@ class ToolsController < ApplicationController
     else
       tool_info = { tool: tool, tags: tags, categories: categories, favorited: false }
     end
-    render json: {result: tool_info || false}
+    render json: { result: tool_info, navCats: nav_cats, navTags: nav_tags }
 
   end
 

@@ -9,8 +9,10 @@ class UsersController < ApplicationController
 
   # user GET
   def show
+    categories = Category.all
+    tags = Tag.all
     tools = current_user.tools
-    render json: { tools: tools }
+    render json: { tools: tools, categories: categories, tags: tags }
   end
 
   # new_user GET

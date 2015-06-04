@@ -1,5 +1,18 @@
 <div class="row">
-  <div class="col s12 m8 offset-m3 card-panel blue-grey lighten-2">
+  <div class="col m3  blue-grey darken-4 mySidebar">
+    <h3 class="pink-text">Browse the Toolbox</h3>
+    <div class="divider"></div>
+    <h4>Category</h4>
+    <ul ng-repeat="cat in categories">
+        <li><a ng-href="/tools/?c={{cat.category}}" ng-click="addCat(cat.category)">{{cat.category}}</a></li>
+    </ul>
+    <div class="divider"></div>
+    <h4>Popular Tags</h4>
+    <ul ng-repeat="tag in tags">
+        <li><a ng-href="/tools/?t={{tag.tag}}" ng-click="addTag(tag.tag)">{{tag.tag}}</a></li>
+    </ul>
+  </div>
+  <div class="col s12 m7 offset-m4 card-panel blue-grey darken-1">
 
     <div class="row">
       <h2>My Toolbox</h2>

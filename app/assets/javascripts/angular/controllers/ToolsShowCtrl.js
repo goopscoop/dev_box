@@ -1,6 +1,6 @@
 DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$location', '$routeParams', '$rootScope',
  function( $scope, $resource, $http, $location, $routeParams, $rootScope ){
-
+  $rootScope.isAuthenticated;
   // console.log('New Tools Ctrl Loaded');
   $scope.favorited = false;
 
@@ -29,14 +29,19 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
     'update': { method:'PUT' }
   });
 
-  console.log("RouteParams:", $routeParams.id);
-  Tool.get({id:$routeParams.id},function(data) {
-    // $rootScope.loading = false;
-    console.log("Tool.get call running");
-    console.log(data);
-    $scope.tool = data.result;
-  },function(err){
-    console.log(err);
-  });
+
+  var init = function(){
+      Tool.get({id:$routeParams.id},function(data) {
+        // $rootScope.loading = false;
+        $scope.categories = data.navCats;
+        $scope.tags = data.navTags;
+        $scope.tool = data.result;
+        console.log($scope.tags)
+      },function(err){
+        console.log(err);
+      });
+    }
+
+    init()
 
 }])
