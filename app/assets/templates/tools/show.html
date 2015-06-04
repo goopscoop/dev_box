@@ -123,8 +123,8 @@
 </div>
 
 <div class="row">
-  <div class="col s12 m7 offset-m4 card-panel blue-grey darken-2">
 
+  <div class="col s12 m7 offset-m4 card-panel blue-grey darken-1">
     <div class="row">
       <h3>Reviews</h3>
     </div>
@@ -138,8 +138,18 @@
             <div id="epiceditor"></div>
           </div>
         </div>
-        <button ng-click="saveTool()" id="save-comment-btn" class="btn waves-effect waves-light deep-purple lighten-1" type="button">Add Review</button>
+        <button ng-click="saveReview()" id="save-comment-btn" class="btn waves-effect waves-light deep-purple lighten-1" type="button">Add Review</button>
       </form>
+    </div>
+
+    <div class="row" ng-repeat="review in tool.reviews_users" ng-bind-html-unsafe="review.review.post">
+      <div class="card-panel blue-grey darken-2 review">
+        <div class="reviewerName">
+          {{review.user_name}}
+          <span class="reviewTime" am-time-ago="review.review.created_at"></span>
+        </div>
+        <div markdown="review.review.post"></div>
+      </div>
     </div>
 
   </div>
