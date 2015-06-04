@@ -35,7 +35,7 @@ DevBox.config(['$routeProvider', '$locationProvider', function($routeProvider, $
   })
   .when('/tools/:id/edit', {
     templateUrl: 'assets/tools/edit.html',
-    controller: 'ToolsCtrl'
+    controller: 'ToolsEditCtrl'
   })
   .when('/users/profile', {
     templateUrl: 'assets/users/show.html',
