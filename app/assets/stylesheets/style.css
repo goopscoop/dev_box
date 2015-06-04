@@ -89,8 +89,8 @@ nav img.responsive-img {
 }
 
 .collection .collection-item {
-  background-color: #546e7a;
-  border-bottom: 1px solid #455a64;
+  background-color: #455a64;
+  border-bottom: 1px solid #546e7a;
 }
 
 .collection {
@@ -360,10 +360,10 @@ md-chips.md-default-theme .md-chips {
   list-style-type: disc;
 }
 
-.review code, kbd, pre, samp {
+.review code, .review kbd, .review pre, .review samp {
   background-color: #37474f;
 }
 
-.review h1, h2, h3, h4, h5, h6 {
+.review h1, .review h2, .review h3, .review h4, .review h5, .review h6 {
   font-size: 1rem;
 }

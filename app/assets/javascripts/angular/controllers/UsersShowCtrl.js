@@ -3,7 +3,9 @@ DevBox.controller('UsersShowCtrl',['$scope', '$http', function( $scope, $http ){
 
   var init = function(){
     $http.get('/api/users/profile').success( function( data ){
-      $scope.tools = data.tools
+      $scope.categories = data.categories;
+      $scope.tags = data.tags;
+      $scope.tools = data.tools;
       console.log($scope.tools)
     } )
   }

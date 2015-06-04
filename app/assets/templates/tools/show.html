@@ -1,5 +1,18 @@
 <div class="row">
-  <div class="col s12 m8 offset-m3 card-panel blue-grey darken-1">
+  <div class="col m3  blue-grey darken-4 mySidebar">
+    <h3 class="pink-text">Browse the Toolbox</h3>
+    <div class="divider"></div>
+    <h4>Category</h4>
+    <ul ng-repeat="cat in categories">
+        <li><a ng-href="/tools/?c={{cat.category}}" ng-click="addCat(cat.category)">{{cat.category}}</a></li>
+    </ul>
+    <div class="divider"></div>
+    <h4>Popular Tags</h4>
+    <ul ng-repeat="tag in tags">
+        <li><a ng-href="/tools/?t={{tag.tag}}" ng-click="addTag(tag.tag)">{{tag.tag}}</a></li>
+    </ul>
+  </div>
+  <div class="col s12 m7 offset-m4 card-panel blue-grey darken-1">
 
     <div class="row">
       <div class="col m1">
@@ -34,6 +47,7 @@
     <div class="row">
       <div class="col m10 offset-m1">
         <div class="card-panel blue-grey darken-2">
+          <a ng-href="{{tool.tool.web_url}}"><span class="small mdi-social-public"></span><md-tooltip ng-if="tool.tool.web_url">website</md-tooltip><md-tooltip ng-if="!!tool.tool.web_url == false">no website</md-tooltip></a> <a ng-href="{{tool.tool.doc_url}}"><span class="mdi-action-description"></span><md-tooltip ng-if="tool.tool.doc_url">docs</md-tooltip><md-tooltip ng-if="!!tool.tool.doc_url == false">no docs</md-tooltip></a> <a ng-href="{{tool.tool.repo_url}}"><span class="mdi-communication-call-split"></span><md-tooltip ng-if="tool.tool.repo_url">repository</md-tooltip><md-tooltip ng-if="!!tool.tool.repo_url == false">no repo</md-tooltip></a> <a ng-if="$root.isAuthenticated" ng-href="/tools/{{tool.tool.id}}/edit"><span class="mdi-editor-mode-edit"></span><md-tooltip ng-if="$root.isAuthenticated === true">edit this tool</md-tooltip></a><span ng-if="isAuthenticated === false"><span class="mdi-editor-mode-edit"></span><md-tooltip ng-if="$root.isAuthenticated === false">log in to edit</md-tooltip></span>
           <p>{{tool.tool.description}}</p>
         </div>
       </div>
@@ -109,8 +123,8 @@
 </div>
 
 <div class="row">
-  <div class="col s12 m8 offset-m3 card-panel blue-grey darken-1">
 
+  <div class="col s12 m7 offset-m4 card-panel blue-grey darken-1">
     <div class="row">
       <h3>Reviews</h3>
     </div>
@@ -124,7 +138,7 @@
             <div id="epiceditor"></div>
           </div>
         </div>
-        <button ng-click="saveReview()" id="save-comment-btn" class="btn waves-effect waves-light deep-purple lighten-1" type="button">Add Comment</button>
+        <button ng-click="saveReview()" id="save-comment-btn" class="btn waves-effect waves-light deep-purple lighten-1" type="button">Add Review</button>
       </form>
     </div>
 
@@ -166,7 +180,7 @@
       fullscreen: false,
       bar: true
     },
-    focusOnLoad: true,
+    focusOnLoad: false,
     shortcut: {
       modifier: 18,
       fullscreen: 70,

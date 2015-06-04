@@ -145,7 +145,8 @@ class ToolsController < ApplicationController
 
   # tool GET
   def show
-
+    nav_cats = Category.all
+    nav_tags = Tag.all
     tool = Tool.find(params[:id])
     tags = tool.tags
     categories = tool.categories
@@ -162,7 +163,7 @@ class ToolsController < ApplicationController
     else
       tool_info = { tool: tool, tags: tags, categories: categories, reviews_users: reviews_users, favorited: false }
     end
-    render json: {result: tool_info || false}
+    render json: { result: tool_info, navCats: nav_cats, navTags: nav_tags }
 
   end
 
@@ -212,6 +213,10 @@ class ToolsController < ApplicationController
 
   # edit_tool GET
   def edit
+    tool = Tool.find_by_id(params[:id])
+    categories = tool.categories
+    tags = tool.tags
+    render json: { tool: tool, categories: categories, tags: tags }
   end
 
   # PATCH or PUT
