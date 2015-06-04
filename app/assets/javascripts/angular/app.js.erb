@@ -22,39 +22,39 @@ DevBox.config(['$routeProvider', '$locationProvider', function($routeProvider, $
     controller: 'StaticCtrl'
   })
   .when('/tools/', {
-    templateUrl: 'assets/tools/index.html',
+    templateUrl: '<%= asset_path("tools/index.html") %>',
     controller: 'ToolsCtrl'
   })
   .when('/tools/new', {
-    templateUrl: 'assets/tools/new.html',
+    templateUrl: '<%= asset_path("tools/new.html") %>',
     controller: 'ToolsNewCtrl'
   })
   .when('/tools/:id', {
-    templateUrl: 'assets/tools/show.html',
+    templateUrl: '<%= asset_path("tools/show.html") %>',
     controller: 'ToolsShowCtrl'
   })
   .when('/tools/:id/edit', {
-    templateUrl: 'assets/tools/edit.html',
+    templateUrl: '<%= asset_path("tools/edit.html") %>',
     controller: 'ToolsEditCtrl'
   })
   .when('/users/profile', {
-    templateUrl: 'assets/users/show.html',
+    templateUrl: '<%= asset_path("users/show.html") %>',
     controller: 'UsersShowCtrl'
   })
   .when('/users/:id/edit', {
-    templateUrl: 'assets/users/edit.html',
+    templateUrl: '<%= asset_path("users/edit.html") %>',
     controller: 'UsersCtrl'
   })
   .when('/tools/:id/reviews/:id/edit', {
-    templateUrl: 'assets/reviews/edit.html',
+    templateUrl: '<%= asset_path("reviews/edit.html") %>',
     controller: 'ReviewsCtrl'
   })
   .when('/login', {
-    templateUrl: 'assets/sessions/new.html',
+    templateUrl: '<%= asset_path("sessions/new.html") %>',
     controller: 'SessionsCtrl'
   })
   .when('/404', {
-    templateUrl: 'assets/404.html',
+    templateUrl: '<%= asset_path("404.html") %>',
     controller: 'StaticCtrl'
   })
   .otherwise({redirectTo: '/404'});
