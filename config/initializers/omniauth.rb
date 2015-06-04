@@ -1,9 +1,16 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
   # GitHub
-  provider :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET'], {
-    redirect_uri: 'http://localhost:3000/auth/github/callback',
-    scope: 'user'
-  }
+  if ENV['RAILS_ENV'] == 'production'
+    provider :github, ENV['GITHUB_KEY_PROD'], ENV['GITHUB_SECRET_PROD'], {
+      redirect_uri: 'http://devboxtools.herokuapp.com/auth/github/callback',
+      scope: 'user'
+    }
+  else
+    provider :github, ENV['GITHUB_KEY_DEV'], ENV['GITHUB_SECRET_DEV'], {
+      redirect_uri: 'http://localhost:3000/auth/github/callback',
+      scope: 'user'
+    }
+  end
 
   # StackExchange - StackOverflow
   provider :stackexchange, ENV['SE_CLIENT_ID'], ENV['SE_CLIENT_SECRET'], public_key: ENV['SE_PUBLIC_KEY'], site: 'stackoverflow'
