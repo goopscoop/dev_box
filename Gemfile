@@ -10,6 +10,7 @@ gem 'rails-api'
 gem 'spring', :group => :development
 gem 'sass', '~> 3.4.14'
 gem 'pg'
+gem 'uglifier', '>= 1.3.0'
 
 # oAuth Gems
 gem 'omniauth'
