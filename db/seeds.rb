@@ -14,7 +14,7 @@ Cody = User.create({name: 'Cody', email: 'codybarrus@gmail.com'})
 # Create Tools Template
 # t1 = Tool.create({title: '', description: '', language: '', is_free: 1, web_url: '', repo_url: ''})
 t1 = Tool.create({title: 'Moment.js', description: 'Parse, validate, manipulate, and display dates in JavaScript.', language: 'javascript', is_free: 1, web_url: 'http://momentjs.com/', repo_url: 'https://github.com/moment/moment/', avg_rating: 5})
-t2 = Tool.create({title: 'ramjet', description: 'Ramjet makes it looks as though one DOM element is capable of transforming into another, no matter where the two elements sit in the DOM tree. It does so by making copies of the two elements (and all their children), setting a fixed position on each, then using CSS transforms to morph the two elements in sync.', language: '', is_free: 1, web_url: 'http://www.rich-harris.co.uk/ramjet/', repo_url: 'https://github.com/rich-harris/ramjet', avg_rating: 5})
+t2 = Tool.create({title: 'ramjet', description: 'Ramjet makes it looks as though one DOM element is capable of transforming into another, no matter where the two elements sit in the DOM tree. It does so by making copies of the two elements (and all their children), setting a fixed position on each, then using CSS transforms to morph the two elements in sync.', language: 'CSS', is_free: 1, web_url: 'http://www.rich-harris.co.uk/ramjet/', repo_url: 'https://github.com/rich-harris/ramjet', avg_rating: 5})
 t3 = Tool.create({title: 'Nifty Modal Window Effects', description: 'Some inspiration for different modal window appearances', language: 'javascript', is_free: 1, web_url: 'http://tympanus.net/Development/ModalWindowEffects/', repo_url: '', avg_rating: 5})
 t4 = Tool.create({title: 'Creative Link Effects', description: 'Subtle and modern effects for links or menu items', language: 'javascript', is_free: 1, web_url: 'http://tympanus.net/Development/CreativeLinkEffects/', repo_url: '', avg_rating: 5})
 t5 = Tool.create({title: 'Creative Loading Effects', description: 'Loading animations don\'t have to be restricted to a tiny indicator. Here is some inspiration for some creative loading effects.*', language: 'javascript', is_free: 1, web_url: '', avg_rating: 5, repo_url: 'http://tympanus.net/Development/CreativeLoadingEffects/'})
@@ -28,7 +28,7 @@ t12 = Tool.create({title: 'Famous', description: 'Famous abstracts the DOM & Web
 t13 = Tool.create({title: 'Skipper', description: 'Skipper makes it easy to implement streaming file uploads to disk, S3, or any of its supported file adapters.', language: 'javascript', is_free: 1, web_url: '', repo_url: 'https://github.com/balderdashy/skipper', avg_rating: 2})
 t14 = Tool.create({title: 'Waterline', description: 'Waterline is a brand new kind of storage and retrieval engine. It provides a uniform API for accessing stuff from different kinds of databases, protocols, and 3rd party APIs. That means you write the same code to get and store things like users, whether they live in Redis, mySQL, LDAP, MongoDB, or Postgres. Waterline strives to inherit the best parts of ORMs like ActiveRecord, Hibernate, and Mongoose, but with a fresh perspective and emphasis on modularity, testability, and consistency across adapters.', language: 'javascript', is_free: 1, web_url: 'https://github.com/balderdashy/waterline-docs', repo_url: 'https://github.com/balderdashy/waterline'})
 t15 = Tool.create({title: 'Mongoose', description: 'Elegant MongoDB object modeling for Node.js', language: 'javascript', is_free: 1, web_url: 'http://mongoosejs.com/', repo_url: 'https://github.com/Automattic/mongoose', avg_rating: 1})
-t16 = Tool.create({title: 'bcrypt', description: '', language: 'A bcrypt library for NodeJS.', is_free: 1, web_url: 'https://www.npmjs.com/package/bcrypt', repo_url: 'https://github.com/ncb000gt/node.bcrypt.js', avg_rating: 4})
+t16 = Tool.create({title: 'bcrypt', description: 'A bcrypt library for NodeJS.', language: 'javascript', is_free: 1, web_url: 'https://www.npmjs.com/package/bcrypt', repo_url: 'https://github.com/ncb000gt/node.bcrypt.js', avg_rating: 4})
 t17 = Tool.create({title: 'Ionic', description: ' The beautiful, open source front-end SDK for developing hybrid mobile apps with HTML5.', language: 'javascript', is_free: 1, web_url: 'http://ionicframework.com/', repo_url: '', avg_rating: 5})
 t18 = Tool.create({title: 'NPM', description: 'A package manager for javascript and a lot of other stuff.', language: '', is_free: 1, web_url: 'https://www.npmjs.com/', repo_url: '', avg_rating: 1})
 t19 = Tool.create({title: 'Foreman', description: 'Manage Procfile-based applications', language: 'ruby', is_free: 1, web_url: 'https://github.com/ddollar/foreman', repo_url: '', avg_rating: 4})
@@ -42,11 +42,101 @@ t26 = Tool.create({title: 'ExpressJS', description: 'Fast, unopinionated, minima
 t27 = Tool.create({title: 'Easy table', description: 'Nice utility for rendering text tables with javascript.', language: 'javascript', is_free: 1, web_url: '', repo_url: 'https://github.com/eldargab/easy-table', avg_rating: 5})
 t28 = Tool.create({title: 'Sequelize', description: 'Sequelize is a promise-based ORM for Node.js and io.js. It supports the dialects PostgreSQL, MySQL, MariaDB, SQLite and MSSQL and features solid transaction support, relations, read replication and more.', language: 'javascript', is_free: 1, web_url: 'http://docs.sequelizejs.com', repo_url: 'https://github.com/sequelize/sequelize', avg_rating: 1})
 t29 = Tool.create({title: 'sequelize/cli', description: 'The Sequelize Command Line Interface', language: 'javascript', is_free: 1, web_url: '', repo_url: 'https://github.com/sequelize/cli', avg_rating: 5})
+t30 = Tool.create({title: 'AngularJS', description: 'HTML is great for declaring static documents, but it falters when we try to use it for declaring dynamic views in web-applications. AngularJS lets you extend HTML vocabulary for your application. The resulting environment is extraordinarily expressive, readable, and quick to develop.', language: 'javascript', is_free: 1, web_url: 'https://angularjs.org/', doc_url: 'https://angularjs.org/', repo_url: 'http://cdnjs.com/libraries/angular.js/', avg_rating: 5})
+t31 = Tool.create({title: 'UI Bootstrap', description: 'Bootstrap components written in pure AngularJS by the AngularUI Team', language: 'javascript', is_free: 1, web_url: 'http://angular-ui.github.io/bootstrap/', doc_url: 'http://angular-ui.github.io/bootstrap/', repo_url: 'https://github.com/angular-ui/bootstrap', avg_rating: 5})
+t32 = Tool.create({title: 'lumx', description: 'The first responsive front-end framework based on AngularJS & Google Material Design specifications.', language: 'javascript', is_free: 1, web_url: 'http://ui.lumapps.com/', doc_url: 'http://ui.lumapps.com/directives/dropdowns', repo_url: 'https://github.com/lumapps/lumX/', avg_rating: 5})
+t33 = Tool.create({title: 'ngAnimate', description: 'The ngAnimate module provides support for CSS-based animations (keyframes and transitions) as well as JavaScript-based animations via callback hooks. Animations are not enabled by default, however, by including ngAnimate then the animation hooks are enabled for an Angular app.', language: 'javascript', is_free: 1, web_url: 'https://docs.angularjs.org/api/ngAnimate', doc_url: 'https://docs.angularjs.org/api/ngAnimate', repo_url: '', avg_rating: 5})
+t34 = Tool.create({title: 'Angular Material', description: 'The Angular Material project is an implementation of Material Design in Angular.js. This project provides a set of reusable, well-tested, and accessible UI components based on the Material Design system.', language: 'javascript', is_free: 1, web_url: 'https://material.angularjs.org', repo_url: 'https://github.com/angular/material/tree/v0.9.7', doc_url: 'https://material.angularjs.org/latest/#/getting-started', avg_rating: 5})
+t35 = Tool.create({title: 'ngInfinite Scroll', description: 'ngInfiniteScroll is a directive that you can use to implement infinite scrolling in your AngularJS applications. Simply declare which function to call when the user gets close to the bottom of the content with the directive and the module will take care of the rest. Of course, you can specify several options to ensure that the behavior is just what you\'re looking for.', language: 'javascript', is_free: 1, web_url: 'https://sroze.github.io/ngInfiniteScroll/', repo_url: 'https://github.com/sroze/ngInfiniteScroll', doc_url: 'https://sroze.github.io/ngInfiniteScroll/documentation.html', avg_rating: 5})
+t36 = Tool.create({title: 'spin.js', description: 'Spin.js dynamically creates spinning activity indicators that can be used as resolution-independent replacement for AJAX loading GIFs.', language: 'javascript', is_free: 1, web_url: 'http://fgnass.github.io/spin.js/', repo_url: 'http://github.com/fgnass/spin.js', doc_url: 'http://fgnass.github.io/spin.js/', avg_rating: 5})
+t37 = Tool.create({title: 'Typhoeus', description: 'Like a modern code version of the mythical beast with 100 serpent heads, Typhoeus runs HTTP requests in parallel while cleanly encapsulating handling logic.', language: 'ruby', is_free: 1, web_url: 'https://github.com/typhoeus/typhoeus', repo_url: 'https://github.com/typhoeus/typhoeus', doc_url: 'https://github.com/typhoeus/typhoeus', avg_rating: 5})
 
 # Create Tags
+terminal = Category.create({category:'terminal'})
+terminal.tools << t29
+terminal.tools << t27
+
+gems = Tag.create({tag:'gem'})
+gems.tools << t37
+
+rails = Tag.create({tag:'rails'})
+rails.tools << t37
+
+requests = Tag.create({tag: 'requests'})
+requests.tools << t37
+
+angular = Tag.create({tag:'angular.js'})
+angular.tools << t30
+angular.tools << t31
+angular.tools << t32
+angular.tools << t33
+angular.tools << t34
+angular.tools << t35
+
+directive = Tag.create({tag:'directive'})
+directive.tools << t31
+directive.tools << t32
+directive.tools << t33
+directive.tools << t34
+directive.tools << t35
+
+pagination = Tag.create({tag:'pagination'})
+pagination.tools << t35
+
+responsive = Tag.create({tag:'responsive'})
+responsive.tools << t31
+responsive.tools << t32
+responsive.tools << t34
+responsive.tools << t35
+
+jquery = Tag.create(tag:'jquery')
+jquery.tools << t22
+jquery.tools << t36
+
+oauth = Tag.create(tag:'oauth')
+oauth.tools << t20
+
+date = Tag.create(tag:'date')
+date.tools << t1
+
+time = Tag.create(tag:'time')
+time.tools << t1
+
+sails = Tag.create(tag:'sails.js')
+sails.tools << t13
+
+node = Tag.create(tag:'node.js')
+node.tools << t15
+node.tools << t23
+node.tools << t20
+node.tools << t21
+node.tools << t25
+node.tools << t26
+node.tools << t28
+
+font = Tag.create(tag:'font')
+font.tools << t9
+
+animate = Tag.create(tag:'animation')
+animate.tools << t2
+animate.tools << t10
+animate.tools << t8
+animate.tools << t5
+animate.tools << t6
+animate.tools << t7
+animate.tools << t33
+animate.tools << t35
+animate.tools << t36
+
 
 frontend = Tag.create({tag:'frontend'})
-
+frontend.tools << t36
+frontend.tools << t35
+frontend.tools << t33
+frontend.tools << t34
+frontend.tools << t32
+frontend.tools << t31
+frontend.tools << t30
 frontend.tools << t1
 frontend.tools << t2
 frontend.tools << t3
@@ -62,6 +152,7 @@ frontend.tools << t12
 frontend.tools << t22
 
 backend = Tag.create({tag:'backend'})
+backend.tools << t37
 backend.tools << t1
 backend.tools << t13
 backend.tools << t14
@@ -84,10 +175,15 @@ comandline.tools << t19
 comandline.tools << t27
 comandline.tools << t29
 
+loading = Tag.create({tag:'loading'})
+loading.tools << t36
+
 # Create Categories
 # Associate Tools to Categories
 
 library = Category.create({category: 'library'})
+library.tools << t37
+library.tools << t36
 library.tools << t1
 library.tools << t2
 library.tools << t6
@@ -109,9 +205,15 @@ library.tools << t25
 library.tools << t27
 library.tools << t28
 library.tools << t29
+library.tools << t35
 
 framework = Category.create({category: 'framework'})
 framework.tools << t1
+framework.tools << t31
+framework.tools << t32
+framework.tools << t34
+framework.tools << t33
+framework.tools << t30
 framework.tools << t12
 framework.tools << t17
 framework.tools << t23
@@ -122,9 +224,19 @@ assets.tools << t1
 assets.tools << t3
 assets.tools << t4
 assets.tools << t5
+assets.tools << t31
+assets.tools << t35
 
 packageManager = Category.create({category: 'package manager'})
 packageManager.tools << t18
+
+
+text = Category.create({category:'text-editory/ide'})
+image = Category.create({category:'image editor'})
+team = Category.create({category:'team communication'})
+project = Category.create({category:'project management'})
+prototype = Category.create({category:'prototype builder'})
+
 
 tv1 = Tvote.create(vote:75)
 t1.tvotes << tv1

@@ -11,6 +11,7 @@ class ToolController < ApplicationController
     end
   end
 
+  # Deletes tool from current users toolbox
   def destroy
     if current_user
       current_user.tools.delete(Tool.find(params[:id]))

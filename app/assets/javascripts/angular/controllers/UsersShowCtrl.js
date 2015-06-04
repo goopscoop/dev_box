@@ -6,6 +6,7 @@ DevBox.controller('UsersShowCtrl',['$scope', '$http', function( $scope, $http ){
       $scope.categories = data.categories;
       $scope.tags = data.tags;
       $scope.tools = data.tools;
+      console.log($scope.tools)
     } )
   }
 

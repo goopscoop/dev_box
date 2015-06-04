@@ -89,8 +89,8 @@ nav img.responsive-img {
 }
 
 .collection .collection-item {
-  background-color: #546e7a;
-  border-bottom: 1px solid #455a64;
+  background-color: #455a64;
+  border-bottom: 1px solid #546e7a;
 }
 
 .collection {
