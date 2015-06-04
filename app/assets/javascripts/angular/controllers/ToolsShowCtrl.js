@@ -52,7 +52,7 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
     review.$save(function(data) {
       console.log(data);
       // Add new comment to list
-      $scope.tool.reviews_users.push(data.result);
+      $scope.tool.reviews_users.unshift(data.result);
 
       // Clear the editor
       editor.edit();

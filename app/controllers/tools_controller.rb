@@ -149,10 +149,9 @@ class ToolsController < ApplicationController
     tool = Tool.find(params[:id])
     tags = tool.tags
     categories = tool.categories
-    reviews = tool.reviews
-    # users = []
+    reviews = tool.reviews.order(created_at: :desc)
+
     reviews_users = reviews.map do |r|
-      # puts "User ID: #{r[:user_id]}"
       user_name = User.find(r[:user_id])[:name]
       {review: r, user_name: user_name}
     end
