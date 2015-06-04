@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+# For heroku deployment
+gem 'rails_12factor', group: :production
 
 gem 'rails', '4.2.1'
 
