@@ -40,8 +40,8 @@
         <div class="section tool-search-results" ng-repeat="tool in popular">
           <div class="col s1">
             <div ng-if="$root.isAuthenticated === false"><a class="not-voted" href="#" ><i class="mdi-navigation-expand-less up-vote"></i><md-tooltip>log in to vote</md-tooltip></a></div>
-            <div ng-if="tool.hasVoted === false && $root.isAuthenticated"><a class="not-voted" href="#" ng-click="upVote(tool.id)"><i class="mdi-navigation-expand-less up-vote"></i></a></div>
-            <div ng-if="tool.hasVoted === true && $root.isAuthenticated"><a class="has-voted" href="#" ng-click="removeVote(tool.id, tool.voteId)"><i class="mdi-navigation-expand-less up-vote"></i></a></div>
+            <div ng-if="tool.hasVoted === false && $root.isAuthenticated"><a class="not-voted" href="#" ng-click="upVotePopular(tool.id)"><i class="mdi-navigation-expand-less up-vote"></i></a></div>
+            <div ng-if="tool.hasVoted === true && $root.isAuthenticated"><a class="has-voted" href="#" ng-click="removeVotePopular(tool.id, tool.voteId)"><i class="mdi-navigation-expand-less up-vote"></i></a></div>
           </div>
           <div class="col s11">
             <div class="row">
@@ -78,8 +78,8 @@
           <div class="section tool-search-results" ng-repeat="tool in recent">
             <div class="col s1">
               <div ng-if="$root.isAuthenticated === false"><a class="not-voted" href="#" ><i class="mdi-navigation-expand-less up-vote"></i><md-tooltip>log in to vote</md-tooltip></a></div>
-              <div ng-if="tool.hasVoted === false && $root.isAuthenticated"><a class="not-voted" href="#" ng-click="upVote(tool.id)"><i class="mdi-navigation-expand-less up-vote"></i></a></div>
-              <div ng-if="tool.hasVoted === true && $root.isAuthenticated"><a class="has-voted" href="#" ng-click="removeVote(tool.id, tool.voteId)"><i class="mdi-navigation-expand-less up-vote"></i></a></div>
+              <div ng-if="tool.hasVoted === false && $root.isAuthenticated"><a class="not-voted" href="#" ng-click="upVoteRecent(tool.id)"><i class="mdi-navigation-expand-less up-vote"></i></a></div>
+              <div ng-if="tool.hasVoted === true && $root.isAuthenticated"><a class="has-voted" href="#" ng-click="removeVoteRecent(tool.id, tool.voteId)"><i class="mdi-navigation-expand-less up-vote"></i></a></div>
             </div>
             <div class="col s11">
               <div class="row">
