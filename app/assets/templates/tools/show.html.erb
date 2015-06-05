@@ -33,24 +33,25 @@
       </div>
       <div class="col m4">
         <br>
-        <div class="col m5">
-          <span class="avg-review-tag">avg. user rating</span>
-        </div>
         <div class="col m7">
           <span ng-repeat="i in getNumber(number) track by $index">
-            <i ng-if="tool.tool.avg_rating >= $index + 1" id={{$index}} class="small mdi-hardware-mouse liked"></i>
-            <i ng-if="tool.tool.avg_rating < $index + 1" id={{$index}} class="small mdi-hardware-mouse"></i>
+            <i ng-if="tool.tool.avg_rating >= $index + 1" id={{$index}} class="mouse mdi-hardware-mouse liked"></i>
+            <i ng-if="tool.tool.avg_rating < $index + 1" id={{$index}} class="mouse mdi-hardware-mouse"></i>
+          </span>
+        </div>
+        <div class="col m5">
+          <span class="avg-review-tag">avg. rating</span>
+        </div>
+
+        <div class="col m7">
+          <span ng-repeat="i in getNumber(number) track by $index">
+            <i ng-if="userRating >= $index + 1" ng-mouseenter="displayRating($index)" ng-mouseleave="resetRatingDisplay()" ng-click="setRating($index)" id={{$index}} class="mouse mdi-hardware-mouse liked"></i>
+            <i ng-if="userRating < $index + 1" ng-mouseenter="displayRating($index)" ng-mouseleave="resetRatingDisplay()" ng-click="setRating($index)" id={{$index}} class="mouse mdi-hardware-mouse"></i>
+            <md-tooltip ng-if="!$root.isAuthenticated">log in to rate tool</md-tooltip>
           </span>
         </div>
         <div class="col m5">
           <span class="avg-review-tag">your rating</span>
-        </div>
-        <div class="col m7">
-          <span ng-repeat="i in getNumber(number) track by $index">
-            <i ng-if="userRating >= $index + 1" ng-mouseenter="displayRating($index)" ng-mouseleave="resetRatingDisplay()" ng-click="setRating($index)" id={{$index}} class="small mdi-hardware-mouse liked"></i>
-            <i ng-if="userRating < $index + 1" ng-mouseenter="displayRating($index)" ng-mouseleave="resetRatingDisplay()" ng-click="setRating($index)" id={{$index}} class="small mdi-hardware-mouse"></i>
-            <md-tooltip ng-if="!$root.isAuthenticated">log in to rate tool</md-tooltip>
-          </span>
         </div>
       </div>
     </div>
