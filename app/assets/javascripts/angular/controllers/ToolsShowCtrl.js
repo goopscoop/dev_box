@@ -1,12 +1,61 @@
-DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$location', '$routeParams', '$rootScope', 'showdown',
- function( $scope, $resource, $http, $location, $routeParams, $rootScope, showdown ){
+DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$location', '$routeParams', '$rootScope', 'showdown', 'UserService',
+ function( $scope, $resource, $http, $location, $routeParams, $rootScope, showdown, UserService ){
   $rootScope.isAuthenticated;
 
   $scope.favorited = false;
   $scope.number = 5;
+  $scope.UserService = UserService;
 
-  $scope.getNumber = function(num) {
+  $scope.$watchCollection('UserService', function() {
+    $scope.currentUser = UserService.currentUser;
+  });
+
+  $scope.getNumber = function( num ) {
       return new Array(num);
+  }
+
+  $scope.displayRating = function( idx ) {
+    if (!$rootScope.isAuthenticated) return;
+    $scope.userRating = idx + 1;
+  }
+
+  $scope.resetRatingDisplay = function() {
+    $scope.userRating = $scope.originalRating;
+  }
+
+  $scope.setRating = function( idx ) {
+    if (!$rootScope.isAuthenticated) return;
+    if ($scope.userRated) {
+
+      // Update code here
+      var review = {}
+      review.id = $scope.userReviewId;
+      review.rating = idx + 1;
+      review.tool_id = $routeParams.id;
+      Review.update({id: $scope.userReviewId}, review, function(data) {
+        console.log(data);
+        // Set user rating and set original rating to the user's new rating
+        $scope.userRating = idx + 1;
+        $scope.originalRating = $scope.userRating;
+        Materialize.toast('rating saved', 4000)
+      })
+
+    } else {
+
+      // New review code here
+      var review = new Review();
+      review.post = null;
+      review.rating = idx + 1;
+      review.tool_id = $routeParams.id;
+      review.$save(function(data) {
+        console.log(data);
+        // Set user rating and set original rating to the user's new rating
+        $scope.userRating = idx + 1;
+        $scope.originalRating = $scope.userRating;
+        Materialize.toast('rating saved', 4000)
+      })
+
+    }
   }
 
   $scope.addTool = function( toolId ){
@@ -31,7 +80,7 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
     'update': { method:'PUT' }
   });
 
-  Review = $resource('/api/tools/' + $routeParams.id + '/reviews', null, {
+  Review = $resource('/api/tools/' + $routeParams.id + '/reviews/:id', null, {
     'update': { method:'PUT' }
   });
 
@@ -49,6 +98,18 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
           $scope.is_free = 'free'
         }
 
+        for(i = 0; i < $scope.tool.reviews_users.length; i++) {
+          if ($scope.tool.reviews_users[i].review.user_id == $scope.currentUser.id) {
+            $scope.userRating = $scope.tool.reviews_users[i].review.rating;
+            // Set a variable so that we know this user has already rated
+            // or reviewed the tool
+            $scope.userRated = true;
+            $scope.userReviewId = $scope.tool.reviews_users[i].review.id
+          }
+        }
+
+        $scope.userRating = $scope.userRating || 0;
+        $scope.originalRating = $scope.userRating;
 
       },function(err){
         console.log(err);
