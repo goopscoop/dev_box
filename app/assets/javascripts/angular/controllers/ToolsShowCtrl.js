@@ -14,12 +14,14 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
       $http.post('/api/users/' + toolId + '/tool').success( function( data ){
         if (data.result === true){
           $scope.tool.favorited = true;
+          Materialize.toast( 'added to toolbox', 4000)
         }
       } )
     } else if ( $scope.tool.favorited === true ) {
       $http.delete( '/api/users/delete/tool/' + toolId ).success( function( data ){
         if (data.result === true){
           $scope.tool.favorited = false;
+          Materialize.toast( 'removed from toolbox', 4000)
         }
       } )
     }

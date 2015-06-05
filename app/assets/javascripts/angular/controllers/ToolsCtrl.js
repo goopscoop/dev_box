@@ -89,6 +89,7 @@ DevBox.controller( 'ToolsCtrl' , [ '$scope' , '$http', '$resource' , '$location'
                 return
               }
            }
+           Materialize.toast( 'voted', 4000)
         })
       }
     }
@@ -104,7 +105,7 @@ DevBox.controller( 'ToolsCtrl' , [ '$scope' , '$http', '$resource' , '$location'
                 return
               }
            }
-           console.log(data)
+           Materialize.toast( 'removed vote', 4000)
         })
       }
     }
