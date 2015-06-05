@@ -215,12 +215,72 @@ class ToolsController < ApplicationController
   def edit
     tool = Tool.find_by_id(params[:id])
     categories = tool.categories
+    all_categories = Category.all
     tags = tool.tags
-    render json: { tool: tool, categories: categories, tags: tags }
+    all_tags = Tag.all
+    render json: { tool: tool, categories: categories, tags: tags, allCategories: all_categories, allTags: all_tags }
   end
 
   # PATCH or PUT
   def update
+
+    if current_user
+      tool = Tool.find_by_id(params[:id])
+      tool.title = params[:title]
+      tool.description = params[:description]
+      tool.language = params[:language]
+      tool.is_open = params[:is_open]
+      tool.is_free = params[:is_free]
+      tool.web_url = params[:web_url]
+      tool.repo_url = params[:repo_url]
+      tool.doc_url = params[:doc_url]
+      tool.save
+
+      cur_cats = tool.categories
+      new_cats = params[:categories]
+
+      cur_tags = tool.tags
+      new_tags = params[:tags]
+
+      cur_tags.each do |cur|
+        if new_tags.any? {|h| h[:id] == cur[:id]} == false
+          # if cur tag is not in new tags; remove the current tag from the tool
+          tool.tags.find(cur[:id]).destroy
+        else
+          # if the cur tag is still in the new tags, remove it from the new tags
+          # array so that we will only be left with actual new tags at the end
+          idx = new_tags.index { |h| h[:id] == cur.id }
+          new_tags.slice!(idx,1)
+        end
+      end
+
+      new_tags.each do |tag|
+        if tag[:id]
+          tool.tags << Tag.find_by_id(tag[:id])
+        else
+          create = Tag.create({tag: tag[:tag]})
+          tool.tags << create
+        end
+      end
+
+      cur_cats.each do |cur|
+        if new_cats.include?(cur.id)
+          idx = new_cats.index(cur.id)
+          new_cats.slice!(idx,1)
+        else
+          category = tool.categories.find_by_category(cur.category)
+          tool.categories.destroy(category)
+        end
+      end
+
+      new_cats.each do |cat|
+        tool.categories << Category.find(cat)
+      end
+
+      render json: {result: true}
+    else
+      render json: {result: false}
+    end
   end
 
   # DELETE
