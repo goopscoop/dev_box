@@ -33,11 +33,25 @@
       </div>
       <div class="col m4">
         <br>
-        <span ng-repeat="i in getNumber(number) track by $index">
-          <i ng-if="tool.tool.avg_rating >= $index + 1" id={{$index}} class="small mdi-hardware-mouse liked"></i>
-          <i ng-if="tool.tool.avg_rating < $index + 1" id={{$index}} class="small mdi-hardware-mouse"></i>
-        </span><br>
-        <span class="avg-review-tag">avg. user review</span>
+        <div class="col m5">
+          <span class="avg-review-tag">avg. user rating</span>
+        </div>
+        <div class="col m7">
+          <span ng-repeat="i in getNumber(number) track by $index">
+            <i ng-if="tool.tool.avg_rating >= $index + 1" id={{$index}} class="small mdi-hardware-mouse liked"></i>
+            <i ng-if="tool.tool.avg_rating < $index + 1" id={{$index}} class="small mdi-hardware-mouse"></i>
+          </span>
+        </div>
+        <div class="col m5">
+          <span class="avg-review-tag">your rating</span>
+        </div>
+        <div class="col m7">
+          <span ng-repeat="i in getNumber(number) track by $index">
+            <i ng-if="userRating >= $index + 1" ng-mouseenter="displayRating($index)" ng-mouseleave="resetRatingDisplay()" ng-click="setRating($index)" id={{$index}} class="small mdi-hardware-mouse liked"></i>
+            <i ng-if="userRating < $index + 1" ng-mouseenter="displayRating($index)" ng-mouseleave="resetRatingDisplay()" ng-click="setRating($index)" id={{$index}} class="small mdi-hardware-mouse"></i>
+            <md-tooltip ng-if="!$root.isAuthenticated">log in to rate tool</md-tooltip>
+          </span>
+        </div>
       </div>
     </div>
     <div class="divider"></div>
@@ -87,11 +101,11 @@
               </tr>
               <tr>
                 <th>Cost</th>
-                <td>{{tool.tool.is_free}}</td>
+                <td>{{is_free}}</td>
               </tr>
               <tr>
-                <th>Open-Source</th>
-                <td>{{tool.tool.is_open}}</td>
+                <th>Source Code</th>
+                <td>{{tool.tool.is_open? 'open source' : 'closed source'}}</td>
               </tr>
             </tbody>
           </table>
@@ -174,9 +188,9 @@
       // base: 'assets/themes/base/epiceditor.css',
       // preview: 'assets/themes/editor/epic-dark.css',
       // editor: 'assets/themes/editor/epic-dark.css'
-      base: '<%= asset_path("assets/themes/base/epiceditor.css") %>',
-      preview: '<%= asset_path("assets/themes/editor/epic-dark.css") %>',
-      editor: '<%= asset_path("assets/themes/editor/epic-dark.css") %>'
+      base: 'https://rawgit.com/ncronquist/4c9211a66a627286f6c8/raw/562c29dfc024c2cdf21786eeceda55403599bd37/epiceditor.css',
+      preview: 'https://rawgit.com/ncronquist/82821f114e29876a7a7c/raw/fffc2a8b6fbcfa0abdef124c784ef1befe1efaba/epic-dark.css',
+      editor: 'https://rawgit.com/ncronquist/82821f114e29876a7a7c/raw/fffc2a8b6fbcfa0abdef124c784ef1befe1efaba/epic-dark.css'
     },
     button: {
       preview: false,
