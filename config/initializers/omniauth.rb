@@ -2,7 +2,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   # GitHub
   if ENV['RAILS_ENV'] == 'production'
     provider :github, ENV['GITHUB_KEY_PROD'], ENV['GITHUB_SECRET_PROD'], {
-      redirect_uri: 'http://devboxtools.herokuapp.com/auth/github/callback',
+      redirect_uri: 'https://devboxtools.herokuapp.com/auth/github/callback',
       scope: 'user'
     }
   else
