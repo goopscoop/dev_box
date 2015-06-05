@@ -162,6 +162,7 @@ nav img.responsive-img {
   padding: 2px 4px;
   border-radius: 2px;
   margin-left: 6px;
+  white-space: nowrap;
 }
 
 .tool-search-results div.row {
@@ -333,6 +334,10 @@ md-chips.md-default-theme .md-chips {
 
 .show-page-mice {
   padding-top: 25px;
+}
+
+.mouse {
+  font-size: 1.3em;
 }
 
 #save-comment-btn, #save-tool-btn {
