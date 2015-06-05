@@ -1,6 +1,11 @@
-<h2>Login to our kickass site</h2>
-
-  <a ng-href="auth/github" target="_self" class="btn btn-large waves-effect waves-light red"><i class="mdi-action-lock"></i>GitHub</a>
-  <a ng-href="auth/stackexchange" target="_self" class="btn btn-large waves-effect waves-light red"><i class="mdi-action-lock"></i>Stack Overflow</a>
-  <a ng-href="auth/gitlab" target="_self" class="btn btn-large waves-effect waves-light red"><i class="mdi-action-lock"></i>GitLab</a>
-
+<div class="row">
+  <div class="col s12 m6 offset-m3 card-panel blue-grey darken-2 ">
+    <h2 class="center-align">Login</h2>
+      <p class="center-align">
+        <a ng-href="auth/github" ng-click="engage()" target="_self" class="btn waves-effect waves-light deep-purple lighten-1"><i class="mdi-action-lock"></i>GitHub</a>
+        <a ng-href="auth/stackexchange" ng-click="engage()" target="_self" class="btn waves-effect waves-light deep-purple lighten-1"><i class="mdi-action-lock"></i>Stack Overflow</a>
+        <a ng-href="auth/gitlab" ng-click="engage()" target="_self" class="btn waves-effect waves-light deep-purple lighten-1"><i class="mdi-action-lock"></i>GitLab</a>
+      </p>
+        <br>
+  </div>
+</div>
