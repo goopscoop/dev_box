@@ -1,5 +1,5 @@
-DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$location', '$routeParams', '$rootScope',
- function( $scope, $resource, $http, $location, $routeParams, $rootScope ){
+DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$location', '$routeParams', '$rootScope', 'showdown',
+ function( $scope, $resource, $http, $location, $routeParams, $rootScope, showdown ){
   $rootScope.isAuthenticated;
   // console.log('New Tools Ctrl Loaded');
   $scope.favorited = false;
