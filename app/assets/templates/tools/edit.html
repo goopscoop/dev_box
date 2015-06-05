@@ -1,7 +1,7 @@
 <div class="row">
   <form class="col s12 m6 offset-m3 card-panel blue-grey darken-2 big-text">
     <h4>Edit {{title}}</h4>
-
+    <div class="card-pannel blue-grey " ng-if="isAuthenticated === false"><p class="center-align">please log in to edit, otherwise current changes will not be saved</p></div>
     <div class="row">
       <div class="input-field col s12">
         <input ng-model="title" id="title" class="active" type="text" placeholder="Title">
@@ -23,18 +23,18 @@
 
     <div class="row">
       <div class="col m4">
-        <md-select ng-model="category01" placeholder="Category">
-          <md-option ng-repeat="category in categories" value="{{category.id}}">{{category.category}}</md-option>
+        <md-select ng-model="category01Pre" placeholder="Category">
+          <md-option ng-repeat="category in categories" ng-selected="{{category.category == category01Pre.category}}" value="{{category.id}}">{{category.category}}</md-option>
         </md-select>
       </div>
       <div class="col m4">
-        <md-select ng-model="category02" placeholder="Category">
-          <md-option ng-repeat="category in categories" value="{{category.id}}">{{category.category}}</md-option>
+        <md-select ng-model="category02Pre" placeholder="Category">
+          <md-option ng-repeat="category in categories" ng-selected="{{category.category == category02Pre.category}}" value="{{category.id}}">{{category.category}}</md-option>
         </md-select>
       </div>
       <div class="col m4">
-        <md-select ng-model="category03" placeholder="Category">
-          <md-option ng-repeat="category in categories" value="{{category.id}}">{{category.category}}</md-option>
+        <md-select ng-model="category03Pre" placeholder="Category">
+          <md-option ng-repeat="category in categories" ng-selected="{{category.category == category03Pre.category}}" value="{{category.id}}">{{category.category}}</md-option>
         </md-select>
       </div>
     </div>
@@ -111,7 +111,10 @@
 
     <div class="row">
       <div class="col s12">
-        <button ng-click="saveTool()" id="save-tool-btn" class="btn waves-effect waves-light deep-purple lighten-1" type="button">Submit
+        <button ng-if="$root.isAuthenticated === true" ng-click="updateTool()" id="save-tool-btn" class="btn waves-effect waves-light deep-purple lighten-1" type="button">Submit
+          <!-- <i class="mdi-content-send right"></i> -->
+        </button>
+        <button ng-if="$root.isAuthenticated === false" id="save-tool-btn" class="btn waves-effect waves-light deep-purple lighten-1" type="button">Submit<md-tooltip>login to edit</md-tooltip>
           <!-- <i class="mdi-content-send right"></i> -->
         </button>
       </div>
