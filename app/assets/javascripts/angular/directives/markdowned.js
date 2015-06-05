@@ -1,5 +1,5 @@
 angular.module('markdowned', [] )
-.directive('markdown', function (showdown) {
+.directive('markdown', ['showdown', function (showdown) {
   var converter = new showdown.Converter();
   return {
     restrict: 'A',
@@ -12,4 +12,4 @@ angular.module('markdowned', [] )
       renderMarkdown();
     }
   };
-});
+}]);

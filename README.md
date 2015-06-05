@@ -1,5 +1,10 @@
 # dev_box
-Dev_Box is a developers toolbox database
+Dev_Box is a community driven developers toolbox database. It's a place where you can finally, easily find the development tools you want to use on your next project. Or, find the tools you should have used on your last one.
+
+[Imgur](http://i.imgur.com/1DDvxCi.png)
+
+## Technologies
+- DevBox is powered by Rails, Angular.js, and Postgres, styled with Materialize.css and Material
 
 ## Features
 - oauth login
@@ -21,6 +26,10 @@ Dev_Box is a developers toolbox database
 - oAuth
   - GitHub
   - Stack Exchange
+
+## ER-Diagram
+
+![](http://i.imgur.com/gGwpcZR.png)
 
 ## Tables
 - Users
@@ -244,7 +253,3 @@ ver   |   ver_last    |   price   |   web_url   | edited_by
 - Run the migrations
 
 	`rake db:migrate`
-
-## ER-Diagram
-
-![](http://i.imgur.com/gGwpcZR.png)
