@@ -87,11 +87,11 @@
               </tr>
               <tr>
                 <th>Cost</th>
-                <td>{{tool.tool.is_free}}</td>
+                <td>{{is_free}}</td>
               </tr>
               <tr>
-                <th>Open-Source</th>
-                <td>{{tool.tool.is_open}}</td>
+                <th>Source Code</th>
+                <td>{{tool.tool.is_open? 'open source' : 'closed source'}}</td>
               </tr>
             </tbody>
           </table>

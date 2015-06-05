@@ -37,11 +37,19 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
 
   var init = function(){
       Tool.get({id:$routeParams.id},function(data) {
-        // $rootScope.loading = false;
         $scope.categories = data.navCats;
         $scope.tags = data.navTags;
         $scope.tool = data.result;
-        console.log($scope.tags)
+
+        if ($scope.tool.tool.is_free == -1) {
+          $scope.is_free = 'freemium'
+        } else if ($scope.tool.tool.is_free == 0) {
+          $scope.is_free = 'paid'
+        } else if ($scope.tool.tool.is_free == 1) {
+          $scope.is_free = 'free'
+        }
+
+
       },function(err){
         console.log(err);
       });
