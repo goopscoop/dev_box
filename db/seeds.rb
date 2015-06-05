@@ -6,10 +6,6 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-# Create Users
-Nick = User.create({name: 'Nick', email: 'nick@ncronquist.com'})
-Cody = User.create({name: 'Cody', email: 'codybarrus@gmail.com'})
-
 
 # Create Tools Template
 # t1 = Tool.create({title: '', description: '', language: '', is_free: 1, web_url: '', repo_url: ''})
