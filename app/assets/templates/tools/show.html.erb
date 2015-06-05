@@ -171,9 +171,12 @@
       autoSave: 100
     },
     theme: {
-      base: 'assets/themes/base/epiceditor.css',
-      preview: 'assets/themes/editor/epic-dark.css',
-      editor: 'assets/themes/editor/epic-dark.css'
+      // base: 'assets/themes/base/epiceditor.css',
+      // preview: 'assets/themes/editor/epic-dark.css',
+      // editor: 'assets/themes/editor/epic-dark.css'
+      base: '<%= asset_path("assets/themes/base/epiceditor.css") %>',
+      preview: '<%= asset_path("assets/themes/editor/epic-dark.css") %>',
+      editor: '<%= asset_path("assets/themes/editor/epic-dark.css") %>'
     },
     button: {
       preview: false,

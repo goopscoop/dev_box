@@ -335,9 +335,11 @@
         , defaultContent: ''
           , autoSave: 100 // Set to false for no auto saving
           }
-        , theme: { base: '/themes/base/epiceditor.css'
+        // , theme: { base: '/themes/base/epiceditor.css'
+        , theme: { base: '<%= asset_path("epiceditor.css") %>'
           // , preview: '/themes/preview/github.css'
-          , editor: '/themes/editor/epic-dark.css'
+          // , editor: '/themes/editor/epic-dark.css'
+          , editor: '<%= asset_path("epic-dark.css") %>'
           }
         , focusOnLoad: false
         , shortcut: { modifier: 18 // alt keycode
