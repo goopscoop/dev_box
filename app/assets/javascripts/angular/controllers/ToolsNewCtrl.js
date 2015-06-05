@@ -1,5 +1,14 @@
 DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', function( $scope, $resource, $location ){
 
+  $scope.readonly = false;
+  $scope.selectedTag = null;
+  $scope.searchText = null;
+  $scope.querySearch = querySearch;
+  $scope.selectedTags = [];
+  $scope.numberChips = [];
+  $scope.numberChips2 = [];
+  $scope.numberBuffer = '';
+
   console.log('New Tools Ctrl Loaded');
 
   Tool = $resource('/api/tools/', null, {
@@ -39,14 +48,7 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', functi
 
   } // End saveTool
 
-  $scope.readonly = false;
-  $scope.selectedTag = null;
-  $scope.searchText = null;
-  $scope.querySearch = querySearch;
-  $scope.selectedTags = [];
-  $scope.numberChips = [];
-  $scope.numberChips2 = [];
-  $scope.numberBuffer = '';
+
 
   $scope.newTag = function(chip) {
     console.log("New Tag Function");
