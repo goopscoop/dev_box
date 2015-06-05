@@ -1,7 +1,16 @@
 <div class="row">
   <form class="col s12 m6 offset-m3 card-panel blue-grey darken-2 big-text">
     <h4>Add a New Tool</h4>
-
+    <div class="card-pannel blue-grey " ng-if="isAuthenticated === false"><p class="center-align">please log in to add a tool, otherwise current changes will not be saved</p></div>
+    <div class="card-pannel blue-grey message" ng-if="isAuthenticated === true">
+      <p>Before adding, here's a few simple principles to keep { DevBox } a great place:</p>
+      <ol>
+        <li><em>Quality:</em> We don't want to be the biggest, save that for the other guys. We want the best.</li>
+        <li><em>Vetted:</em> Only submit tools you've personally used. This helps with numero uno.</li>
+        <li><em>Not Yours:</em> Don't share tools you've created... no offense. Another way to help nummer eins.</li>
+      </ol>
+      <p>Thanks. Team { DevBox }</p>
+    </div>
     <div class="row">
       <div class="input-field col s12">
         <input ng-model="title" id="title" type="text">

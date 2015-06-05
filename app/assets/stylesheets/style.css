@@ -42,7 +42,7 @@ h5 {
   color: #c6ff00;
 }
 
-p, li, h6 {
+p, li, h6, label, .input-label, md-select-label, md-option {
   font-family: 'Anonymous Pro' ;
 }
 
@@ -366,4 +366,12 @@ md-chips.md-default-theme .md-chips {
 
 .review h1, .review h2, .review h3, .review h4, .review h5, .review h6 {
   font-size: 1rem;
+}
+
+/* NEW TOOL PAGE */
+
+.message p,
+.message li {
+  color: white;
+  font-size: 0.70em;
 }
