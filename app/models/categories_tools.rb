@@ -5,17 +5,17 @@ class CategoriesTools < ActiveRecord::Base
 
   validates :category_id, presence: true, numericality: { only_integer: true }
   validates :tool_id, presence: true, numericality: { only_integer: true }
-  validates :tool_categories_count, on: :create
+  # validates :tool_categories_count, on: :create
 
-  def tool_categories_count
-    # console.log("Tool categories count running");
-    puts "Tool categories count running"
-    tool = Tool.find(tool_id)
-    puts "Tool Title: #{tool[:title]}";
-    if tool.categories.length >= 3
-      errors.add(:tool_id, "can only have 3 categories")
-    end
-  end
+  # def tool_categories_count
+  #   # console.log("Tool categories count running");
+  #   puts "Tool categories count running"
+  #   tool = Tool.find(tool_id)
+  #   puts "Tool Title: #{tool[:title]}";
+  #   if tool.categories.length >= 3
+  #     errors.add(:tool_id, "can only have 3 categories")
+  #   end
+  # end
 
   # validate :active_customer, on: :create
 
