@@ -72,7 +72,7 @@
           <h5>Categories</h5>
           <ul class="tool-search-results">
             <li ng-repeat="category in tool.categories" class="tool-search-results">
-              <a href="#" class="tool-category">{{category.category}}</a>
+              <a ng-href="/tools/?c={{category.category}}" class="tool-category">{{category.category}}</a>
             </li>
           </ul>
         </div>
@@ -82,7 +82,7 @@
           <h5>Tags</h5>
           <ul class="tool-search-results">
             <li ng-repeat="tag in tool.tags" class="tool-search-results">
-              <a href="#" class="tool-category">{{tag.tag}}</a>
+              <a ng-href="/tools/?t={{tag.tag}}" class="tool-category">{{tag.tag}}</a>
             </li>
           </ul>
         </div>
