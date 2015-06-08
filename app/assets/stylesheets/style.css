@@ -14,6 +14,13 @@ body, html {
 
 }
 
+footer {
+  /*min-height: 200px;*/
+  margin-top: 20px;
+  padding-top: 55px;
+  padding-bottom: 50px;
+  color: white;
+}
 .nav-wrapper a{
   white-space: nowrap;
 }
