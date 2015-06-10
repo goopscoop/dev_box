@@ -100,7 +100,7 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
         $scope.userReviewId = data.result.review.id
         $scope.userPost = data.result.review.post
         $scope.userReviewCreatedAt = data.result.review.created_at
-
+        $scope.tool.tool.avg_rating = data.result.avg_rating
         // Clear the editor
         editor.edit();
         editor.getElement('editor').body.innerHTML = '';
@@ -125,6 +125,8 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
           $scope.userRating = data.result.rating
           $scope.userPost = data.result.post
           $scope.userReviewUpdatedAt = data.result.updated_at
+          $scope.tool.tool.avg_rating = data.avg_rating
+          console.log()
           Materialize.toast('review updated', 4000)
         })
       }
