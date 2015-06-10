@@ -9,8 +9,9 @@ class ReviewsController < ApplicationController
       else
         review = Review.create(post: params[:post], user_id: current_user[:id], tool_id: params[:tool_id])
       end
+      avg_rating = Tool.find(review[:tool_id]).avg_rating
 
-      review_user = {review: review, user_name: current_user[:name]}
+      review_user = {review: review, user_name: current_user[:name], avg_rating: avg_rating}
       render json: {result: review_user || false}
     else
       render json: {result: false}
@@ -25,8 +26,9 @@ class ReviewsController < ApplicationController
       review.rating = params[:rating]
       review.post = params[:post]
       review.save
+      avg_rating = Tool.find(review[:tool_id]).avg_rating
 
-      render json: {result: review}
+      render json: {result: review, avg_rating: avg_rating }
     else
       render json: {result: false}
     end

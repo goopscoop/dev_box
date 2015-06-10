@@ -6,6 +6,18 @@ class Review < ActiveRecord::Base
   validates :user_id, presence: true, numericality: { only_integer: true }
   validates_uniqueness_of :user_id, :scope => :tool_id
 
+  after_save :set_avg_rating
+
+  protected
+
+    def set_avg_rating
+      tool = Tool.find(self.tool_id)
+      tool.avg_rating = tool.reviews.average("rating").to_i
+      tool.save
+    end
+
+
+
   # create_table "reviews", force: :cascade do |t|
   #   t.text     "post"
   #   t.integer  "rating"
