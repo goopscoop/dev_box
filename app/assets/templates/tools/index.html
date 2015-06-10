@@ -21,7 +21,7 @@
       <div class="input-field col m6 offset-m3">
         <!-- <input id="search_tools" type="text" class="validate"> -->
         <!-- <label for="search_tools">Search</label> -->
-        <md-autocomplete md-autofocus="true" md-selected-item="selectedTool" placeholder="Search (at least 3 chars)" md-delay="250" md-min-length="3" md-search-text="toolSearchText" md-items="tool in getMatches(toolSearchText)" md-item-text="tool.title" md-no-cache="true">
+        <md-autocomplete md-autofocus="true" md-selected-item="selectedTool" md-selected-item-change="focusOnSelectedTool()" placeholder="Search (at least 3 chars)" md-delay="200" md-min-length="3" md-search-text="toolSearchText" md-items="tool in getMatches(toolSearchText)" md-item-text="tool.title" md-no-cache="true">
           <md-item-template>
             <span md-highlight-text="searchText">{{tool.title}}</span>
           </md-item-template>

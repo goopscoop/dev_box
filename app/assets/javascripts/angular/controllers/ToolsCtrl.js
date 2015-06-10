@@ -61,10 +61,21 @@ DevBox.controller( 'ToolsCtrl' , [ '$scope' , '$http', '$resource' , '$location'
     $scope.getMatches = function( toolSearchText ){
       $http.get( '/api/tools?q=' + toolSearchText ).success( function( data ){
         // returns an array of objects with Tools and associated categories and tags
-         $scope.searchTools = data
+         $scope.searchTools = data;
       })
         console.log("get matches function",$scope.searchTools)
-        return $scope.searchTools
+        return $scope.searchTools;
+    }
+
+     $scope.focusOnSelectedTool = function( ){
+      if ($scope.selectedTool) {
+        $scope.searchTools = [];
+        $scope.searchTools.unshift($scope.selectedTool);
+        return $scope.searchTools;
+        console.log("get matches function",$scope.searchTools)
+      }
+      return $scope.searchTools;
+      // $scope.searchTools = $scope.selectedTool
     }
 
     $scope.addCat = function( catName ){
