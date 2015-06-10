@@ -138,7 +138,7 @@ class ToolsController < ApplicationController
       render json: tool_info
     else
       all_categories = Category.all
-      all_tags = Tag.all
+      all_tags = get_popular_tags
       render json: { categories: all_categories, tags: all_tags }
     end
   end
@@ -146,7 +146,7 @@ class ToolsController < ApplicationController
   # tool GET
   def show
     nav_cats = Category.all
-    nav_tags = Tag.all
+    nav_tags = get_popular_tags
     tool = Tool.find(params[:id])
     tags = tool.tags
     categories = tool.categories

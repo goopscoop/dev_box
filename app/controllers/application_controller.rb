@@ -34,4 +34,14 @@ class ApplicationController < ActionController::Base
     super || valid_authenticity_token?(session, request.headers['X-XSRF-TOKEN'])
   end
 
+  def get_popular_tags
+    Tag.find_by_sql("SELECT    tt.tag_id, t.tag, count(tt.tag_id)
+                      FROM    tags_tools tt,
+                          tags t
+                      WHERE    tt.tag_id = t.id
+                      GROUP BY tt.tag_id, t.tag
+                      ORDER BY count(tag_id) desc
+                      LIMIT 10")
+  end
+
 end

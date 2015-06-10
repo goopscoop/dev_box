@@ -40,7 +40,7 @@ class StaticController < ApplicationController
     end
 
     categories = Category.all
-    tags = Tag.all
+    tags = get_popular_tags
 
     render json: { categories: categories, tags: tags, popular:popular_tools, recent: recent_tools }
   end
