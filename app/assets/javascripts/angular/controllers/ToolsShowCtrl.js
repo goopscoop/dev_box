@@ -2,6 +2,8 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
  function( $scope, $resource, $http, $location, $routeParams, $rootScope, showdown, UserService ){
   $rootScope.isAuthenticated;
 
+  $scope.editingReview = false;
+  $scope.userRated = false;
   $scope.favorited = false;
   $scope.number = 5;
   $scope.UserService = UserService;
@@ -12,50 +14,6 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
 
   $scope.getNumber = function( num ) {
       return new Array(num);
-  }
-
-  $scope.displayRating = function( idx ) {
-    if (!$rootScope.isAuthenticated) return;
-    $scope.userRating = idx + 1;
-  }
-
-  $scope.resetRatingDisplay = function() {
-    $scope.userRating = $scope.originalRating;
-  }
-
-  $scope.setRating = function( idx ) {
-    if (!$rootScope.isAuthenticated) return;
-    if ($scope.userRated) {
-
-      // Update code here
-      var review = {}
-      review.id = $scope.userReviewId;
-      review.rating = idx + 1;
-      review.tool_id = $routeParams.id;
-      Review.update({id: $scope.userReviewId}, review, function(data) {
-        console.log(data);
-        // Set user rating and set original rating to the user's new rating
-        $scope.userRating = idx + 1;
-        $scope.originalRating = $scope.userRating;
-        Materialize.toast('rating saved', 4000)
-      })
-
-    } else {
-
-      // New review code here
-      var review = new Review();
-      review.post = null;
-      review.rating = idx + 1;
-      review.tool_id = $routeParams.id;
-      review.$save(function(data) {
-        console.log(data);
-        // Set user rating and set original rating to the user's new rating
-        $scope.userRating = idx + 1;
-        $scope.originalRating = $scope.userRating;
-        Materialize.toast('rating saved', 4000)
-      })
-
-    }
   }
 
   $scope.addTool = function( toolId ){
@@ -105,6 +63,8 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
             // or reviewed the tool
             $scope.userRated = true;
             $scope.userReviewId = $scope.tool.reviews_users[i].review.id
+            $scope.userPost = $scope.tool.reviews_users[i].review.post
+            $scope.userReviewCreatedAt = $scope.tool.reviews_users[i].review.created_at
           }
         }
 
@@ -119,20 +79,75 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
   init()
 
   $scope.saveReview = function() {
-    console.log("Add Review Function");
-    var content = editor.exportFile();
-    var review = new Review();
-    review.post = content;
-    review.tool_id = $routeParams.id;
-    review.$save(function(data) {
-      console.log(data);
-      // Add new comment to list
-      $scope.tool.reviews_users.unshift(data.result);
+    if ( !$scope.userRating || $scope.userRating < 1 ) {
+      Materialize.toast('please add a rating', 4000)
+    } else {
+      var content = editor.exportFile();
+      var review = new Review();
+      review.post = content;
+      review.rating = $scope.userRating;
+      review.tool_id = $routeParams.id;
+      review.$save(function(data) {
+        console.log(data);
+        // Add new comment to list
+        $scope.tool.reviews_users.unshift(data.result);
 
-      // Clear the editor
-      editor.edit();
-      editor.getElement('editor').body.innerHTML = '';
-    })
+        // Set the users review info
+        $scope.userRating = data.result.review.rating;
+        // Set a variable so that we know this user has already rated
+        // or reviewed the tool
+        $scope.userRated = true;
+        $scope.userReviewId = data.result.review.id
+        $scope.userPost = data.result.review.post
+        $scope.userReviewCreatedAt = data.result.review.created_at
+
+        // Clear the editor
+        editor.edit();
+        editor.getElement('editor').body.innerHTML = '';
+      })
+    }
+  }
+
+  $scope.updateReview = function() {
+    // update logic here
+    if ( !$scope.userRating || $scope.userRating < 1 ) {
+      Materialize.toast('please add a rating', 4000)
+    } else {
+      var content = editor.exportFile();
+      var review = {}
+      review.post = content;
+      review.rating = $scope.userRating;
+      review.id = $scope.userReviewId;
+
+      Review.update({id: $scope.userReviewId}, review, function(data) {
+          console.log(data);
+          $scope.editingReview = false;
+          $scope.userRating = data.result.rating
+          $scope.userPost = data.result.post
+          $scope.userReviewUpdatedAt = data.result.updated_at
+          Materialize.toast('review updated', 4000)
+        })
+      }
+  }
+
+  $scope.editReview = function() {
+    $scope.editingReview = true;
+    editor.importFile('edit', $scope.userPost)
+  }
+
+  $scope.displayRating = function( idx ) {
+    if (!$rootScope.isAuthenticated) return;
+    $scope.userRating = idx + 1;
+  }
+
+  $scope.resetRatingDisplay = function() {
+    $scope.userRating = $scope.originalRating;
+  }
+
+  $scope.setRating = function( idx ) {
+    if (!$rootScope.isAuthenticated) return;
+    $scope.userRating = idx + 1;
+    $scope.originalRating = $scope.userRating;
   }
 
 }])

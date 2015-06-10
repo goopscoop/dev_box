@@ -22,17 +22,11 @@ class ReviewsController < ApplicationController
 
     if current_user
       review = Review.find(params[:id])
+      review.rating = params[:rating]
+      review.post = params[:post]
+      review.save
 
-      if params[:rating]
-        # if the rating is passed in, update the rating
-        review.rating = params[:rating]
-        review.save
-      else
-        # Otherwise update the review
-        review.post = params[:post]
-        review.save
-      end
-      render json: {result: true}
+      render json: {result: review}
     else
       render json: {result: false}
     end

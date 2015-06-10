@@ -14,9 +14,9 @@ Rails.application.config.middleware.use OmniAuth::Builder do
 
   # StackExchange - StackOverflow
   if ENV['RAILS_ENV'] == 'production'
-    provider :stackexchange, ENV['SE_CLIENT_ID'], ENV['SE_CLIENT_SECRET'], public_key: ENV['SE_PUBLIC_KEY'], site: 'stackoverflow'
-  else
     provider :stackexchange, ENV['SE_CLIENT_ID_PROD'], ENV['SE_CLIENT_SECRET_PROD'], public_key: ENV['SE_PUBLIC_KEY_PROD'], site: 'stackoverflow'
+  else
+    provider :stackexchange, ENV['SE_CLIENT_ID'], ENV['SE_CLIENT_SECRET'], public_key: ENV['SE_PUBLIC_KEY'], site: 'stackoverflow'
   end
 
   # GitLab
