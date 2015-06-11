@@ -26,10 +26,13 @@
       </ul>
       <ul class="side-nav" id="mobile_sidebar">
         <li><a href="/tools">Search Toolbox</a></li>
+        <li>
+          <a ng-show="currentUser" class="dropdown-button" href="#!" data-activates="profile-dropdown">Profile <i class="mdi-navigation-arrow-drop-down right"></i></a>
+          <a href="/login" ng-hide="currentUser">Login</a>
+        </li>
         <li><a href="/about">About</a></li>
         <li>
           <a href="/login" ng-hide="currentUser">Login</a>
-          <a href="#" ng-click="logout()" ng-show="currentUser">Logout</a>
         </li>
       </ul>
     </div>

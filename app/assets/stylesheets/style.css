@@ -37,9 +37,31 @@ h1 {
   color: white;
 }
 
+@media (max-width: 1284px) {
+  h1 {
+    font-size: 3.5em;
+  }
+}
+
+@media (max-width: 1047px) {
+  h1 {
+    font-size: 3em;
+  }
+}
+
+@media (max-width: 789px) {
+  h1 {
+    font-size: 2.5em;
+  }
+  h3 {
+    font-size: 2em;
+  }
+}
+
 h2 {
   color: #c6ff00;
 }
+
 
 h3 {
   color: #c6ff00;
@@ -216,6 +238,12 @@ nav img.responsive-img {
   top: 64px;
   bottom: 0;
   position: absolute;
+}
+
+@media (max-width: 840px) {
+  .mySidebar {
+    display: none;
+  }
 }
 
 .mySidebar::after{
