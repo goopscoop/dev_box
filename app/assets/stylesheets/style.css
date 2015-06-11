@@ -212,10 +212,14 @@ nav img.responsive-img {
 
 .mySidebar {
 
-  height: 183%;
+  height: 160%;
   top: 64px;
   bottom: 0;
   position: absolute;
+}
+
+.mySidebar::after{
+  content: " ";
 }
 
 .activeSidebar {
