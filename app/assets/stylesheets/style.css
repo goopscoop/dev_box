@@ -58,6 +58,18 @@ h1 {
   }
 }
 
+@media (max-width: 377px) {
+  h1 {
+    font-size: 2.3em;
+  }
+}
+
+@media (max-width: 320px) {
+  h1 {
+    font-size: 2em;
+  }
+}
+
 h2 {
   color: #c6ff00;
 }
@@ -132,20 +144,12 @@ nav img.responsive-img {
 
 /* Tools#Index page */
 
-.up-vote {
-  padding-left: 45px;
-  font-size: 2em;
-}
 
 .button-holder {
   width: 100%;
 }
 
-.avg-rating {
-  display: inline-block;
-  padding-top: 10px;
-  font-size: 1.25em;
-}
+
 
 #clear-search-btn {
   width: 100%;
@@ -189,14 +193,7 @@ nav img.responsive-img {
   vertical-align: top;
 }
 
-.avg-review-tag {
-  background: #78909c;
-  color: #37474f;
-  padding: 2px 4px;
-  border-radius: 2px;
-  margin-left: 6px;
-  white-space: nowrap;
-}
+
 
 .tool-search-results div.row {
   margin-bottom: 0;
@@ -212,16 +209,13 @@ nav img.responsive-img {
 }
 
 .tool-title {
-  font-size: 0.5em;
   display: inline;
 }
 
-.tool-category {
-  color: #37474f;
-  background: #ffe082;
-  padding: 2px 4px;
-  margin-right: 2px;
-  border-radius: 2px;
+.avg-rating {
+  display: inline-block;
+  padding-top: 10px;
+  font-size: 1.25em;
 }
 
 .tool-language {
@@ -232,6 +226,109 @@ nav img.responsive-img {
   display: inline;
 }
 
+.avg-review-tag {
+  background: #78909c;
+  color: #37474f;
+  padding: 2px 4px;
+  border-radius: 2px;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+
+.tool-category {
+  color: #37474f;
+  background: #ffe082;
+  padding: 2px 4px;
+  margin-right: 2px;
+  border-radius: 2px;
+}
+
+@media (min-width: 1300px) {
+  .up-vote {
+    padding-left: 45px;
+    font-size: 2em;
+  }
+}
+
+@media (max-width: 1299px) {
+  .up-vote {
+    padding-left: 25px;
+    font-size: 2em;
+  }
+}
+
+@media (max-width: 1130px) {
+  .avg-review-tag{
+    font-size: 0.9em;
+    margin-left: 4px;
+  }
+
+  .tool-title a {
+    font-size: 0.7em;
+  }
+
+  .avg-rating {
+    font-size: 1.1em;
+  }
+
+  .tool-language {
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 845px) {
+  .up-vote {
+    padding-left: 10px;
+    font-size: 2em;
+  }
+}
+
+@media (max-width: 425px) {
+  .avg-rating {
+    font-size: 1em;
+  }
+  .tool-language {
+    display: none;
+  }
+  .up-vote {
+    padding-left: 0;
+    font-size: 2em;
+  }
+  .tool-category {
+    display: none;
+  }
+}
+
+@media (max-width: 375px) {
+  .avg-rating {
+    font-size: 0.75em;
+  }
+
+  .avg-review-tag{
+    font-size: 0.8em;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 374px) {
+
+  .avg-review-tag{
+    display: none;
+  }
+}
+
+@media (max-width: 320px) {
+  .avg-rating {
+    font-size: 0.6em;
+  }
+  .up-vote {
+    display: none;
+  }
+}
+
+
+
+
 .mySidebar {
 
   height: 160%;
@@ -240,11 +337,7 @@ nav img.responsive-img {
   position: absolute;
 }
 
-@media (max-width: 840px) {
-  .mySidebar {
-    display: none;
-  }
-}
+
 
 .mySidebar::after{
   content: " ";
@@ -276,6 +369,31 @@ nav img.responsive-img {
 .mySidebar li a {
   color: #ffe082;
   margin-left: 45px;
+}
+
+@media (max-width: 810px) {
+
+  .mySidebar li a {
+    margin-left: 5px;
+  }
+}
+
+@media (max-width: 810px) {
+
+  .mySidebar h4 {
+    padding-left: 5px;
+  }
+
+  .mySidebar h3 {
+    padding-left: 5px;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .mySidebar {
+    display: none;
+  }
 }
 
 /* Liked is the color for the avg_rating mice */
