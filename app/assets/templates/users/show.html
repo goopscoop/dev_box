@@ -17,12 +17,47 @@
     <div class="row">
       <h2>My Toolbox</h2>
     </div>
+    <div class="row">
+      <md-autocomplete md-autofocus="true" md-selected-item="selectedTool" md-selected-item-change="focusOnSelectedTool()" placeholder="Quick find by name or tag" md-delay="200" md-search-text="toolSearchText" md-items="tool in getMatches(toolSearchText)" md-item-text="tool.title" md-no-cache="true">
+          <md-item-template>
+            <span md-highlight-text="searchText">{{tool.title}}</span>
+          </md-item-template>
+          <md-not-found>
+            No matches found.
+          </md-not-found>
+        </md-autocomplete>
 
+        <button ng-click="clearSearch()" id="clear-search-btn" class="btn waves-effect waves-light">Clear Search
+        </button>
+
+    </div>
     <div class="row">
       <!-- <div class="col m10 offset-m1 s12"> -->
         <div class="card-panel blue-grey darken-2">
           <ul class="collection" >
-            <li ng-repeat="tool in tools" class="collection-item">
+            <!-- If user is searching -->
+            <li ng-if="searchTools" ng-repeat="tool in searchTools" class="collection-item">
+            <span class="user-tool-title"><a ng-href="/tools/{{tool.id}}">{{tool.title}}<md-tooltip md-direction="left">tool page</md-tooltip></a></span> <span class="tool-language">[{{tool.language}}]</span>
+              <a href="#" ng-click="removeTool(tool.id)" class="secondary-content btn-floating waves-effect waves-light pink"><i class="mdi-content-clear "></i><md-tooltip>remove from toolbox</md-tooltip></a>
+            <br>
+
+                <span class="tool-search-results" ng-repeat="category in tool.categories"><a ng-href="/tools/?c={{category.category}}" class="tool-category">{{category.category}}</a></span>
+
+              <a class="user-tool-link" ng-show="tool.web_url" ng-href="{{tool.web_url}}">
+                <i class="mdi-social-public"></i>
+                <md-tooltip>website</md-tooltip>
+              </a>
+              <a class="user-tool-link" ng-show="tool.repo_url" ng-href="{{tool.repo_url}}">
+                <i class="mdi-communication-call-split"></i>
+                <md-tooltip>repo</md-tooltip>
+              </a>
+              <a class="user-tool-link" ng-show="tool.doc_url" ng-href="{{tool.doc_url}}">
+                <i class="mdi-action-description"></i>
+                <md-tooltip>docs</md-tooltip>
+              </a>
+            </li>
+            <!-- If nothing has been searched for -->
+            <li ng-if="searchTools == false" ng-repeat="tool in tools" class="collection-item">
             <span class="user-tool-title"><a ng-href="/tools/{{tool.id}}">{{tool.title}}<md-tooltip md-direction="left">tool page</md-tooltip></a></span> <span class="tool-language">[{{tool.language}}]</span>
               <a href="#" ng-click="removeTool(tool.id)" class="secondary-content btn-floating waves-effect waves-light pink"><i class="mdi-content-clear "></i><md-tooltip>remove from toolbox</md-tooltip></a>
             <br>

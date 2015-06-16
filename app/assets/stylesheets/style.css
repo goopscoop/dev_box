@@ -29,6 +29,10 @@ main {
   white-space: nowrap;
 }
 
+#profile-dropdown-desktop {
+  overflow: hidden;
+}
+
 h1, h2, h3, h4, h5 {
   font-family: 'Source Code Pro' ;
 }

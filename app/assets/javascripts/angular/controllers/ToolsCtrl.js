@@ -63,8 +63,8 @@ DevBox.controller( 'ToolsCtrl' , [ '$scope' , '$http', '$resource' , '$location'
         // returns an array of objects with Tools and associated categories and tags
          $scope.searchTools = data;
       })
-        // console.log("get matches function",$scope.searchTools)
         return $scope.searchTools;
+        // console.log("get matches function",$scope.searchTools)
     }
 
      $scope.focusOnSelectedTool = function( ){
