@@ -1,7 +1,7 @@
 <header>
   <nav ng-controller="NavCtrl">
   <!-- PROFILE DROPDOWN -->
-  <ul id="profile-dropdown" class="dropdown-content">
+  <ul id="profile-dropdown-mobile" class="dropdown-content">
     <li><a href="/users/profile">My Toolbox</a></li>
     <li><a href="/tools/new">Add New Tool</a></li>
     <li class="divider"></li>
@@ -9,7 +9,7 @@
       <a href="#" ng-click="logout()" ng-show="currentUser">Logout</a>
     </li>
   </ul>
-  <ul id="profile-dropdown1" class="dropdown-content">
+  <ul id="profile-dropdown-desktop" class="dropdown-content">
     <li><a href="/users/profile">My Toolbox</a></li>
     <li><a href="/tools/new">Add New Tool</a></li>
     <li class="divider"></li>
@@ -25,7 +25,7 @@
         <li><a href="/tools">Search Toolbox</a></li>
         <li><a href="/about">About</a></li>
         <li>
-          <a ng-show="currentUser" class="dropdown-button" href="#!" data-activates="profile-dropdown1">Profile <i class="mdi-navigation-arrow-drop-down right"></i></a>
+          <a ng-show="currentUser" class="dropdown-button" href="#!" data-activates="profile-dropdown-desktop">Profile <i class="mdi-navigation-arrow-drop-down right"></i></a>
           <a href="/login" ng-hide="currentUser">Login</a>
         </li>
         <li>
@@ -35,7 +35,7 @@
       <ul class="side-nav" id="mobile_sidebar">
         <li><a href="/tools">Search Toolbox</a></li>
         <li>
-          <a ng-show="currentUser" class="dropdown-button" href="#!" data-activates="profile-dropdown">Profile <i class="mdi-navigation-arrow-drop-down right"></i></a>
+          <a ng-show="currentUser" class="dropdown-button" href="#!" data-activates="profile-dropdown-mobile">Profile <i class="mdi-navigation-arrow-drop-down right"></i></a>
           <a href="/login" ng-hide="currentUser">Login</a>
         </li>
         <li><a href="/about">About</a></li>
