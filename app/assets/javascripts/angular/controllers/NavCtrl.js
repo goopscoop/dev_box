@@ -1,5 +1,4 @@
 DevBox.controller('NavCtrl', ['$scope', '$rootScope', 'UserService', function($scope, $rootScope, UserService) {
-  console.log('Nav Controller Loaded');
 
   $scope.UserService = UserService;
 
