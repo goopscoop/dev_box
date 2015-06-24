@@ -56,7 +56,7 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
           $scope.is_free = 'free'
         }
 
-        for(i = 0; i < $scope.tool.reviews_users.length; i++) {
+        for(var i = 0; i < $scope.tool.reviews_users.length; i++) {
           if ($scope.tool.reviews_users[i].review.user_id == $scope.currentUser.id) {
             $scope.userRating = $scope.tool.reviews_users[i].review.rating;
             // Set a variable so that we know this user has already rated
