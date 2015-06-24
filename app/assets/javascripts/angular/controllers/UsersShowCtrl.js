@@ -1,4 +1,6 @@
-DevBox.controller('UsersShowCtrl',['$scope', '$http', function( $scope, $http ){
+DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl',
+  function( $scope, $http, buildUrl ){
+
   $scope.tools = []
   $scope.searchTools = []
 
@@ -33,15 +35,8 @@ DevBox.controller('UsersShowCtrl',['$scope', '$http', function( $scope, $http ){
               return true;
             }
           }
-          // tool.tags.map(function(tag){
-          //   if ( tag.tag.toLowerCase().indexOf( toolSearchText.toLowerCase() ) !== -1 ) {
-          //     return true;
-          //   }
-          // })
         }
       });
-      // console.log("get matches function",$scope.searchTools)
-
   }
 
   $scope.focusOnSelectedTool = function( ){
@@ -61,7 +56,8 @@ DevBox.controller('UsersShowCtrl',['$scope', '$http', function( $scope, $http ){
     }
 
   $scope.addCat = function( catName ){
-
+    localUrl = buildUrl.build( false, $location.search().q, catName, $location.search().t);
+    $location.search(localUrl);
   }
 
   init()

@@ -1,4 +1,6 @@
 DevBox.factory('buildUrl', function(){
+     // builds url. API is required (true if api call, false if local url)
+    // all other paramaters are optional.
   return {
     build: function( api, query, cats, tags ){
       if ( api ) {
