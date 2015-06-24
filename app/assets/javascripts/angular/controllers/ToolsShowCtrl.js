@@ -120,13 +120,11 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
       review.id = $scope.userReviewId;
 
       Review.update({id: $scope.userReviewId}, review, function(data) {
-          console.log(data);
           $scope.editingReview = false;
           $scope.userRating = data.result.rating
           $scope.userPost = data.result.post
           $scope.userReviewUpdatedAt = data.result.updated_at
           $scope.tool.tool.avg_rating = data.avg_rating
-          console.log()
           Materialize.toast('review updated', 4000)
         })
       }

@@ -7,7 +7,6 @@ DevBox.controller('UsersShowCtrl',['$scope', '$http', function( $scope, $http ){
       $scope.categories = data.categories;
       $scope.tags = data.tags;
       $scope.tools = data.tools;
-      console.log($scope.tools)
     } )
   }
 
@@ -32,7 +31,6 @@ DevBox.controller('UsersShowCtrl',['$scope', '$http', function( $scope, $http ){
           for ( i = 0; i < tool.tags.length; i++ ) {
             if ( tool.tags[i].tag.toLowerCase().indexOf( toolSearchText.toLowerCase() ) !== -1 ) {
               return true;
-              console.log(tool.tags[i].tag)
             }
           }
           // tool.tags.map(function(tag){

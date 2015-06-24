@@ -9,8 +9,6 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', functi
   $scope.numberChips2 = [];
   $scope.numberBuffer = '';
 
-  console.log('New Tools Ctrl Loaded');
-
   Tool = $resource('/api/tools/', null, {
     'update': { method:'PUT' }
   });
@@ -20,7 +18,6 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', functi
   })
 
   NewTool.get(function(data) {
-    console.log(data);
     $scope.categories = data.result.categories;
     $scope.tags = data.result.tags
   },function(err){
@@ -51,8 +48,6 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', functi
 
 
   $scope.newTag = function(chip) {
-    console.log("New Tag Function");
-    console.log("Chip.tag:", chip.tag);
     if ( chip.tag ) {
       return chip;
     }
@@ -65,7 +60,6 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', functi
    */
   function querySearch (query) {
     var results = query ? $scope.tags.filter(createFilterFor(query)) : [];
-    console.log("Results:", results);
     return results;
   }
   /**
@@ -74,8 +68,6 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', functi
   function createFilterFor(query) {
     var lowercaseQuery = angular.lowercase(query);
     return function filterFn(tag) {
-      console.log("tag.tag", tag.tag);
-      console.log("lowercaseQuery", lowercaseQuery);
       return (tag.tag.indexOf(lowercaseQuery) === 0);
     };
   }
