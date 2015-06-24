@@ -4,12 +4,12 @@
     <div class="divider"></div>
     <h4>Category</h4>
     <ul ng-repeat="cat in categories">
-        <li><a ng-href="/tools/?c={{cat.category}}" ng-click="addCat(cat.category)">{{cat.category}}</a></li>
+        <li><a ng-href="/users/profile/?c={{cat.category}}" ng-click="addCat(cat.category)">{{cat.category}}</a></li>
     </ul>
     <div class="divider"></div>
     <h4>Popular Tags</h4>
     <ul ng-repeat="tag in tags">
-        <li><a ng-href="/tools/?t={{tag.tag}}" ng-click="addTag(tag.tag)">{{tag.tag}}</a></li>
+        <li><a ng-href="/users/profile/?t={{tag.tag}}" ng-click="addTag(tag.tag)">{{tag.tag}}</a></li>
     </ul>
   </div>
   <div class="col s12 m7 offset-m4 card-panel blue-grey darken-1">

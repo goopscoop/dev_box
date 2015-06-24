@@ -60,5 +60,9 @@ DevBox.controller('UsersShowCtrl',['$scope', '$http', function( $scope, $http ){
       $scope.toolSearchText = '';
     }
 
+  $scope.addCat = function( catName ){
+
+  }
+
   init()
 }]);
