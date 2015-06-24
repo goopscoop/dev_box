@@ -64,6 +64,18 @@
               <ul>
                 <li ng-repeat="category in tool.categories"><a href="#" class="tool-category" ng-click="addCat(category.category)">{{category.category}}</a></li>
               </ul>
+              <a class="user-tool-link" ng-show="tool.web_url" ng-href="{{tool.web_url}}">
+                <i class="mdi-social-public"></i>
+                <md-tooltip>website</md-tooltip>
+              </a>
+              <a class="user-tool-link" ng-show="tool.repo_url" ng-href="{{tool.repo_url}}">
+                <i class="mdi-communication-call-split"></i>
+                <md-tooltip>repo</md-tooltip>
+              </a>
+              <a class="user-tool-link" ng-show="tool.doc_url" ng-href="{{tool.doc_url}}">
+                <i class="mdi-action-description"></i>
+                <md-tooltip>docs</md-tooltip>
+              </a>
             </div>
             <div class="col s4 m4">
               <span class="avg-review-tag">avg. review</span>
