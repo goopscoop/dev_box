@@ -24,14 +24,12 @@ class ToolsController < ApplicationController
     elsif search_term && category
       category_match = Category.find_by_category(category)
       search_match = category_match.tools.where('title ilike ?', "%#{search_term}%")
-      # Add tools to json + associated tags and categories
 
       tool_info = add_tool_info search_match
 
       tool_info.sort!{ |a,b| b[:votes].to_i <=> a[:votes].to_i }
       render json: tool_info
     elsif category && tag
-
       search_match = db_find_by_cat_tag category,tag
 
       tool_info = add_tool_info search_match
@@ -40,29 +38,26 @@ class ToolsController < ApplicationController
       render json: tool_info
 
     elsif category
-      # Just a category search
-      category_match = Category.find_by_category(category)
-
-      search_match = category_match.tools
+      search_match = Category.find_by_category( category ).tools
 
       tool_info = add_tool_info search_match
 
       tool_info.sort!{ |a,b| b[:votes].to_i <=> a[:votes].to_i }
       render json: tool_info
     elsif tag
-      tag_match = Tag.find_by_tag(tag)
-      search_match = tag_match.tools
+      search_match = Tag.find_by_tag(tag).tools
 
       tool_info = add_tool_info search_match
 
       tool_info.sort!{ |a,b| b[:votes].to_i <=> a[:votes].to_i }
       render json: tool_info
     elsif search_term
-    # Search results for just a query (no categories or tags)
       search_match = Tool.where('title ilike ?', "%#{search_term}%")
       tag_match = Tag.where('tag ilike ?', "%#{search_term}%")
 
       tool_info = add_tool_info search_match
+
+      add_tags_to_tool_info tag_match, tool_info
 
       tool_info.sort!{ |a,b| b[:votes].to_i <=> a[:votes].to_i }
       render json: tool_info
@@ -254,6 +249,16 @@ class ToolsController < ApplicationController
     AND tg.tag = ?",category,tag])
   end
 
+  def add_tags_to_tool_info tag_match, tool_info
+    tag_match.each do |tag|
+      tag.tools.each do |tool|
+        if tool_info.any? {|t| t[:id] == tool[:id]} == false
+          tool_info.push(add_single_tool_info tool)
+        end
+      end
+    end
+  end
+
   def add_tool_info array_of_tools
     tool_info = []
     array_of_tools.each do |tool|
@@ -278,6 +283,28 @@ class ToolsController < ApplicationController
       tool_info.push({ id: tool.id, title: tool.title, avg_rating: tool.avg_rating, language: tool.language, tags: tags, categories: cats, votes: tvotes, hasVoted: has_voted, voteId: vote_id })
     end
     return tool_info
+  end
+
+  def add_single_tool_info tool
+    cats = []
+    tool.categories.each do |cat|
+      cats.push({ id: cat[:id] , category: cat[:category] })
+    end
+    tags = []
+    tool.tags.each do |tag|
+      tags.push({ id: tag[:id] , tag: tag[:tag]})
+    end
+    tvotes = 0
+    has_voted = false
+    vote_id = nil
+    tool.tvotes.each do |vote|
+      tvotes += vote.vote
+      if current_user && vote.user_id == current_user.id
+        has_voted = true
+        vote_id = vote.id
+      end
+    end
+    return({ id: tool.id, title: tool.title, avg_rating: tool.avg_rating, language: tool.language, tags: tags, categories: cats, votes: tvotes, hasVoted: has_voted, voteId: vote_id })
   end
 
 end
