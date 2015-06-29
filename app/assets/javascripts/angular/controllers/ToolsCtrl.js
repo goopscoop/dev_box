@@ -10,34 +10,21 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$resource', '$location', '
     $scope.activeCategory;
     $scope.activeTag;
 
+    var init = function(){
+      loadCatsAndTags()
+      queryDatabase()
+    }
+
     $scope.getNumber = function(num) {
           return new Array(num);
     }
 
-    function isEmpty(ob){
+    var isEmpty = function(ob){
        for(var i in ob){ return true;}
       return false;
     }
 
-    $http.get( '/api/tools' ).success( function( data ){
-      // returns an array of objects with Tools and associated categories and tags
-      $scope.categories = data.categories;
-      $scope.tags = data.tags;
-      // console.log( $scope.tools )
-    })
 
-    var init = function(){
-      if( isEmpty( $location.search() ) ){
-        $scope.activeCategory = $location.search().c || null;
-        $scope.activeTag = $location.search().t || null;
-        // console.log($scope.activeCategory)
-        get = buildUrl.build( true, $location.search().q, $location.search().c, $location.search().t )
-        $http.get( get ).success( function( data ){
-          // returns an array of objects with Tools and associated categories and tags
-          $scope.searchTools = data
-        })
-      }
-    }
 
     $scope.clearSearch = function(){
       $location.search("")
@@ -102,6 +89,30 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$resource', '$location', '
               }
            }
            Materialize.toast( 'removed vote', 4000)
+        })
+      }
+    }
+
+    var loadCatsAndTags = function(){
+      if( !$scope.categories || !$scope.tags ){
+        $http.get( '/api/tools' ).success( function( data ){
+          // returns an array of objects with Tools and associated categories and tags
+          $scope.categories = data.categories;
+          $scope.tags = data.tags;
+          // console.log( $scope.tools )
+        })
+      }
+    }
+
+    var queryDatabase = function(){
+      if( isEmpty( $location.search() ) ){
+        $scope.activeCategory = $location.search().c || null;
+        $scope.activeTag = $location.search().t || null;
+        // console.log($scope.activeCategory)
+        get = buildUrl.build( true, $location.search().q, $location.search().c, $location.search().t )
+        $http.get( get ).success( function( data ){
+          // returns an array of objects with Tools and associated categories and tags
+          $scope.searchTools = data
         })
       }
     }

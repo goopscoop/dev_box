@@ -60,5 +60,10 @@ DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl',
     $location.search(localUrl);
   }
 
+  $scope.addTag = function( tagName ){
+    localUrl = buildUrl.build( false, $location.search().q, $location.search().c, tagName );
+    $location.search(localUrl);
+  }
+
   init()
 }]);
