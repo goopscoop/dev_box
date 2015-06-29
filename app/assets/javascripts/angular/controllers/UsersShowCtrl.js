@@ -1,17 +1,63 @@
-DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl',
-  function( $scope, $http, buildUrl ){
+DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl', '$location',
+  function( $scope, $http, buildUrl, $location ){
 
-  $scope.tools = []
   $scope.searchTools = []
 
   var init = function(){
-    $http.get('/api/users/profile').success( function( data ){
-      $scope.categories = data.categories;
-      $scope.tags = data.tags;
-      $scope.tools = data.tools;
-    } )
+    loadToolsCatsAndTags(); //Also calls narrowTools() function in callback
   }
 
+  var loadToolsCatsAndTags = function(){
+    if ( !$scope.tools || !$scope.categories || !$scope.tags ) {
+      $http.get('/api/users/profile').success( function( data ){
+        $scope.categories = data.categories;
+        $scope.tags = data.tags;
+        $scope.tools = data.tools;
+        console.log($scope.tools)
+      } ).success(function(){
+        narrowTools()
+      })
+    }
+  }
+
+  var isNotEmptyObj = function(ob){
+     for(var i in ob){ return true;}
+    return false;
+  }
+
+  var narrowTools = function(){
+    if( isNotEmptyObj( $location.search() ) ){
+      $scope.activeCategory = $location.search().c || null;
+      $scope.activeTag = $location.search().t || null;
+      $scope.searchTools = $.grep($scope.tools, function(tool){
+        if ( $scope.activeCategory && $scope.activeTag ) {
+          for (var i = 0; i < tool.categories.length; i++) {
+            if ( tool.categories[i].category.indexOf( $scope.activeCategory.toLowerCase() ) !== -1){
+              for ( i = 0; i < tool.tags.length; i++ ) {
+                if ( tool.tags[i].tag.toLowerCase().indexOf( $scope.activeTag.toLowerCase() ) !== -1 ) {
+                  return true;
+                }
+              }
+            }
+          }
+        } else if ( $scope.activeCategory ) {
+          for (var i = 0; i < tool.categories.length; i++) {
+            if ( tool.categories[i].category.indexOf( $scope.activeCategory.toLowerCase() ) !== -1){
+              return true;
+            } else {
+
+            }
+          }
+        } else if ( $scope.activeTag ) {
+          for ( i = 0; i < tool.tags.length; i++ ) {
+            if ( tool.tags[i].tag.toLowerCase().indexOf( $scope.activeTag.toLowerCase() ) !== -1 ) {
+              return true;
+            }
+          }
+        }
+      })
+    }
+  }
 
   $scope.removeTool = function( toolId ){
     $http.delete( '/api/users/delete/tool/' + toolId ).success( function( data ){
@@ -40,20 +86,21 @@ DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl',
   }
 
   $scope.focusOnSelectedTool = function( ){
-      if ($scope.selectedTool) {
-        $scope.searchTools = [];
-        $scope.searchTools.unshift($scope.selectedTool);
-        return $scope.searchTools;
-        // console.log("get matches function",$scope.searchTools)
-      }
-      return $scope.searchTools;
-      // $scope.searchTools = $scope.selectedTool
-    }
-
-    $scope.clearSearch = function(){
+    if ($scope.selectedTool) {
       $scope.searchTools = [];
-      $scope.toolSearchText = '';
+      $scope.searchTools.unshift($scope.selectedTool);
+      return $scope.searchTools;
+      // console.log("get matches function",$scope.searchTools)
     }
+    return $scope.searchTools;
+    // $scope.searchTools = $scope.selectedTool
+  }
+
+  $scope.clearSearch = function(){
+    $scope.searchTools = [];
+    $scope.toolSearchText = '';
+    $location.search("")
+  }
 
   $scope.addCat = function( catName ){
     localUrl = buildUrl.build( false, $location.search().q, catName, $location.search().t);

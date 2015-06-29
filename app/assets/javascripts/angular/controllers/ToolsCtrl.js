@@ -1,11 +1,8 @@
 DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$resource', '$location', '$rootScope', 'buildUrl',
   function( $scope, $http, $resource, $location, $rootScope, buildUrl ){
 
-    $scope.categories = [];
-    // String the search bar is binding to.
-    $scope.toolSearchText;
-    // Object returned after search is completed
-    $scope.selectedTool = {};
+    $scope.toolSearchText; // String the search bar is binding to.
+    $scope.selectedTool = {}; // Object returned after search is completed
     $scope.searchTools = [];
     $scope.activeCategory;
     $scope.activeTag;
@@ -18,13 +15,6 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$resource', '$location', '
     $scope.getNumber = function(num) {
           return new Array(num);
     }
-
-    var isEmpty = function(ob){
-       for(var i in ob){ return true;}
-      return false;
-    }
-
-
 
     $scope.clearSearch = function(){
       $location.search("")
@@ -102,6 +92,11 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$resource', '$location', '
           // console.log( $scope.tools )
         })
       }
+    }
+
+    var isEmpty = function(ob){
+       for(var i in ob){ return true;}
+      return false;
     }
 
     var queryDatabase = function(){
