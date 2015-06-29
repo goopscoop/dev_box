@@ -1,6 +1,6 @@
 DevBox.controller( 'ToolsEditCtrl', [ '$scope' , '$resource', '$location', '$http', '$routeParams', '$rootScope',
   function( $scope, $resource, $location, $http, $routeParams, $rootScope ){
-    $rootScope.isAuthenticated;
+  $rootScope.isAuthenticated;
     // Vars needed for tags
   $scope.readonly = false;
   $scope.selectedTag = null;
