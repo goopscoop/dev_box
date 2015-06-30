@@ -6,7 +6,7 @@
     <div class="divider"></div>
     <h4>Category</h4>
     <ul ng-repeat="cat in categories">
-        <li ng-class="{activeSidebar: activeCategory === cat.category}"><a  href="#" ng-click="addCat(cat.category)">{{cat.category}}</a></li>
+        <li ng-class="{activeSidebar: activeCategory === cat.category}"><a href="#" ng-click="addCat(cat.category)">{{cat.category}}</a></li>
     </ul>
     <div class="divider"></div>
     <h4>Popular Tags</h4>
@@ -22,7 +22,7 @@
       <div class="input-field col s12 m6 offset-m3">
         <!-- <input id="search_tools" type="text" class="validate"> -->
         <!-- <label for="search_tools">Search</label> -->
-        <md-autocomplete md-autofocus="true" md-selected-item="selectedTool" md-selected-item-change="focusOnSelectedTool()" placeholder="Search (at least 3 chars)" md-delay="200" md-min-length="3" md-search-text="toolSearchText" md-items="tool in getMatches(toolSearchText)" md-item-text="tool.title" md-no-cache="true">
+        <md-autocomplete md-autofocus="true" md-selected-item="selectedTool" md-selected-item-change="focusOnSelectedTool()" placeholder="Search Tools" md-delay="200" md-min-length="1" md-search-text="toolSearchText" md-items="tool in getMatches(toolSearchText)" md-item-text="tool.title" md-no-cache="true">
           <md-item-template>
             <span md-highlight-text="searchText">{{tool.title}}</span>
           </md-item-template>
@@ -64,6 +64,18 @@
               <ul>
                 <li ng-repeat="category in tool.categories"><a href="#" class="tool-category" ng-click="addCat(category.category)">{{category.category}}</a></li>
               </ul>
+              <a class="user-tool-link" ng-show="tool.web_url" ng-href="{{tool.web_url}}">
+                <i class="mdi-social-public"></i>
+                <md-tooltip>website</md-tooltip>
+              </a>
+              <a class="user-tool-link" ng-show="tool.repo_url" ng-href="{{tool.repo_url}}">
+                <i class="mdi-communication-call-split"></i>
+                <md-tooltip>repo</md-tooltip>
+              </a>
+              <a class="user-tool-link" ng-show="tool.doc_url" ng-href="{{tool.doc_url}}">
+                <i class="mdi-action-description"></i>
+                <md-tooltip>docs</md-tooltip>
+              </a>
             </div>
             <div class="col s4 m4">
               <span class="avg-review-tag">avg. review</span>

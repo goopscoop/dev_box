@@ -15,7 +15,6 @@ DevBox.controller('HomeCtrl',['$scope', '$http', '$rootScope', function( $scope,
       $scope.tags = data.tags;
       $scope.popular = data.popular;
       $scope.recent = data.recent;
-      console.log($scope.recent);
     } )
   }
 

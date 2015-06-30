@@ -1,57 +1,19 @@
-DevBox.controller( 'ToolsCtrl' , [ '$scope' , '$http', '$resource' , '$location', '$rootScope',
-  function( $scope , $http , $resource , $location , $rootScope ){
+DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$resource', '$location', '$rootScope', 'buildUrl',
+  function( $scope, $http, $resource, $location, $rootScope, buildUrl ){
 
-    $scope.categories = [];
-    // String the search bar is binding to.
-    $scope.toolSearchText;
-    // Object returned after search is completed
-    $scope.selectedTool = {};
+    $scope.toolSearchText; // String the search bar is binding to.
+    $scope.selectedTool = {}; // Object returned after search is completed
     $scope.searchTools = [];
     $scope.activeCategory;
     $scope.activeTag;
-    $scope.getNumber = function(num) {
-          return new Array(num);
-    }
-
-    function isEmpty(ob){
-       for(var i in ob){ return true;}
-      return false;
-    }
-
-    $http.get( '/api/tools' ).success( function( data ){
-      // returns an array of objects with Tools and associated categories and tags
-      $scope.categories = data.categories;
-      $scope.tags = data.tags;
-      // console.log( $scope.tools )
-    })
 
     var init = function(){
-      if( isEmpty( $location.search() ) ){
-        $scope.activeCategory = $location.search().c || null;
-        $scope.activeTag = $location.search().t || null;
-        // console.log($scope.activeCategory)
-        get = buildUrl( true, $location.search().q, $location.search().c, $location.search().t )
-        $http.get( get ).success( function( data ){
-          // returns an array of objects with Tools and associated categories and tags
-          $scope.searchTools = data
-        })
-      }
+      loadCatsAndTags()
+      queryDatabase()
     }
 
-    // builds url. API is required (true if api call, false if local url)
-    // all other paramaters are optional.
-    var buildUrl = function( api, query, cats, tags ){
-      if ( api ) {
-        var url =  '/api/tools?'
-      } else {
-        url = ''
-      }
-      if ( query ) url += 'q=' + query;
-      if ( (query && cats) || (query && tags) ) url += '&';
-      if ( cats ) url += 'c=' + cats;
-      if ( cats && tags ) url += '&';
-      if ( tags ) url += 't=' + tags;
-      return url
+    $scope.getNumber = function(num) {
+          return new Array(num);
     }
 
     $scope.clearSearch = function(){
@@ -63,8 +25,8 @@ DevBox.controller( 'ToolsCtrl' , [ '$scope' , '$http', '$resource' , '$location'
         // returns an array of objects with Tools and associated categories and tags
          $scope.searchTools = data;
       })
-        // console.log("get matches function",$scope.searchTools)
         return $scope.searchTools;
+        // console.log("get matches function",$scope.searchTools)
     }
 
      $scope.focusOnSelectedTool = function( ){
@@ -79,12 +41,12 @@ DevBox.controller( 'ToolsCtrl' , [ '$scope' , '$http', '$resource' , '$location'
     }
 
     $scope.addCat = function( catName ){
-      localUrl = buildUrl( false, $location.search().q, catName, $location.search().t);
+      localUrl = buildUrl.build( false, $location.search().q, catName, $location.search().t);
       $location.search(localUrl);
     }
 
     $scope.addTag = function( tagName ){
-      localUrl = buildUrl( false, $location.search().q, $location.search().c, tagName );
+      localUrl = buildUrl.build( false, $location.search().q, $location.search().c, tagName );
       $location.search(localUrl);
     }
 
@@ -117,6 +79,35 @@ DevBox.controller( 'ToolsCtrl' , [ '$scope' , '$http', '$resource' , '$location'
               }
            }
            Materialize.toast( 'removed vote', 4000)
+        })
+      }
+    }
+
+    var loadCatsAndTags = function(){
+      if( !$scope.categories || !$scope.tags ){
+        $http.get( '/api/tools' ).success( function( data ){
+          // returns an array of objects with Tools and associated categories and tags
+          $scope.categories = data.categories;
+          $scope.tags = data.tags;
+          // console.log( $scope.tools )
+        })
+      }
+    }
+
+    var isEmpty = function(ob){
+       for(var i in ob){ return true;}
+      return false;
+    }
+
+    var queryDatabase = function(){
+      if( isEmpty( $location.search() ) ){
+        $scope.activeCategory = $location.search().c || null;
+        $scope.activeTag = $location.search().t || null;
+        // console.log($scope.activeCategory)
+        get = buildUrl.build( true, $location.search().q, $location.search().c, $location.search().t )
+        $http.get( get ).success( function( data ){
+          // returns an array of objects with Tools and associated categories and tags
+          $scope.searchTools = data
         })
       }
     }
