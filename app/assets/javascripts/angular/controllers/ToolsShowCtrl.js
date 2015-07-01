@@ -5,6 +5,7 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
   $scope.editingReview = false;
   $scope.userRated = false;
   $scope.favorited = false;
+  $scope.$watch.isFormattingHelpOpen = false;
   $scope.number = 5;
   $scope.UserService = UserService;
 
@@ -41,6 +42,11 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
   Review = $resource('/api/tools/' + $routeParams.id + '/reviews/:id', null, {
     'update': { method:'PUT' }
   });
+
+  $scope.formattingHelp = function(action){
+    console.log('boop')
+    $scope.isFormattingHelpOpen = action;
+  }
 
   var init = function(){
       Tool.get({id:$routeParams.id},function(data) {

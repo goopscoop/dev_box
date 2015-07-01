@@ -45,6 +45,10 @@ h1 {
   color: white;
 }
 
+a {
+  color: #78909c;
+}
+
 @media (max-width: 1284px) {
   h1 {
     font-size: 3.5em;
