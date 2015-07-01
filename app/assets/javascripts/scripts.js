@@ -1,4 +1,4 @@
-$( document ).ready(function(){
+$(function() {
 
   // Initialize sidebar nav
   $(".button-collapse").sideNav();

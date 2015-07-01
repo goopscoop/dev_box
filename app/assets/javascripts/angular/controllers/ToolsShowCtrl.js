@@ -82,13 +82,12 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
     if ( !$scope.userRating || $scope.userRating < 1 ) {
       Materialize.toast('please add a rating', 4000)
     } else {
-      var content = editor.exportFile();
       var review = new Review();
-      review.post = content;
+      review.post = $scope.userPost;
       review.rating = $scope.userRating;
       review.tool_id = $routeParams.id;
       review.$save(function(data) {
-        console.log(data);
+
         // Add new comment to list
         $scope.tool.reviews_users.unshift(data.result);
 
@@ -101,9 +100,6 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
         $scope.userPost = data.result.review.post
         $scope.userReviewCreatedAt = data.result.review.created_at
         $scope.tool.tool.avg_rating = data.result.avg_rating
-        // Clear the editor
-        editor.edit();
-        editor.getElement('editor').body.innerHTML = '';
       })
     }
   }
@@ -113,9 +109,8 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
     if ( !$scope.userRating || $scope.userRating < 1 ) {
       Materialize.toast('please add a rating', 4000)
     } else {
-      var content = editor.exportFile();
       var review = {}
-      review.post = content;
+      review.post = $scope.userPost;
       review.rating = $scope.userRating;
       review.id = $scope.userReviewId;
 
@@ -125,6 +120,7 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
           $scope.userPost = data.result.post
           $scope.userReviewUpdatedAt = data.result.updated_at
           $scope.tool.tool.avg_rating = data.avg_rating
+
           Materialize.toast('review updated', 4000)
         })
       }
@@ -132,7 +128,6 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
 
   $scope.editReview = function() {
     $scope.editingReview = true;
-    editor.importFile('edit', $scope.userPost)
   }
 
   $scope.displayRating = function( idx ) {
