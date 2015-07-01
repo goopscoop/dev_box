@@ -37,7 +37,7 @@
                   fullscreen: true,
                   bar: "auto"
               },
-              focusOnLoad: true,
+              focusOnLoad: false,
               shortcut: {
                   modifier: 18,
                   fullscreen: 70,
