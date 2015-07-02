@@ -41,7 +41,7 @@
 
   <!-- search body -->
       <div ng-show="searchTools">
-        <div class="section tool-search-results" ng-repeat="tool in searchTools">
+        <div class="section tool-search-results" dir-paginate="tool in searchTools | itemsPerPage: 10">
           <div class="col s1">
             <div ng-if="$root.isAuthenticated === false"><a class="not-voted" href="#" ><i class="mdi-navigation-expand-less up-vote"></i><md-tooltip>log in to vote</md-tooltip></a></div>
             <div ng-if="tool.hasVoted === false && $root.isAuthenticated"><a class="not-voted" href="#" ng-click="upVote(tool.id)"><i class="mdi-navigation-expand-less up-vote"></i></a></div>
@@ -82,6 +82,11 @@
             </div>
           </div>
 
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s4 m4 offset-s4 offset-m4">
+          <dir-pagination-controls></dir-pagination-controls>
         </div>
       </div>
     </div>
