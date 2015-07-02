@@ -553,3 +553,10 @@ md-chips.md-default-theme .md-chips {
   color: white;
   font-size: 0.70em;
 }
+
+/* Pagination */
+
+.pagination li a {
+  color: white;
+  font-family: Source Code Pro;
+}

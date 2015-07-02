@@ -1,4 +1,5 @@
-var DevBox = angular.module('DevBox',['ngRoute', 'ngResource', 'ngMaterial', 'ngSanitize', 'angularMoment', 'markdowned', 'ui.epiceditor']);
+var DevBox = angular.module('DevBox',['ngRoute', 'ngResource', 'ngMaterial', 'ngSanitize', 'angularMoment',
+  'markdowned', 'ui.epiceditor', 'angularUtils.directives.dirPagination']);
 
 DevBox.run(['$rootScope', 'UserService', function($rootScope, UserService) {
   UserService.check(function(err, data) {
