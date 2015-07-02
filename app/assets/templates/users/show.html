@@ -36,7 +36,7 @@
         <div class="card-panel blue-grey darken-2">
           <ul class="collection" >
             <!-- If user is searching -->
-            <li ng-if="searchTools" ng-repeat="tool in searchTools" class="collection-item">
+            <li ng-if="searchTools" dir-paginate="tool in searchTools | itemsPerPage: 10" class="collection-item">
             <span class="user-tool-title"><a ng-href="/tools/{{tool.id}}">{{tool.title}}<md-tooltip md-direction="left">tool page</md-tooltip></a></span> <span class="tool-language">[{{tool.language}}]</span>
               <a href="#" ng-click="removeTool(tool.id)" class="secondary-content btn-floating waves-effect waves-light pink"><i class="mdi-content-clear "></i><md-tooltip>remove from toolbox</md-tooltip></a>
             <br>
@@ -57,7 +57,8 @@
               </a>
             </li>
             <!-- If nothing has been searched for -->
-            <li ng-if="searchTools == false" ng-repeat="tool in tools" class="collection-item">
+            <div ng-if="searchTools == false">
+            <li dir-paginate="tool in tools | itemsPerPage: 10" class="collection-item">
             <span class="user-tool-title"><a ng-href="/tools/{{tool.id}}">{{tool.title}}<md-tooltip md-direction="left">tool page</md-tooltip></a></span> <span class="tool-language">[{{tool.language}}]</span>
               <a href="#" ng-click="removeTool(tool.id)" class="secondary-content btn-floating waves-effect waves-light pink"><i class="mdi-content-clear "></i><md-tooltip>remove from toolbox</md-tooltip></a>
             <br>
@@ -77,7 +78,13 @@
                 <md-tooltip>docs</md-tooltip>
               </a>
             </li>
+            </div>
           </ul>
+          <div class="row">
+            <div class="col s4 m4 offset-s4 offset-m4">
+              <dir-pagination-controls></dir-pagination-controls>
+            </div>
+          </div>
         </div>
       </div>
     </div>
