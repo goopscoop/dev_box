@@ -89,7 +89,9 @@ DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl', '$location',
   }
 
   $scope.searchTextChanged = function( toolSearchText ){
-    $scope.getMatches(toolSearchText)
+    if( toolSearchText ){
+      $scope.getMatches(toolSearchText)
+    }
   }
 
   $scope.focusOnSelectedTool = function( ){
