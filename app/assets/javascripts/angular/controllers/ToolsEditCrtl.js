@@ -37,7 +37,6 @@ DevBox.controller( 'ToolsEditCtrl', [ '$scope' , '$resource', '$location', '$htt
       $scope.category03Pre = data.categories[2] || null;
       $scope.categories = data.allCategories;
 
-      console.log(data.tags);
     })
   }
 
@@ -57,22 +56,18 @@ DevBox.controller( 'ToolsEditCtrl', [ '$scope' , '$resource', '$location', '$htt
       tool.doc_url = $scope.doc_url;
       tool.categories = [$scope.category01Pre, $scope.category02Pre, $scope.category03Pre];
       tool.tags = $scope.selectedTags;
-      console.log(tool)
-      Tool.update({id: $routeParams.id},tool,function(data){
-        console.log(data)
-        Materialize.toast('edit successful', 4000)
-        $location.url("/tools/" + $routeParams.id)
-      });
-      //   function(data) {
-      //   console.log(data);
-      //   $location.url("/tools/" + data.result.id)
-      // })
+      Tool.update({id: $routeParams.id},tool,
+        function(data){
+          Materialize.toast('edit successful', 4000)
+          $location.url("/tools/" + $routeParams.id)
+        },
+        function(err) {
+          Materialize.toast('Uh-oh :/ Try refreshing', 4000)
+        });
     }
   }
 
   $scope.newTag = function(chip) {
-    // console.log("New Tag Function");
-    // console.log("Chip.tag:", chip.tag);
     if ( chip.tag ) {
       return chip;
     }
@@ -82,17 +77,13 @@ DevBox.controller( 'ToolsEditCtrl', [ '$scope' , '$resource', '$location', '$htt
   }
 
   function querySearch (query) {
-    // console.log("query search")
     var results = query ? $scope.tags.filter(createFilterFor(query)) : [];
-    // console.log("Results:", results);
     return results;
   }
 
   function createFilterFor(query) {
     var lowercaseQuery = angular.lowercase(query);
     return function filterFn(tag) {
-      // console.log("tag.tag", tag.tag);
-      // console.log("lowercaseQuery", lowercaseQuery);
       return (tag.tag.indexOf(lowercaseQuery) === 0);
     };
   }

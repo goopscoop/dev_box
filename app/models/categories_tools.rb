@@ -4,7 +4,8 @@ class CategoriesTools < ActiveRecord::Base
   belongs_to :tool
 
   validates :category_id, presence: true, numericality: { only_integer: true }
-  validates :tool_id, presence: true, numericality: { only_integer: true }
+  validates :tool_id, uniqueness: true, presence: true, numericality: { only_integer: true }
+
   # validates :tool_categories_count, on: :create
 
   # def tool_categories_count
