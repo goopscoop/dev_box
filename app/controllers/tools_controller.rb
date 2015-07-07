@@ -113,10 +113,13 @@ class ToolsController < ApplicationController
                       is_free: params[:is_free], web_url: params[:web_url],
                       repo_url: params[:repo_url], doc_url: params[:doc_url] )
 
+    p tool
     # Associate the categories to the new tool
     params[:categories].each do |cid|
-      c = Category.find(cid)
-      tool.categories << c
+      if cid
+        c = Category.find(cid)
+        tool.categories << c
+      end
     end
 
     # Associate existing tags to the new tool
