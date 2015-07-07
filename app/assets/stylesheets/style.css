@@ -25,8 +25,8 @@ main {
 }
 
 
-.nav-wrapper a {
-  /*white-space: nowrap;*/
+.no-wrap a {
+  white-space: nowrap;
 }
 
 small {
@@ -109,6 +109,17 @@ p {
 
 th, td {
   color: white;
+}
+
+.bulleted-list li {
+  list-style-type: disc;
+  margin: 0;
+  margin-left: 15px;
+  padding: 0;
+}
+
+.bulleted-list a {
+  color: #c6ff00;
 }
 
 nav img.responsive-img {

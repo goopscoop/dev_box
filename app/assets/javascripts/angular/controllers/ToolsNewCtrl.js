@@ -1,19 +1,22 @@
-DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', function( $scope, $resource, $location ){
+DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', '$http',
+  function( $scope, $resource, $location, $http ){
 
+  $scope.showPrinciples = true;
   $scope.readonly = false;
   $scope.selectedTag = null;
   $scope.searchText = null;
+  $scope.isUniqueTooltipVisible = false;
   $scope.querySearch = querySearch;
   $scope.selectedTags = [];
   $scope.numberChips = [];
   $scope.numberChips2 = [];
   $scope.numberBuffer = '';
 
-  Tool = $resource('/api/tools/', null, {
+  var Tool = $resource('/api/tools/', null, {
     'update': { method:'PUT' }
   });
 
-  NewTool = $resource('/api/tools/new', null, {
+  var NewTool = $resource('/api/tools/new', null, {
     'update': { method: 'PUT' }
   })
 
@@ -23,6 +26,27 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', functi
   },function(err){
     console.log(err);
   });
+
+
+  $scope.checkForExisitingTool = function(){
+    $http.get( '/api/validate?title=' + $scope.title ).success( function( data ){
+    console.log(data.message)
+      if (data.uniqueness === false ){
+        $scope.isUniqueMessage = data.message;
+        $scope.conflictingTools = data.tools;
+      } else {
+        $scope.isUniqueMessage = '';
+      }
+    })
+  }
+
+  $scope.hidePrinciples = function(boolean){
+    $scope.showPrinciples = boolean;
+  }
+
+  $scope.hideUniqueMessage = function(boolean){
+    $scope.isUniqueMessage = '';
+  }
 
   $scope.saveTool = function() {
 

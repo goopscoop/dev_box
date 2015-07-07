@@ -12,11 +12,11 @@ DevBox.controller( 'ToolsEditCtrl', [ '$scope' , '$resource', '$location', '$htt
   $scope.numberBuffer = '';
   $scope.tool = {};
 
-  Tool = $resource('/api/tools/:id', null, {
+  var Tool = $resource('/api/tools/:id', null, {
     'update': { method:'PUT' }
   });
 
-  ToolEdit = $resource('/api/tools/:id/edit', null, {
+  var ToolEdit = $resource('/api/tools/:id/edit', null, {
     'update': { method:'PUT' }
   });
 
