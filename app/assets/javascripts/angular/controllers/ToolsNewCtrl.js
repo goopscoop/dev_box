@@ -50,24 +50,34 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', '$http
   }
 
   $scope.saveTool = function() {
-
-        var tool = new Tool();
-        tool.title = $scope.title;
-        tool.description = $scope.description;
-        tool.language = $scope.language;
-        tool.is_open = $scope.is_open? true : false;
-        tool.is_free = $scope.is_free;
-        tool.web_url = $scope.web_url;
-        tool.repo_url = $scope.repo_url;
-        tool.doc_url = $scope.doc_url;
-        tool.avg_rating = null;
-        tool.categories = [$scope.category01, $scope.category02, $scope.category03];
-        tool.tags = $scope.selectedTags;
-        tool.$save(function(data) {
-          console.log(data);
-          $location.url("/tools/" + data.result.id)
-        })
-
+    if( !$scope.title ) {
+      Materialize.toast( 'a title is required', 4000)
+    } else if( !$scope.category01 ){
+      Materialize.toast( 'a category is required', 4000)
+    } else if( !$scope.description ) {
+      Materialize.toast( 'a description is required', 4000)
+    } else if( !$scope.web_url && !$scope.repo_url && !$scope.doc_url ) {
+      Materialize.toast( 'at least one link is required', 4000)
+    } else if( !$scope.tags ) {
+      Materialize.toast( 'at least one tag is required', 4000)
+    } else {
+      var tool = new Tool();
+      tool.title = $scope.title;
+      tool.description = $scope.description;
+      tool.language = $scope.language;
+      tool.is_open = $scope.is_open? true : false;
+      tool.is_free = $scope.is_free;
+      tool.web_url = $scope.web_url;
+      tool.repo_url = $scope.repo_url;
+      tool.doc_url = $scope.doc_url;
+      tool.avg_rating = null;
+      tool.categories = [$scope.category01, $scope.category02, $scope.category03];
+      tool.tags = $scope.selectedTags;
+      tool.$save(function(data) {
+        console.log(data);
+        $location.url("/tools/" + data.result.id)
+      })
+    }
 
   }
 
