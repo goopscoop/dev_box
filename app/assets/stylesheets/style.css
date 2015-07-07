@@ -481,6 +481,10 @@ form.big-text {
   font-size: 1.6rem;
 }
 
+label {
+  font-size: 1.6rem;
+}
+
 [type="radio"]:not(:checked)+label, [type="radio"]:checked+label {
   font-size: 1.6rem;
 }

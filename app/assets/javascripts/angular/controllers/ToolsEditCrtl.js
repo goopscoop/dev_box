@@ -11,6 +11,12 @@ DevBox.controller( 'ToolsEditCtrl', [ '$scope' , '$resource', '$location', '$htt
   $scope.numberChips2 = [];
   $scope.numberBuffer = '';
   $scope.tool = {};
+  $scope.$watch.isFormattingHelpOpen = false;
+
+  $scope.formattingHelp = function(action){
+    console.log('boop')
+    $scope.isFormattingHelpOpen = action;
+  }
 
   Tool = $resource('/api/tools/:id', null, {
     'update': { method:'PUT' }
@@ -33,8 +39,6 @@ DevBox.controller( 'ToolsEditCtrl', [ '$scope' , '$resource', '$location', '$htt
       $scope.selectedTags = data.tags;
       $scope.tags = data.allTags;
       $scope.category01Pre = data.categories[0] || null;
-      $scope.category02Pre = data.categories[1] || null;
-      $scope.category03Pre = data.categories[2] || null;
       $scope.categories = data.allCategories;
 
     })
@@ -54,7 +58,7 @@ DevBox.controller( 'ToolsEditCtrl', [ '$scope' , '$resource', '$location', '$htt
       tool.web_url = $scope.web_url;
       tool.repo_url = $scope.repo_url;
       tool.doc_url = $scope.doc_url;
-      tool.categories = [$scope.category01Pre, $scope.category02Pre, $scope.category03Pre];
+      tool.categories = [$scope.category01Pre];
       tool.tags = $scope.selectedTags;
       Tool.update({id: $routeParams.id},tool,
         function(data){

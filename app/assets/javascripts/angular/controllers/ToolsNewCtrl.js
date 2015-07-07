@@ -8,6 +8,12 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', functi
   $scope.numberChips = [];
   $scope.numberChips2 = [];
   $scope.numberBuffer = '';
+  $scope.$watch.isFormattingHelpOpen = false;
+
+  $scope.formattingHelp = function(action){
+    console.log('boop')
+    $scope.isFormattingHelpOpen = action;
+  }
 
   Tool = $resource('/api/tools/', null, {
     'update': { method:'PUT' }
@@ -36,7 +42,7 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', functi
     tool.repo_url = $scope.repo_url;
     tool.doc_url = $scope.doc_url;
     tool.avg_rating = null;
-    tool.categories = [$scope.category01, $scope.category02, $scope.category03];
+    tool.categories = [$scope.category01];
     tool.tags = $scope.selectedTags;
     tool.$save(function(data) {
       console.log(data);
