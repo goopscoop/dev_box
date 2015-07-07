@@ -5,14 +5,12 @@ class ValidateController < ApplicationController
 
     tools = Tool.where('title ilike ?', "%#{tool_title}%")
 
-    if tools.length == 1
-      render json: { uniqueness: false, title: tools.title, id: tools.id, message: "We found a tool with a similar name in our database." }
-    elsif tools.length > 1
-      render json: { uniqueness: false, tools: tools, message: "We found #{tools.length} tools with a similar name in our database." }
+    if tools.length > 0
+      render json: { uniqueness: false, tools: tools, message: "We found #{tools.length} tool(s) with a similar name in our database." }
     else
       render json: { uniqueness: true }
     end
-
   end
+
 
 end

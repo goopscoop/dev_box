@@ -133,6 +133,11 @@
 
     <div class="row">
       <div class="col s12">
+        <div ng-if="finalIsUniqueMessage">
+          <div class="col s10 offset-s1 card-panel blue-grey message">
+            <p>{{finalIsUniqueMessage}} Visit the <a href="/tools/{{ finalConflictingToolId }}">{{ finalConflictingToolTitle }}</a> page or add a new entry.</p>
+          </div>
+        </div>
         <button ng-click="saveTool()" id="save-tool-btn" class="btn waves-effect waves-light deep-purple lighten-1" type="button">Submit
           <!-- <i class="mdi-content-send right"></i> -->
         </button>
