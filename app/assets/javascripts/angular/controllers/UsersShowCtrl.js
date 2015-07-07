@@ -1,7 +1,10 @@
 DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl', '$location',
   function( $scope, $http, buildUrl, $location ){
 
-  $scope.searchTools = []
+  $scope.userToolBox = {
+    searchTools: []
+  }
+  // $scope.searchTools = []
 
   var init = function(){
     loadToolsCatsAndTags(); //Also calls narrowTools() function in callback
@@ -29,7 +32,7 @@ DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl', '$location',
     if( isNotEmptyObj( $location.search() ) ){
       $scope.activeCategory = $location.search().c || null;
       $scope.activeTag = $location.search().t || null;
-      $scope.searchTools = $.grep($scope.tools, function(tool){
+      $scope.userToolBox.searchTools = $.grep($scope.tools, function(tool){
         if ( $scope.activeCategory && $scope.activeTag ) {
           for (var i = 0; i < tool.categories.length; i++) {
             if ( tool.categories[i].category.indexOf( $scope.activeCategory.toLowerCase() ) !== -1){
@@ -70,7 +73,7 @@ DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl', '$location',
   }
 
   $scope.getMatches = function( toolSearchText ){
-      return $scope.searchTools = $.grep($scope.tools, function(tool){
+      return $scope.userToolBox.searchTools = $.grep($scope.tools, function(tool){
         // Searching for tool by name
         if ( tool.title.toLowerCase().indexOf( toolSearchText.toLowerCase() ) !== -1 ) {
           return true;
@@ -85,19 +88,25 @@ DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl', '$location',
       });
   }
 
+  $scope.searchTextChanged = function( toolSearchText ){
+    if( toolSearchText ){
+      $scope.getMatches(toolSearchText)
+    }
+  }
+
   $scope.focusOnSelectedTool = function( ){
     if ($scope.selectedTool) {
-      $scope.searchTools = [];
-      $scope.searchTools.unshift($scope.selectedTool);
-      return $scope.searchTools;
+      $scope.userToolBox.searchTools = [];
+      $scope.userToolBox.searchTools.unshift($scope.selectedTool);
+      return $scope.userToolBox.searchTools;
       // console.log("get matches function",$scope.searchTools)
     }
-    return $scope.searchTools;
+    return $scope.userToolBox.searchTools;
     // $scope.searchTools = $scope.selectedTool
   }
 
   $scope.clearSearch = function(){
-    $scope.searchTools = [];
+    $scope.userToolBox.searchTools = [];
     $scope.toolSearchText = '';
     $location.search("")
   }

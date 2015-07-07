@@ -13,7 +13,7 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$resource', '$location', '
     }
 
     $scope.getNumber = function(num) {
-          return new Array(num);
+      return new Array(num);
     }
 
     $scope.clearSearch = function(){
@@ -22,11 +22,18 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$resource', '$location', '
 
     $scope.getMatches = function( toolSearchText ){
       $http.get( '/api/tools?q=' + toolSearchText ).success( function( data ){
+
         // returns an array of objects with Tools and associated categories and tags
          $scope.searchTools = data;
       })
         return $scope.searchTools;
         // console.log("get matches function",$scope.searchTools)
+    }
+
+    $scope.searchTextChanged = function( toolSearchText ){
+      if(toolSearchText){
+        $scope.getMatches(toolSearchText)
+      }
     }
 
      $scope.focusOnSelectedTool = function( ){
@@ -89,27 +96,27 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$resource', '$location', '
           // returns an array of objects with Tools and associated categories and tags
           $scope.categories = data.categories;
           $scope.tags = data.tags;
-          // console.log( $scope.tools )
         })
       }
     }
 
-    var isEmpty = function(ob){
+    var isNotEmpty = function(ob){
        for(var i in ob){ return true;}
       return false;
     }
 
     var queryDatabase = function(){
-      if( isEmpty( $location.search() ) ){
+      if( isNotEmpty( $location.search() ) ){
         $scope.activeCategory = $location.search().c || null;
         $scope.activeTag = $location.search().t || null;
         // console.log($scope.activeCategory)
-        get = buildUrl.build( true, $location.search().q, $location.search().c, $location.search().t )
-        $http.get( get ).success( function( data ){
+        var url = buildUrl.build( true, $location.search().q, $location.search().c, $location.search().t )
+        $http.get( url ).success( function( data ){
           // returns an array of objects with Tools and associated categories and tags
           $scope.searchTools = data
         })
       }
+
     }
 
     init();

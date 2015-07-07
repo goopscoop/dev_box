@@ -14,15 +14,13 @@
         <li ng-class="{activeSidebar: activeTag === tag.tag}"><a href="#" ng-click="addTag(tag.tag)">{{tag.tag}}</a></li>
     </ul>
   </div>
-
   <div class="col s12 m9 offset-m3">
-
 
     <div class="row">
       <div class="input-field col s12 m6 offset-m3">
         <!-- <input id="search_tools" type="text" class="validate"> -->
         <!-- <label for="search_tools">Search</label> -->
-        <md-autocomplete md-autofocus="true" md-selected-item="selectedTool" md-selected-item-change="focusOnSelectedTool()" placeholder="Search Tools" md-delay="200" md-min-length="1" md-search-text="toolSearchText" md-items="tool in getMatches(toolSearchText)" md-item-text="tool.title" md-no-cache="true">
+        <md-autocomplete md-autofocus="true" md-selected-item="selectedTool" md-selected-item-change="focusOnSelectedTool()" placeholder="Search Tools" md-delay="200" md-min-length="1" md-search-text="toolSearchText"  md-search-text-change="searchTextChanged(toolSearchText)"  md-items="tool in getMatches(toolSearchText)" md-item-text="tool.title" md-no-cache="true">
           <md-item-template>
             <span md-highlight-text="searchText">{{tool.title}}</span>
           </md-item-template>
