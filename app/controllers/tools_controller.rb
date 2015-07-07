@@ -116,8 +116,10 @@ class ToolsController < ApplicationController
     p tool
     # Associate the categories to the new tool
     params[:categories].each do |cid|
-      c = Category.find(cid)
-      tool.categories << c
+      if cid
+        c = Category.find(cid)
+        tool.categories << c
+      end
     end
 
     # Associate existing tags to the new tool

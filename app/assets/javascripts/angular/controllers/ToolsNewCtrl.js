@@ -74,8 +74,18 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', '$http
       tool.categories = [$scope.category01, $scope.category02, $scope.category03];
       tool.tags = $scope.selectedTags;
       tool.$save(function(data) {
-        console.log(data);
-        $location.url("/tools/" + data.result.id)
+        console.log("server returns before",data);
+        if(data.result.id === null){
+                 // ... error_message comes from the server
+            Materialize.toast( 'Oops. Something happened', 4000)
+            Materialize.toast( 'Please make sure this tool is a unique entry', 4000)
+             console.log("server returns if",data);
+
+          } else {
+
+               console.log("server returns else",data);
+            $location.url("/tools/" + data.result.id)
+          }
       })
     }
 
