@@ -96,8 +96,6 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$resource', '$location', '
           // returns an array of objects with Tools and associated categories and tags
           $scope.categories = data.categories;
           $scope.tags = data.tags;
-          // console.log( $scope.tools )
-          console.log("Cats and Tags",$scope.searchTools)
         })
       }
     }
@@ -113,11 +111,9 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$resource', '$location', '
         $scope.activeTag = $location.search().t || null;
         // console.log($scope.activeCategory)
         var url = buildUrl.build( true, $location.search().q, $location.search().c, $location.search().t )
-        debugger
         $http.get( url ).success( function( data ){
           // returns an array of objects with Tools and associated categories and tags
           $scope.searchTools = data
-          console.log($scope.searchTools)
         })
       }
 
