@@ -1,5 +1,5 @@
-DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$resource', '$location', '$rootScope', 'buildUrl',
-  function( $scope, $http, $resource, $location, $rootScope, buildUrl ){
+DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 'buildUrl',
+  function( $scope, $http, $location, $rootScope, buildUrl ){
 
     $scope.toolSearchText; // String the search bar is binding to.
     $scope.selectedTool = {}; // Object returned after search is completed

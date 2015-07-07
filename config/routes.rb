@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     post 'login' => 'sessions#create'
     get 'check' => 'sessions#check'
     delete 'logout' => 'sessions#destroy'
+    get 'validate' => 'validate#index' #use this route to validate tool info
     # get 'logout' => 'sessions#destroy'
     get 'home' => 'static#index'
     resources :tools do
