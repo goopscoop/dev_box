@@ -25,8 +25,8 @@ main {
 }
 
 
-.nav-wrapper a{
-  white-space: nowrap;
+.nav-wrapper a {
+  /*white-space: nowrap;*/
 }
 
 small {
