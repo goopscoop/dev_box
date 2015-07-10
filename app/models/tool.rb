@@ -6,8 +6,9 @@ class Tool < ActiveRecord::Base
   has_many :tvotes
   has_many :reviews
 
-  validates :title, presence: true
+  validates :title, presence: true, uniqueness: { case_sensitive: false }
   validates :description, presence: true
+
 
   # create_table "tools", force: :cascade do |t|
   #   t.string   "title"

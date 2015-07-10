@@ -2,19 +2,30 @@
   <form class="col s12 m6 offset-m3 card-panel blue-grey darken-2 big-text">
     <h4>Add a New Tool</h4>
     <div class="card-pannel blue-grey " ng-if="isAuthenticated === false"><p class="center-align">please log in to add a tool, otherwise current changes will not be saved</p></div>
-    <div class="card-pannel blue-grey message" ng-if="isAuthenticated === true">
-      <p>Before adding, here's a few simple principles to keep { DevBox } a great place:</p>
+    <div class="card-pannel blue-grey message" ng-if="isAuthenticated" ng-show="showPrinciples">
+      <p>Before adding, here's a few simple principles to keep DevBox.tools a great place:</p>
       <ol>
         <li><em>Quality:</em> We don't want to be the biggest, save that for the other guys. We want the best.</li>
         <li><em>Vetted:</em> Only submit tools you've personally used. This helps with numero uno.</li>
       </ol>
       <p>Thanks. Team { DevBox }</p>
+      <p class="center-align"><a href="#" ng-click="hidePrinciples(false)" class="waves-effect waves-light btn deep-purple lighten-1">Hide</a></p>
     </div>
     <div class="row">
       <div class="input-field col s12">
-        <input ng-model="title" id="title" type="text">
-        <label for="title">Title</label>
-        <md-tooltip md-visible="true">tool titles must be unique</md-tooltip>
+        <input ng-blur="checkForExisitingTool()" ng-model="title" id="title" type="text" autofocus>
+        <label for="title">Title (must be unique)</label>
+        <div ng-if="isUniqueMessage">
+          <div class="col s10 offset-s1 card-panel blue-grey message">
+            <p>{{isUniqueMessage}} If your entry is unique, simply complete the form. Otherwise, visit the tool page.</p>
+            <ul class="bulleted-list">
+              <li ng-repeat="tool in conflictingTools">
+                {{ tool.title }} | <a href="/tools/{{tool.id}}" target="_blank">visit tool page</a>
+              </li>
+            </ul>
+            <p class="center-align"><a href="#" ng-click="hideUniqueMessage(false)" class="waves-effect waves-light btn deep-purple lighten-1">Hide</a></p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -151,6 +162,11 @@
 
     <div class="row">
       <div class="col s12">
+        <div ng-if="finalIsUniqueMessage">
+          <div class="col s10 offset-s1 card-panel blue-grey message">
+            <p>{{finalIsUniqueMessage}} Visit the <a href="/tools/{{ finalConflictingToolId }}">{{ finalConflictingToolTitle }}</a> page or add a new entry.</p>
+          </div>
+        </div>
         <button ng-click="saveTool()" id="save-tool-btn" class="btn waves-effect waves-light deep-purple lighten-1" type="button">Submit
           <!-- <i class="mdi-content-send right"></i> -->
         </button>
