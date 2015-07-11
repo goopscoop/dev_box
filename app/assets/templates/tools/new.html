@@ -32,21 +32,50 @@
     <div class="row">
       <div class="input-field col s12">
         <textarea ng-model="description" id="description" class="materialize-textarea"></textarea>
-        <label for="description">Description</label>
+        <label for="description">Description (Markdown)</label>
+      </div>
+      <div class="markdownHelper">
+        <a href="#" ng-hide="isFormattingHelpOpen" ng-click="formattingHelp(true)">Show Formatting Help</a>
+        <a href="#" ng-show="isFormattingHelpOpen" ng-click="formattingHelp(false)">Hide Formatting Help</a>
+        <div ng-show="isFormattingHelpOpen" class="card-panel blue-grey darken-2">
+          <p>Reviews on DevBox.tools are formatted with markdown.</p>
+          <table>
+            <tr>
+              <td width="50%">
+                <ul>
+                  <li>italics: *this* or _this_ equals <em>this</em></li>
+                  <li>bold: **this** or __this__ equals <strong>this</strong></li>
+                  <li>strikethrough: ~~this~~ equals <del>this</del></li>
+                  <li>inline code: `this` equals <code>this</code></li>
+                  <li>block code: ```a block of multi line code```</li>
+                </ul>
+              </td>
+              <td width="50%">
+                <ol>
+                  <li>Ordered lists begin with a number.</li>
+                </ol>
+                <ul>
+                  <li>Unordered lists begin with either * , - , or + (notice the space that follows).</li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
 
-    <div class="row input-label">
+<!--     <div class="row input-label">
       Choose up to three categories
-    </div>
+    </div> -->
 
     <div class="row">
       <div class="col m4">
         <md-select ng-model="category01" placeholder="Category">
           <md-option ng-repeat="category in categories" value="{{category.id}}">{{category.category}}</md-option>
         </md-select>
+        <label for="category01Pre">Category</label>
       </div>
-      <div class="col m4">
+<!--       <div class="col m4">
         <md-select ng-model="category02" placeholder="Category">
           <md-option ng-repeat="category in categories" value="{{category.id}}">{{category.category}}</md-option>
         </md-select>
@@ -55,7 +84,7 @@
         <md-select ng-model="category03" placeholder="Category">
           <md-option ng-repeat="category in categories" value="{{category.id}}">{{category.category}}</md-option>
         </md-select>
-      </div>
+      </div> -->
     </div>
 
     <div class="row">

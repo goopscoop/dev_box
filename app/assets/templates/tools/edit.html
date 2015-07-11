@@ -6,36 +6,50 @@
       <div class="input-field col s12">
         <input ng-model="title" id="title" class="active" type="text" placeholder="Title">
 
-        <!-- <md-tooltip md-visible="true">tool titles must be unique</md-tooltip> -->
+        <md-tooltip md-visible="true">tool titles must be unique</md-tooltip>
       </div>
     </div>
 
     <div class="row">
       <div class="input-field col s12">
         <textarea ng-model="description" id="description" class="materialize-textarea" placeholder="Description"></textarea>
-
       </div>
-    </div>
-
-    <div class="row input-label">
-      Choose up to three categories
+      <div class="markdownHelper">
+        <a href="#" ng-hide="isFormattingHelpOpen" ng-click="formattingHelp(true)">Show Formatting Help</a>
+        <a href="#" ng-show="isFormattingHelpOpen" ng-click="formattingHelp(false)">Hide Formatting Help</a>
+        <div ng-show="isFormattingHelpOpen" class="card-panel blue-grey darken-2">
+          <p>Reviews on DevBox.tools are formatted with markdown.</p>
+          <table>
+            <tr>
+              <td width="50%">
+                <ul>
+                  <li>italics: *this* or _this_ equals <em>this</em></li>
+                  <li>bold: **this** or __this__ equals <strong>this</strong></li>
+                  <li>strikethrough: ~~this~~ equals <del>this</del></li>
+                  <li>inline code: `this` equals <code>this</code></li>
+                  <li>block code: ```a block of multi line code```</li>
+                </ul>
+              </td>
+              <td width="50%">
+                <ol>
+                  <li>Ordered lists begin with a number.</li>
+                </ol>
+                <ul>
+                  <li>Unordered lists begin with either * , - , or + (notice the space that follows).</li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
     </div>
 
     <div class="row">
       <div class="col m4">
-        <md-select ng-model="category01Pre" placeholder="Category">
+        <md-select ng-model="category01Pre" id="category01Pre" placeholder="Category">
           <md-option ng-repeat="category in categories" ng-selected="{{category.category == category01Pre.category}}" value="{{category.id}}">{{category.category}}</md-option>
         </md-select>
-      </div>
-      <div class="col m4">
-        <md-select ng-model="category02Pre" placeholder="Category">
-          <md-option ng-repeat="category in categories" ng-selected="{{category.category == category02Pre.category}}" value="{{category.id}}">{{category.category}}</md-option>
-        </md-select>
-      </div>
-      <div class="col m4">
-        <md-select ng-model="category03Pre" placeholder="Category">
-          <md-option ng-repeat="category in categories" ng-selected="{{category.category == category03Pre.category}}" value="{{category.id}}">{{category.category}}</md-option>
-        </md-select>
+        <label for="category01Pre">Category</label>
       </div>
     </div>
 
@@ -112,10 +126,8 @@
     <div class="row">
       <div class="col s12">
         <button ng-if="$root.isAuthenticated === true" ng-click="updateTool()" id="save-tool-btn" class="btn waves-effect waves-light deep-purple lighten-1" type="button">Submit
-          <!-- <i class="mdi-content-send right"></i> -->
         </button>
         <button ng-if="$root.isAuthenticated === false" id="save-tool-btn" class="btn waves-effect waves-light deep-purple lighten-1" type="button">Submit<md-tooltip>login to edit</md-tooltip>
-          <!-- <i class="mdi-content-send right"></i> -->
         </button>
       </div>
     </div>

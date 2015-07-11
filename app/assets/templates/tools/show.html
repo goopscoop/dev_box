@@ -48,9 +48,9 @@
     </div>
     <div class="row">
       <div class="col s12 m10 offset-m1">
-        <div class="card-panel blue-grey darken-2">
+        <div class="card-panel blue-grey darken-2 review">
           <a ng-href="{{tool.tool.web_url}}"><span class="small mdi-social-public"></span><md-tooltip ng-if="tool.tool.web_url">website</md-tooltip><md-tooltip ng-if="!!tool.tool.web_url == false">no website</md-tooltip></a> <a ng-href="{{tool.tool.doc_url}}"><span class="mdi-action-description"></span><md-tooltip ng-if="tool.tool.doc_url">docs</md-tooltip><md-tooltip ng-if="!!tool.tool.doc_url == false">no docs</md-tooltip></a> <a ng-href="{{tool.tool.repo_url}}"><span class="mdi-communication-call-split"></span><md-tooltip ng-if="tool.tool.repo_url">repository</md-tooltip><md-tooltip ng-if="!!tool.tool.repo_url == false">no repo</md-tooltip></a> <a ng-if="$root.isAuthenticated" ng-href="/tools/{{tool.tool.id}}/edit"><span class="mdi-editor-mode-edit"></span><md-tooltip ng-if="$root.isAuthenticated === true">edit this tool</md-tooltip></a><span ng-if="isAuthenticated === false"><span class="mdi-editor-mode-edit"></span><md-tooltip ng-if="$root.isAuthenticated === false">log in to edit</md-tooltip></span>
-          <p>{{tool.tool.description}}</p>
+          <div markdown="tool.tool.description"></div>
         </div>
       </div>
     </div>

@@ -11,6 +11,12 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', '$http
   $scope.numberChips = [];
   $scope.numberChips2 = [];
   $scope.numberBuffer = '';
+  $scope.$watch.isFormattingHelpOpen = false;
+
+  $scope.formattingHelp = function(action){
+    console.log('boop')
+    $scope.isFormattingHelpOpen = action;
+  }
 
   var Tool = $resource('/api/tools/', null, {
     'update': { method:'PUT' }
@@ -26,7 +32,6 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', '$http
   },function(err){
     console.log(err);
   });
-
 
   $scope.checkForExisitingTool = function(){
     $http.get( '/api/validate?title=' + $scope.title ).success( function( data ){
@@ -71,7 +76,7 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', '$http
       tool.repo_url = $scope.repo_url;
       tool.doc_url = $scope.doc_url;
       tool.avg_rating = null;
-      tool.categories = [$scope.category01, $scope.category02, $scope.category03];
+      tool.categories = [$scope.category01];
       tool.tags = $scope.selectedTags;
       tool.$save(function(data) {
         console.log("server returns before",data);
@@ -88,7 +93,6 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', '$http
           }
       })
     }
-
   }
 
 
@@ -119,4 +123,3 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', '$http
   }
 
 }])
-
