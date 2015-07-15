@@ -18,6 +18,7 @@ DevBox.factory('buildUrl', function(){
   }
 })
   .factory('devValidate', function(){
+
     var isValidated = function( testEl, errMessage, optionalTestEl, optionalTestEl2 ){
       if( testEl || optionalTestEl || optionalTestEl2 ) {
         return true;
@@ -26,7 +27,6 @@ DevBox.factory('buildUrl', function(){
         return false;
       }
     }
-
 
     return {
       title: function( toolTitle ){
@@ -42,7 +42,10 @@ DevBox.factory('buildUrl', function(){
         return isValidated( webUrl, 'at least one link is required', repoUrl, docsUrl );
       },
       tags: function( toolTags ){
-        return isValidated(toolTags, 'at least one tag is required')
+        return isValidated( toolTags, 'at least one tag is required' )
+      },
+      custom: function( customEl, message, optionalEl, optionalEl2 ){
+        return isValidated( customEl, message, optionalEl, optionalEl2 )
       }
     }
   })
