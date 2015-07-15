@@ -58,7 +58,7 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', '$http
     if ( devValidate.title($scope.title) &&
         devValidate.description($scope.description) &&
         devValidate.category($scope.category01) &&
-        devValidate.tags( $scope.tags ) &&
+        devValidate.tags( $scope.selectedTags[0] ) &&
         devValidate.urls( $scope.web_url, $scope.repo_url, $scope.doc_url ) ) {
 
           var tool = new Tool();
@@ -74,16 +74,12 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', '$http
           tool.categories = [$scope.category01];
           tool.tags = $scope.selectedTags;
           tool.$save(function(data) {
-            console.log("server returns before",data);
             if(data.result.id === null){
                      // ... error_message comes from the server
+                     // NOT WORKING YET!!! but validations make chances of error unlikely
                 Materialize.toast( 'Oops. Something happened', 4000)
                 Materialize.toast( 'Please make sure this tool is a unique entry', 4000)
-                 console.log("server returns if",data);
-
               } else {
-
-                   console.log("server returns else",data);
                 $location.url("/tools/" + data.result.id)
               }
           })
