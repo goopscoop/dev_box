@@ -2,13 +2,6 @@
   <form class="col s12 m6 offset-m3 card-panel blue-grey darken-2 big-text">
     <h4>Edit {{title}}</h4>
     <div class="card-pannel blue-grey " ng-if="isAuthenticated === false"><p class="center-align">please log in to edit, otherwise current changes will not be saved</p></div>
-    <div class="row">
-      <div class="input-field col s12">
-        <input ng-model="title" id="title" class="active" type="text" placeholder="Title">
-
-        <md-tooltip md-visible="true">tool titles must be unique</md-tooltip>
-      </div>
-    </div>
 
     <div class="row">
       <div class="input-field col s12">
