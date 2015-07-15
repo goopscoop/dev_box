@@ -1,4 +1,25 @@
-DevBox.directive('boxSearchResult', function(){
+DevBox.directive( 'devMarkdownHelper', function(){
+  var helperLogic = function(scope, element, attrs ){
+    scope.isFormattingHelpOpen = false;
+
+    scope.formattingHelp = function(action){
+      console.log('boop')
+      scope.isFormattingHelpOpen = action;
+    }
+  }
+  return {
+    restrict: 'A',
+    template: 'markdownHelper.html',
+
+    scope: {
+      // newclass: '='
+    },
+    link: helperLogic
+  }
+} )
+
+
+.directive('boxSearchResult', function(){
   var searchResultTemplat = '<div class="section tool-search-results" dir-paginate="tool in searchArray | itemsPerPage: 10">' +
           '<div class="col s1">' +
             '<div ng-if="$root.isAuthenticated === false"><a class="not-voted" href="#" ><i class="mdi-navigation-expand-less up-vote"></i><md-tooltip>log in to vote</md-tooltip></a></div>' +
@@ -43,10 +64,6 @@ DevBox.directive('boxSearchResult', function(){
 
   return {
     restrict: 'E',
-
-    link: function(scope, element, attribute){
-      scope.searchArray = attribute.searchArray;
-    },
     template: searchResultTemplat,
     replace: true
   }
