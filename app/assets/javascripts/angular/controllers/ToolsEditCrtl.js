@@ -1,5 +1,5 @@
-DevBox.controller( 'ToolsEditCtrl', [ '$scope' , '$resource', '$location', '$http', '$routeParams', '$rootScope',
-  function( $scope, $resource, $location, $http, $routeParams, $rootScope ){
+DevBox.controller( 'ToolsEditCtrl', [ '$scope' , '$resource', '$location', '$http', '$routeParams', '$rootScope', 'devValidate',
+  function( $scope, $resource, $location, $http, $routeParams, $rootScope, devValidate ){
   $rootScope.isAuthenticated;
     // Vars needed for tags
   $scope.readonly = false;
@@ -40,34 +40,35 @@ DevBox.controller( 'ToolsEditCtrl', [ '$scope' , '$resource', '$location', '$htt
       $scope.tags = data.allTags;
       $scope.category01Pre = data.categories[0] || null;
       $scope.categories = data.allCategories;
-
     })
   }
 
   $scope.updateTool = function() {
-    if ( $scope.category01Pre == false ||$scope.category01Pre == null ){
-      Materialize.toast('please add at least one category', 4000)
-    } else {
-      var tool = {}
-    // $http.put
-      tool.title = $scope.title;
-      tool.description = $scope.description;
-      tool.language = $scope.language;
-      tool.is_open = $scope.is_open? true : false;
-      tool.is_free = $scope.is_free;
-      tool.web_url = $scope.web_url;
-      tool.repo_url = $scope.repo_url;
-      tool.doc_url = $scope.doc_url;
-      tool.categories = [$scope.category01Pre];
-      tool.tags = $scope.selectedTags;
-      Tool.update({id: $routeParams.id},tool,
-        function(data){
-          Materialize.toast('edit successful', 4000)
-          $location.url("/tools/" + $routeParams.id)
-        },
-        function(err) {
-          Materialize.toast('Uh-oh :/ Try refreshing', 4000)
-        });
+    if ( devValidate.description($scope.description) &&
+        devValidate.category($scope.category01Pre) &&
+        devValidate.tags( $scope.selectedTags[0] ) &&
+        devValidate.urls( $scope.web_url, $scope.repo_url, $scope.doc_url ) ){
+
+        var tool = {}
+        // tool.title = $scope.title;
+        tool.description = $scope.description;
+        tool.language = $scope.language;
+        tool.is_open = $scope.is_open? true : false;
+        tool.is_free = $scope.is_free;
+        tool.web_url = $scope.web_url;
+        tool.repo_url = $scope.repo_url;
+        tool.doc_url = $scope.doc_url;
+        tool.categories = [$scope.category01Pre];
+        tool.tags = $scope.selectedTags;
+        Tool.update({id: $routeParams.id},tool,
+          function(data){
+            Materialize.toast('edit successful', 4000)
+            $location.url("/tools/" + $routeParams.id)
+          },
+          function(err) {
+            Materialize.toast('Uh-oh :/ Try refreshing', 4000)
+          });
+
     }
   }
 
