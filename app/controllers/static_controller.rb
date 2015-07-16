@@ -19,7 +19,6 @@ class StaticController < ApplicationController
             vote_id = vote.id
           end
         end
-
         return({ id: tool.id, title: tool.title, avg_rating: tool.avg_rating, language: tool.language, tags: tags, categories: cats, votes: tvotes, hasVoted: has_voted, voteId: vote_id })
   end
 
@@ -39,7 +38,7 @@ class StaticController < ApplicationController
       recent_tools.push(add_tool_info tool)
     end
 
-    categories = Category.all
+    categories = db_all_cats
     tags = get_popular_tags
 
     render json: { categories: categories, tags: tags, popular:popular_tools, recent: recent_tools }

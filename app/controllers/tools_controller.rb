@@ -9,60 +9,43 @@ class ToolsController < ApplicationController
     # Search results for a query and category
     if search_term && category && tag
       search_match = db_find_by_term_cat_tag category,tag,search_term
-
       tool_info = add_tool_info search_match
-
-      tool_info.sort!{ |a,b| b[:votes].to_i <=> a[:votes].to_i }
+      sort_by_votes tool_info
       render json: tool_info
     elsif search_term && tag
-      search_match = Tag.find_by_tag(tag).tools.where('title ilike ?', "%#{search_term}%")
-
+      search_match = db_find_by_tags_and_tool_title tag, search_term
       tool_info = add_tool_info search_match
-
-      tool_info.sort!{ |a,b| b[:votes].to_i <=> a[:votes].to_i }
+      sort_by_votes tool_info
       render json: tool_info
     elsif search_term && category
-      category_match = Category.find_by_category(category)
-      search_match = category_match.tools.where('title ilike ?', "%#{search_term}%")
-
+      search_match = db_find_by_cat_and_tool_title category, search_term
       tool_info = add_tool_info search_match
-
-      tool_info.sort!{ |a,b| b[:votes].to_i <=> a[:votes].to_i }
+      sort_by_votes tool_info
       render json: tool_info
     elsif category && tag
       search_match = db_find_by_cat_tag category,tag
-
       tool_info = add_tool_info search_match
-
-      tool_info.sort!{ |a,b| b[:votes].to_i <=> a[:votes].to_i }
+      sort_by_votes tool_info
       render json: tool_info
-
     elsif category
-      search_match = Category.find_by_category( category ).tools
-
+      search_match = db_find_by_cat category
       tool_info = add_tool_info search_match
-
-      tool_info.sort!{ |a,b| b[:votes].to_i <=> a[:votes].to_i }
+      sort_by_votes tool_info
       render json: tool_info
     elsif tag
-      search_match = Tag.find_by_tag(tag).tools
-
+      search_match = db_find_by_tag tag
       tool_info = add_tool_info search_match
-
-      tool_info.sort!{ |a,b| b[:votes].to_i <=> a[:votes].to_i }
+      sort_by_votes tool_info
       render json: tool_info
     elsif search_term
-      search_match = Tool.where('title ilike ?', "%#{search_term}%")
-      tag_match = Tag.where('tag ilike ?', "%#{search_term}%")
-
+      search_match = db_find_by_tool_title search_term
+      tag_match = db_find_by_tag_partial_match search_term
       tool_info = add_tool_info search_match
-
-      add_tags_to_tool_info tag_match, tool_info
-
-      tool_info.sort!{ |a,b| b[:votes].to_i <=> a[:votes].to_i }
+      add_tags_to_tool_info tag_match , tool_info
+      sort_by_votes tool_info
       render json: tool_info
     else
-      all_categories = Category.all
+      all_categories = db_all_cats
       all_tags = get_popular_tags
       render json: { categories: all_categories, tags: all_tags }
     end
@@ -70,13 +53,12 @@ class ToolsController < ApplicationController
 
   # tool GET
   def show
-    nav_cats = Category.all
+    nav_cats = db_all_cats
     nav_tags = get_popular_tags
-    tool = Tool.find(params[:id])
+    tool = db_find_by_tool_id params[:id]
     tags = tool.tags
     categories = tool.categories
     reviews = tool.reviews.order(created_at: :desc)
-
     reviews_users = reviews.map do |r|
       user_name = User.find(r[:user_id])[:name]
       {review: r, user_name: user_name}
@@ -89,13 +71,12 @@ class ToolsController < ApplicationController
       tool_info = { tool: tool, tags: tags, categories: categories, reviews_users: reviews_users, favorited: false }
     end
     render json: { result: tool_info, navCats: nav_cats, navTags: nav_tags }
-
   end
 
   # new_tool GET
   def new
-    categories = Category.all
-    tags = Tag.all
+    categories = db_all_cats
+    tags = db_all_tags
     tag_tags = tags.map do |tag|
       {tag: tag[:tag]}
     end
@@ -141,11 +122,11 @@ class ToolsController < ApplicationController
 
   # edit_tool GET
   def edit
-    tool = Tool.find_by_id(params[:id])
+    tool = db_find_by_tool_id params[:id]
     categories = tool.categories
-    all_categories = Category.all
+    all_categories = db_all_cats
     tags = tool.tags
-    all_tags = Tag.all
+    all_tags = db_all_tags
     render json: { tool: tool, categories: categories, tags: tags, allCategories: all_categories, allTags: all_tags }
   end
 
@@ -217,8 +198,36 @@ class ToolsController < ApplicationController
 
   private
 
+  def db_find_by_tool_id tool_id
+    Tool.find_by_id( tool_id )
+  end
+
+  def db_find_by_tag_partial_match search_tag
+    Tag.where('tag ilike ?', "%#{search_tag}%")
+  end
+
+  def db_find_by_tag search_tag
+    Tag.find_by_tag( search_tag ).tools
+  end
+
+  def db_find_by_cat search_category
+    Category.find_by_category( search_category ).tools
+  end
+
+  def db_find_by_cat_and_tool_title search_category, search_title
+    Category.find_by_category( search_category ).tools.where('title ilike ?', "%#{search_title}%")
+  end
+
+  def db_find_by_tags_and_tool_title search_tag, search_title
+    Tag.find_by_tag( search_tag ).tools.where( 'title ilike ?', "%#{search_title}%" )
+  end
+
+  def sort_by_votes array_of_tools
+    array_of_tools.sort!{ |a,b| b[:votes].to_i <=> a[:votes].to_i }
+  end
+
   def tool_params
-    params.require(:tool).permit(:title,:description,:language,:is_open,:is_free,:web_url,:repo_url,:doc_url,:avg_rating)
+    params.require( :tool ).permit( :title,:description,:language,:is_open,:is_free,:web_url,:repo_url,:doc_url,:avg_rating )
   end
 
   def db_find_by_term_cat_tag category,tag,search_term

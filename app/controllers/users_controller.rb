@@ -9,8 +9,8 @@ class UsersController < ApplicationController
 
   # user GET
   def show
-    categories = Category.all
-    tags = Tag.all
+    categories = db_all_cats
+    tags = db_all_tags
     tools = current_user.tools
     tool_info = []
     tools.each do |tool|
