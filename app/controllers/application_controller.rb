@@ -34,6 +34,8 @@ class ApplicationController < ActionController::Base
     super || valid_authenticity_token?(session, request.headers['X-XSRF-TOKEN'])
   end
 
+
+
   def get_popular_tags
     Tag.find_by_sql("SELECT    tt.tag_id, t.tag, count(tt.tag_id)
                       FROM    tags_tools tt,
@@ -42,6 +44,18 @@ class ApplicationController < ActionController::Base
                       GROUP BY tt.tag_id, t.tag
                       ORDER BY count(tag_id) desc
                       LIMIT 10")
+  end
+
+  def db_all_tags
+    Tag.all
+  end
+
+  def db_all_cats
+    Category.all
+  end
+
+  def db_find_by_tool_title search_title
+    Tool.where('title ilike ?', "%#{search_term}%")
   end
 
 end

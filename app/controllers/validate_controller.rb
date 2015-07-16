@@ -1,10 +1,7 @@
 class ValidateController < ApplicationController
 
   def index
-    tool_title = params[:title]
-
-    tools = Tool.where('title ilike ?', "%#{tool_title}%")
-
+    tools = db_find_by_tool_title params[:title]
     if tools.length > 0
       render json: { uniqueness: false, tools: tools, message: "We found #{tools.length} tool(s) with a similar name in our database." }
     else
