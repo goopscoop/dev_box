@@ -1,5 +1,5 @@
-DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', '$http', 'devValidate',
-  function( $scope, $resource, $location, $http, devValidate ){
+DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', '$http', 'devValidate', 'devAlert',
+  function( $scope, $resource, $location, $http, devValidate, devAlert ){
 
   $scope.showPrinciples = true;
   $scope.readonly = false;
@@ -14,7 +14,6 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', '$http
   $scope.$watch.isFormattingHelpOpen = false;
 
   $scope.formattingHelp = function(action){
-    console.log('boop')
     $scope.isFormattingHelpOpen = action;
   }
 
@@ -34,16 +33,18 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', '$http
   });
 
   $scope.checkForExisitingTool = function(){
-    $http.get( '/api/validate?title=' + $scope.title ).success( function( data ){
-      if (data.uniqueness === false ){
-        $scope.isUniqueMessage = data.message;
-        $scope.conflictingTools = data.tools;
-        console.log('if', data)
-      } else {
-        $scope.isUniqueMessage = '';
-        console.log('else', data)
-      }
-    })
+    if ( $scope.title ){
+        $http.get( '/api/validate?title=' + $scope.title ).success( function( data ){
+          if (data.uniqueness === false ){
+            $scope.isUniqueMessage = data.message;
+            $scope.conflictingTools = data.tools;
+          } else {
+            $scope.isUniqueMessage = '';
+          }
+        })
+    } else {
+      devAlert.alert("A title is required")
+    }
   }
 
   $scope.hidePrinciples = function(boolean){
@@ -77,8 +78,8 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', '$http
             if(data.result.id === null){
                      // ... error_message comes from the server
                      // NOT WORKING YET!!! but validations make chances of error unlikely
-                Materialize.toast( 'Oops. Something happened', 4000)
-                Materialize.toast( 'Please make sure this tool is a unique entry', 4000)
+                devAlert.alert( 'Oops. Something happened');
+                devAlert.alert( 'Please make sure this tool is a unique entry');
               } else {
                 $location.url("/tools/" + data.result.id)
               }

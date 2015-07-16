@@ -1,5 +1,5 @@
-DevBox.controller( 'ToolsEditCtrl', [ '$scope' , '$resource', '$location', '$http', '$routeParams', '$rootScope', 'devValidate',
-  function( $scope, $resource, $location, $http, $routeParams, $rootScope, devValidate){
+DevBox.controller( 'ToolsEditCtrl', [ '$scope' , '$resource', '$location', '$http', '$routeParams', '$rootScope', 'devValidate', 'devAlert',
+  function( $scope, $resource, $location, $http, $routeParams, $rootScope, devValidate, devAlert ){
   $rootScope.isAuthenticated;
     // Vars needed for tags
   $scope.readonly = false;
@@ -62,11 +62,11 @@ DevBox.controller( 'ToolsEditCtrl', [ '$scope' , '$resource', '$location', '$htt
         tool.tags = $scope.selectedTags;
         Tool.update({id: $routeParams.id},tool,
           function(data){
-            Materialize.toast('edit successful', 4000)
-            $location.url("/tools/" + $routeParams.id)
+            devAlert.alert('edit successful')
+            $location.url("/tools/" + $routeParams.id);
           },
           function(err) {
-            Materialize.toast('Uh-oh :/ Try refreshing', 4000)
+            devAlert.alert('Uh-oh :/ Try refreshing');
           });
 
     }

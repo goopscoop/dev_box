@@ -17,13 +17,13 @@ DevBox.factory('buildUrl', function(){
     }
   }
 })
-  .factory('devValidate', function(){
+  .factory('devValidate',[ 'devAlert', function( devAlert ){
 
     var isValidated = function( testEl, errMessage, optionalTestEl, optionalTestEl2 ){
       if( testEl || optionalTestEl || optionalTestEl2 ) {
         return true;
       } else {
-        Materialize.toast( errMessage, 4000)
+        devAlert.alert( errMessage);
         return false;
       }
     }
@@ -46,6 +46,13 @@ DevBox.factory('buildUrl', function(){
       },
       custom: function( customEl, message, optionalEl, optionalEl2 ){
         return isValidated( customEl, message, optionalEl, optionalEl2 )
+      }
+    }
+  }])
+  .factory('devAlert', function(){
+    return {
+      alert: function( message, optionalDuration ){
+        Materialize.toast( message, optionalDuration || 4000)
       }
     }
   })
