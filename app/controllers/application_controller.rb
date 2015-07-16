@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
   end
 
   def db_find_by_tool_title search_title
-    Tool.where('title ilike ?', "%#{search_term}%")
+    Tool.where('title ilike ?', "%#{search_title}%")
   end
 
 end

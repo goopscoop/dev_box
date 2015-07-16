@@ -1,5 +1,5 @@
-DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$location', '$routeParams', '$rootScope', 'showdown', 'UserService',
- function( $scope, $resource, $http, $location, $routeParams, $rootScope, showdown, UserService ){
+DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$location', '$routeParams', '$rootScope', 'showdown', 'UserService', 'devAlert',
+ function( $scope, $resource, $http, $location, $routeParams, $rootScope, showdown, UserService, devAlert ){
   $rootScope.isAuthenticated;
 
   $scope.editingReview = false;
@@ -22,14 +22,14 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
       $http.post('/api/users/' + toolId + '/tool').success( function( data ){
         if (data.result === true){
           $scope.tool.favorited = true;
-          Materialize.toast( 'added to toolbox', 4000)
+          devAlert.alert('added to toolbox')
         }
       } )
     } else if ( $scope.tool.favorited === true ) {
       $http.delete( '/api/users/delete/tool/' + toolId ).success( function( data ){
         if (data.result === true){
           $scope.tool.favorited = false;
-          Materialize.toast( 'removed from toolbox', 4000)
+          devAlert.alert( 'removed from toolbox')
         }
       } )
     }
@@ -113,7 +113,7 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
   $scope.updateReview = function() {
     // update logic here
     if ( !$scope.userRating || $scope.userRating < 1 ) {
-      Materialize.toast('please add a rating', 4000)
+      devAlert.alert('please add a rating');
     } else {
       var review = {}
       review.post = $scope.userPost;
@@ -122,12 +122,11 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
 
       Review.update({id: $scope.userReviewId}, review, function(data) {
           $scope.editingReview = false;
-          $scope.userRating = data.result.rating
-          $scope.userPost = data.result.post
-          $scope.userReviewUpdatedAt = data.result.updated_at
-          $scope.tool.tool.avg_rating = data.avg_rating
-
-          Materialize.toast('review updated', 4000)
+          $scope.userRating = data.result.rating;
+          $scope.userPost = data.result.post;
+          $scope.userReviewUpdatedAt = data.result.updated_at;
+          $scope.tool.tool.avg_rating = data.avg_rating;
+          devAlert.alert('review updated');
         })
       }
   }

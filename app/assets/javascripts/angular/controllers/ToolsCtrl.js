@@ -1,5 +1,5 @@
-DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 'buildUrl',
-  function( $scope, $http, $location, $rootScope, buildUrl ){
+DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 'buildUrl', 'devAlert',
+  function( $scope, $http, $location, $rootScope, buildUrl, devAlert ){
 
     $scope.toolSearchText; // String the search bar is binding to.
     $scope.selectedTool = {}; // Object returned after search is completed
@@ -32,7 +32,7 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 
 
     $scope.searchTextChanged = function( toolSearchText ){
       if(toolSearchText){
-        $scope.getMatches(toolSearchText)
+        $scope.getMatches( toolSearchText )
       }
     }
 
@@ -61,6 +61,7 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 
       if ( $rootScope.isAuthenticated ){
         $http.post( '/api/tools/' + toolId + '/tvotes' ).success( function( data ){
           // returns an array of objects with Tools and associated categories and tags
+           devAlert.alert('voted');
            for ( var i = 0; i < $scope.searchTools.length; i++ ) {
               if( $scope.searchTools[i].id === toolId ) {
                 $scope.searchTools[i].votes = data.votes;
@@ -69,7 +70,7 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 
                 return
               }
            }
-           Materialize.toast( 'voted', 4000)
+           // Materialize.toast( 'voted', 4000)
         })
       }
     }
@@ -77,6 +78,7 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 
     $scope.removeVote = function( toolId, tvoteId ){
       if ( $rootScope.isAuthenticated ){
         $http.delete( '/api/tools/' + toolId + '/tvotes/' + tvoteId ).success( function( data ){
+           devAlert.alter( 'removed vote')
            for ( var i = 0; i < $scope.searchTools.length; i++ ) {
               if( $scope.searchTools[i].id === toolId ) {
                 $scope.searchTools[i].votes = data.votes
@@ -85,7 +87,6 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 
                 return
               }
            }
-           Materialize.toast( 'removed vote', 4000)
         })
       }
     }
@@ -93,7 +94,6 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 
     var loadCatsAndTags = function(){
       if( !$scope.categories || !$scope.tags ){
         $http.get( '/api/tools' ).success( function( data ){
-          // returns an array of objects with Tools and associated categories and tags
           $scope.categories = data.categories;
           $scope.tags = data.tags;
         })
@@ -109,9 +109,7 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 
       if( isNotEmpty( $location.search() ) ){
         $scope.activeCategory = $location.search().c || null;
         $scope.activeTag = $location.search().t || null;
-        // console.log($scope.activeCategory)
-        var url = buildUrl.build( true, $location.search().q, $location.search().c, $location.search().t )
-        $http.get( url ).success( function( data ){
+        $http.get( buildUrl.build( true, $location.search().q, $location.search().c, $location.search().t ) ).success( function( data ){
           // returns an array of objects with Tools and associated categories and tags
           $scope.searchTools = data
         })
