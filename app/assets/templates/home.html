@@ -3,11 +3,13 @@
     <h3 class="pink-text">Browse the Toolbox</h3>
     <div class="divider"></div>
     <h4>Category</h4>
+    <span ng-if="categories == false"><p>LOADING...</p></span>
     <ul ng-repeat="cat in categories">
         <li><a ng-href="/tools/?c={{cat.category}}" ng-click="addCat(cat.category)">{{cat.category}}</a></li>
     </ul>
     <div class="divider"></div>
     <h4>Popular Tags</h4>
+    <span ng-if="tags == false"><p>LOADING...</p></span>
     <ul ng-repeat="tag in tags">
         <li><a ng-href="/tools/?t={{tag.tag}}" ng-click="addTag(tag.tag)">{{tag.tag}}</a></li>
     </ul>
@@ -36,7 +38,8 @@
     <div class="col m10 offset-m1">
     <div class="row popular-section">
         <h4 class="home-section-title">Popular Tools</h4>
-        <div ng-show="popular ">
+        <span ng-if="popular == false"><p>LOADING...</p></span>
+        <div ng-show="popular">
         <div class="section tool-search-results" ng-repeat="tool in popular">
           <div class="col s1">
             <div ng-if="$root.isAuthenticated === false"><a class="not-voted" href="#" ><i class="mdi-navigation-expand-less up-vote"></i><md-tooltip>log in to vote</md-tooltip></a></div>
@@ -74,6 +77,7 @@
       <div class="row recent-section">
 
           <h4 class="home-section-title">Recently Added Tools</h4>
+          <span ng-if="popular == false"><p>LOADING...</p></span>
           <div ng-show="popular ">
           <div class="section tool-search-results" ng-repeat="tool in recent">
             <div class="col s1">
