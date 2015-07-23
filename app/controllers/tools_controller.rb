@@ -186,6 +186,11 @@ class ToolsController < ApplicationController
   def destroy
   end
 
+  def tags_and_cats
+    popular_tags_and_cats = db_popular_tags_and_cats
+    render json: { categories: popular_tags_and_cats[:cats], tags: popular_tags_and_cats[:tags] }
+  end
+
   private
 
   def db_find_by_tool_id tool_id

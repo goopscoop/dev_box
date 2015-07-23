@@ -50,6 +50,10 @@ class ApplicationController < ActionController::Base
     { tags: db_all_tags, cats: db_all_cats }
   end
 
+  def db_popular_tags_and_cats
+    { tags: get_popular_tags, cats: db_all_cats }
+  end
+
   def db_all_tags
     Tag.all
   end

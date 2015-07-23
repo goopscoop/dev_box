@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     delete 'logout' => 'sessions#destroy'
     get 'validate' => 'validate#index' #use this route to validate tool info
     # get 'logout' => 'sessions#destroy'
+    get 'tags-and-cats' => 'tools#tags_and_cats'
     get 'home' => 'static#index'
     resources :tools do
         resources :tvotes, :only => [:create,:destroy]
