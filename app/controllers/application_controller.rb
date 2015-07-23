@@ -46,6 +46,10 @@ class ApplicationController < ActionController::Base
                       LIMIT 10")
   end
 
+  def db_all_tags_and_cats
+    { tags: db_all_tags, cats: db_all_cats }
+  end
+
   def db_all_tags
     Tag.all
   end

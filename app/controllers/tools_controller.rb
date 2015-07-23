@@ -45,9 +45,8 @@ class ToolsController < ApplicationController
       sort_by_votes tool_info
       render json: tool_info
     else
-      all_categories = db_all_cats
-      all_tags = get_popular_tags
-      render json: { categories: all_categories, tags: all_tags }
+      all_tags_and_cats = db_all_tags_and_cats
+      render json: { categories: all_tags_and_cats[:cats], tags: all_tags_and_cats[:tags] }
     end
   end
 
@@ -75,14 +74,8 @@ class ToolsController < ApplicationController
 
   # new_tool GET
   def new
-    categories = db_all_cats
-    tags = db_all_tags
-    tag_tags = tags.map do |tag|
-      {tag: tag[:tag]}
-    end
-
-    render json: {result: {categories: categories, tags: tag_tags} || false}
-
+    all_tags_and_cats = db_all_tags_and_cats
+    render json: {result: {categories: all_tags_and_cats[:cats], tags: all_tags_and_cats[:tags] } || false}
   end
 
   # POST
@@ -108,11 +101,9 @@ class ToolsController < ApplicationController
     # and then associate it to the new tool
     params[:tags].each do |tag_obj|
       t = Tag.find_by_tag(tag_obj[:tag].downcase)
-
       unless t
         t = Tag.create(tag: tag_obj[:tag].downcase)
       end
-
       tool.tags << t
     end
 
@@ -124,10 +115,9 @@ class ToolsController < ApplicationController
   def edit
     tool = db_find_by_tool_id params[:id]
     categories = tool.categories
-    all_categories = db_all_cats
+    all_tags_and_cats = db_all_tags_and_cats
     tags = tool.tags
-    all_tags = db_all_tags
-    render json: { tool: tool, categories: categories, tags: tags, allCategories: all_categories, allTags: all_tags }
+    render json: { tool: tool, categories: categories, tags: tags, allCategories: all_tags_and_cats[:cats], allTags: all_tags_and_cats[:tags] }
   end
 
   # PATCH or PUT
