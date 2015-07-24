@@ -14,7 +14,18 @@ class CollectionsController < ApplicationController
     if current_user
       collection = Collection.create( name: params[:name], description: params[:description], is_public: params[:is_public] )
       current_user.collections << collection
-      render json: { result: true }
+
+      user_tools = current_user.tools
+
+      params[:tools].each do |tool|
+        add_tool = Tool.find_by_id( tool[:id] )
+        if user_tools.any? {|a| a[:id] == tool[:id]} == false
+          user_tools << add_tool
+        end
+        collection.tools << add_tool
+      end
+
+      render json: { result: true, id: collection.id }
     else
       render json: { result: false }
     end

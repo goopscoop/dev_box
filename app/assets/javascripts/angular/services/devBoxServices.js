@@ -17,6 +17,7 @@ DevBox.factory('buildUrl', function(){
     }
   }
 })
+
   .factory('devValidate',[ 'devAlert', function( devAlert ){
 
     var isValidated = function( testEl, errMessage, optionalTestEl, optionalTestEl2 ){
@@ -49,21 +50,31 @@ DevBox.factory('buildUrl', function(){
       }
     }
   }])
-  .factory('devAlert', function(){
-    return {
-      alert: function( message, optionalDuration ){
-        Materialize.toast( message, optionalDuration || 4000)
-      }
-    }
-  })
-  .factory('devSearchFn', function(){
-    return {
-      focus: function( selectedTool ){
-        if ( selectedTool ) {
-          searchTools = [];
-          searchTools.push(selectedTool);
-          return searchTools;
+
+  .factory('devAlert',  function(){
+      return {
+        alert: function( message, optionalDuration ){
+          Materialize.toast( message, optionalDuration || 4000)
         }
       }
-    }
-  })
+    })
+
+    .factory('devSearchFn', [ '$http', function( $http ){
+
+      return {
+        focus: function( selectedTool ){
+          if ( selectedTool ) {
+            searchTools = [];
+            searchTools.push(selectedTool);
+            return searchTools;
+          }
+        },
+        check: function( toolSearchText){
+          if( toolSearchText ){
+            return true
+          } else {
+            return false
+          }
+        }
+      }
+    }])

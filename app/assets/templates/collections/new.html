@@ -2,7 +2,7 @@
   <dev-left-sidebar categories="categories" tags="tags"></dev-left-sidebar>
 
 <div class="row">
-  <form class="col s12 m7 offset-m4 card-panel blue-grey darken-2 big-text">
+  <form class="col s12 m7 offset-m4 card-panel blue-grey darken-1">
     <h4>Create a Collection</h4>
     <div class="card-pannel blue-grey " ng-if="isAuthenticated === false">
       <p class="center-align">please log in to create a collection, otherwise current changes will not be saved</p>
@@ -34,9 +34,8 @@
     </div>
 
     <div class="row">
-      <div class="input-field col s12">
-        <!-- Add tools (can be done later) -->
-        <md-autocomplete md-autofocus="true" md-selected-item="selectedTool" md-selected-item-change="focusOnSelectedTool()" placeholder="Search Tools" md-delay="200" md-min-length="1" md-search-text="toolSearchText"  md-search-text-change="searchTextChanged(toolSearchText)"  md-items="tool in getMatches(toolSearchText)" md-item-text="tool.title" md-no-cache="true">
+      <div class="input-field col s10 offset-s1">
+        <md-autocomplete md-autofocus="true" md-selected-item="selectedTool" md-selected-item-change="addToolToCollection()" placeholder="Optional: Add tools to collection. Can be done later." md-delay="200" md-min-length="1" md-search-text="toolSearchText"  md-search-text-change="searchTextChanged(toolSearchText)"  md-items="tool in getMatches(toolSearchText)" md-item-text="tool.title" md-no-cache="true">
           <md-item-template>
             <span md-highlight-text="searchText">{{tool.title}}</span>
           </md-item-template>
@@ -44,6 +43,15 @@
             No matches found.
           </md-not-found>
         </md-autocomplete>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s10 offset-s1 card-panel blue-grey darken-2">
+        <h6>Tools to be added to collection (will also be added to your toolbox)</h6>
+
+          <div ng-repeat="collectionTool in toolsInCollection" ><p><i ng-click="removeFromCollection( collectionTool.id )" class="mdi-content-clear waves-effect waves-light pink"></i> {{collectionTool.title}}</p></div>
+
       </div>
     </div>
 

@@ -1,0 +1,3 @@
+DevBox.controller('CollectionsShowCtrl',function(){
+
+})

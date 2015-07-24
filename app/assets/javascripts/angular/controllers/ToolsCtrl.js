@@ -1,5 +1,5 @@
-DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 'buildUrl', 'devAlert',
-  function( $scope, $http, $location, $rootScope, buildUrl, devAlert ){
+DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 'buildUrl', 'devAlert', 'devSearchFn',
+  function( $scope, $http, $location, $rootScope, buildUrl, devAlert, devSearchFn ){
 
     $scope.toolSearchText; // String the search bar is binding to.
     $scope.selectedTool = {}; // Object returned after search is completed
@@ -22,17 +22,14 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 
 
     $scope.getMatches = function( toolSearchText ){
       $http.get( '/api/tools?q=' + toolSearchText ).success( function( data ){
-        // returns an array of objects with Tools and associated categories and tags
-         $scope.searchTools = data;
+        $scope.searchTools = data;
       })
         return $scope.searchTools;
-        // console.log("get matches function",$scope.searchTools)
     }
 
     $scope.searchTextChanged = function( toolSearchText ){
-      if(toolSearchText){
-        $scope.getMatches( toolSearchText )
-      }
+       if ( devSearchFn.check( toolSearchText ) ) $scope.getMatches( toolSearchText );
+       return $scope.searchTools
     }
 
      $scope.focusOnSelectedTool = function( ){
