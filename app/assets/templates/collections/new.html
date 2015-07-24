@@ -1,3 +1,52 @@
 <div>
   <dev-left-sidebar categories="categories" tags="tags"></dev-left-sidebar>
+
+<div class="row">
+  <form class="col s12 m7 offset-m4 card-panel blue-grey darken-2 big-text">
+    <h4>Create a Collection</h4>
+    <div class="card-pannel blue-grey " ng-if="isAuthenticated === false">
+      <p class="center-align">please log in to create a collection, otherwise current changes will not be saved</p>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input placeholder="Collection Name" ng-model="name" id="name" type="text" autofocus>
+        <label for="name">Collection Name</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <textarea ng-model="description" ng-keypress="descCharCount = description.length + 1 || 0" id="description" class="materialize-textarea"></textarea>
+        <label for="description">Description (limit {{descCharCount}} of 200 chars)</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <div class="switch">
+          <label>
+            <input ng-model="is_public" name="is_public" type="checkbox" disabled>
+            <span class="lever"></span>
+            Private (coming soon...)
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <!-- Add tools (can be done later) -->
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s12">
+        <button ng-click="saveCollection()" id="save-tool-btn" class="btn waves-effect waves-light deep-purple lighten-1" type="button">
+          Submit
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
 </div>

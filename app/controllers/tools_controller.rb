@@ -80,7 +80,6 @@ class ToolsController < ApplicationController
 
   # POST
   def create
-
     # Create the tool
     tool = Tool.create(title: params[:title], description: params[:description],
                       language: params[:language], is_open: params[:is_open],
