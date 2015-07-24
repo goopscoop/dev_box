@@ -56,3 +56,14 @@ DevBox.factory('buildUrl', function(){
       }
     }
   })
+  .factory('devSearchFn', function(){
+    return {
+      focus: function( selectedTool ){
+        if ( selectedTool ) {
+          searchTools = [];
+          searchTools.push(selectedTool);
+          return searchTools;
+        }
+      }
+    }
+  })

@@ -1,5 +1,5 @@
-DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl', '$location',
-  function( $scope, $http, buildUrl, $location ){
+DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl', '$location', 'devSearchFn',
+  function( $scope, $http, buildUrl, $location, devSearchFn ){
 
   $scope.userToolBox = {
     searchTools: []
@@ -28,37 +28,53 @@ DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl', '$location',
     return false;
   }
 
-  var narrowTools = function(){
+  var narrowTools = function( ){
     if( isNotEmptyObj( $location.search() ) ){
       $scope.activeCategory = $location.search().c || null;
       $scope.activeTag = $location.search().t || null;
-      $scope.userToolBox.searchTools = $.grep($scope.tools, function(tool){
-        if ( $scope.activeCategory && $scope.activeTag ) {
-          for (var i = 0; i < tool.categories.length; i++) {
-            if ( tool.categories[i].category.indexOf( $scope.activeCategory.toLowerCase() ) !== -1){
-              for ( i = 0; i < tool.tags.length; i++ ) {
-                if ( tool.tags[i].tag.toLowerCase().indexOf( $scope.activeTag.toLowerCase() ) !== -1 ) {
-                  return true;
-                }
-              }
-            }
-          }
-        } else if ( $scope.activeCategory ) {
-          for (var i = 0; i < tool.categories.length; i++) {
-            if ( tool.categories[i].category.indexOf( $scope.activeCategory.toLowerCase() ) !== -1){
-              return true;
-            } else {
+      $scope.userToolBox.searchTools = narrowByCatAndTag( $scope.tools, $scope.activeCategory, $scope.activeTag );
+  }
 
-            }
-          }
-        } else if ( $scope.activeTag ) {
-          for ( i = 0; i < tool.tags.length; i++ ) {
-            if ( tool.tags[i].tag.toLowerCase().indexOf( $scope.activeTag.toLowerCase() ) !== -1 ) {
-              return true;
-            }
+
+
+ function narrowByCatAndTag( allTools, focusedCat, focusedTag ){
+    return $.grep( allTools, function(tool){
+        if ( focusedCat && focusedTag ) {
+          return returnSelectedTagsAndCats( tool, focusedCat, focusedTag );
+        } else if ( focusedCat ) {
+          return returnSelectedCats( tool, focusedCat );
+        } else if ( focusedTag ) {
+          return returnSelectedTags( tool, focusedTag );
+        }
+      });
+    }
+  }
+
+  var returnSelectedTags = function( tool, focusedTag ){
+    for ( i = 0; i < tool.tags.length; i++ ) {
+      if ( tool.tags[i].tag.toLowerCase().indexOf( focusedTag.toLowerCase() ) !== -1 ) {
+        return true;
+      }
+    }
+  }
+
+  var returnSelectedCats = function( tool, focusedCat){
+    for (var i = 0; i < tool.categories.length; i++) {
+      if ( tool.categories[i].category.indexOf( focusedCat.toLowerCase() ) !== -1){
+        return true;
+      }
+    }
+  }
+
+  var returnSelectedTagsAndCats = function( tool, focusedCat, focusedTag ){
+    for (var i = 0; i < tool.categories.length; i++) {
+      if ( tool.categories[i].category.indexOf( focusedCat.toLowerCase() ) !== -1){
+        for ( i = 0; i < tool.tags.length; i++ ) {
+          if ( tool.tags[i].tag.toLowerCase().indexOf( focusedTag.toLowerCase() ) !== -1 ) {
+            return true;
           }
         }
-      })
+      }
     }
   }
 
@@ -69,7 +85,7 @@ DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl', '$location',
             $scope.tools.splice(i,1);
           }
         }
-      } )
+      } );
   }
 
   $scope.getMatches = function( toolSearchText ){
@@ -94,15 +110,11 @@ DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl', '$location',
     }
   }
 
+
+
   $scope.focusOnSelectedTool = function( ){
-    if ($scope.selectedTool) {
-      $scope.userToolBox.searchTools = [];
-      $scope.userToolBox.searchTools.unshift($scope.selectedTool);
-      return $scope.userToolBox.searchTools;
-      // console.log("get matches function",$scope.searchTools)
-    }
-    return $scope.userToolBox.searchTools;
-    // $scope.searchTools = $scope.selectedTool
+    $scope.userToolBox.searchTools = devSearchFn.focus( $scope.selectedTool )
+    return  $scope.userToolBox.searchTools
   }
 
   $scope.clearSearch = function(){
@@ -120,6 +132,8 @@ DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl', '$location',
     localUrl = buildUrl.build( false, $location.search().q, $location.search().c, tagName );
     $location.search(localUrl);
   }
+
+
 
   init()
 }]);
