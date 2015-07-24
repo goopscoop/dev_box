@@ -24,11 +24,11 @@ Rails.application.routes.draw do
     # get 'logout' => 'sessions#destroy'
     get 'tags-and-cats' => 'tools#tags_and_cats'
     get 'home' => 'static#index'
+    resources :collections
     resources :tools do
         resources :tvotes, :only => [:create,:destroy]
         resources :reviews, :only => [:create,:update,:destroy]
     end
-    resources :collections
     resources :users do
         resources :tool, :only => [:create,:destroy]
     end

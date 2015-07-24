@@ -34,7 +34,17 @@ class ApplicationController < ActionController::Base
     super || valid_authenticity_token?(session, request.headers['X-XSRF-TOKEN'])
   end
 
-
+  def add_tool_categories array_of_tools
+    tool_info = []
+    array_of_tools.each do |tool|
+      cats = []
+      tool.categories.each do |cat|
+        cats.push({ id: cat[:id] , category: cat[:category] })
+      end
+      tool_info.push({ id: tool.id, title: tool.title, avg_rating: tool.avg_rating, language: tool.language, categories: cats, web_url: tool.web_url, repo_url: tool.repo_url, doc_url: tool.doc_url })
+    end
+    return tool_info
+  end
 
   def get_popular_tags
     Tag.find_by_sql("SELECT    tt.tag_id, t.tag, count(tt.tag_id)

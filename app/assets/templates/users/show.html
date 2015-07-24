@@ -20,13 +20,13 @@
     </div>
     <div class="row">
       <md-autocomplete md-search-text="toolSearchText" md-autofocus="true" md-search-text-change="searchTextChanged(toolSearchText)" md-selected-item="selectedTool" md-selected-item-change="focusOnSelectedTool()" placeholder="Quick find by name or tag" md-delay="200" md-items="tool in getMatches(toolSearchText)" md-item-text="tool.title" md-no-cache="true">
-          <md-item-template>
-            <span md-highlight-text="searchText">{{tool.title}}</span>
-          </md-item-template>
-          <md-not-found>
-            No matches found.
-          </md-not-found>
-        </md-autocomplete>
+        <md-item-template>
+          <span md-highlight-text="searchText">{{tool.title}}</span>
+        </md-item-template>
+        <md-not-found>
+          No matches found.
+        </md-not-found>
+      </md-autocomplete>
 
         <button ng-click="clearSearch()" id="clear-search-btn" class="btn waves-effect waves-light">Clear Search
         </button>

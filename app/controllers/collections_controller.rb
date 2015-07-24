@@ -10,7 +10,6 @@ class CollectionsController < ApplicationController
   end
 
   def create
-    # add new tool to a collection
     if current_user
       collection = Collection.create( name: params[:name], description: params[:description], is_public: params[:is_public] )
       current_user.collections << collection
@@ -32,7 +31,13 @@ class CollectionsController < ApplicationController
   end
 
   def show
-    # get all tools for single collection
+    collection = Collection.find_by_id( params[:id] )
+    if collection[:is_public] == true
+      tools = add_tool_categories collection.tools
+      render json: { result: true, collection: collection, tools: tools }
+    else
+      render json: { result: false}
+    end
   end
 
   def edit
