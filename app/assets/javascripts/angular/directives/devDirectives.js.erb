@@ -21,19 +21,17 @@ DevBox.directive( 'devMarkdownHelper', function(){
 
 .directive('devLeftSidebar', [ '$http', function( $http ){
   var logic = function(scope, element, attrs){
-    $http.get('/api/tags-and-cats').success( function( data ){
-      scope.categories = data.categories;
-      scope.tags = data.tags;
-    });
+    console.log('scope.categories')
   }
 
   return {
     restrict: 'E',
-    template: 'devLeftSidebar.html',
-    replace: true,
+    templateUrl: '<%= asset_path("templates/devLeftSidebar.html") %>',
+    transclude: true,
     link: logic,
     scope: {
-
+      categories: '=',
+      tags: '='
     }
   }
 }])

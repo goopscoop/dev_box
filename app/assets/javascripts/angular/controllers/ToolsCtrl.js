@@ -22,7 +22,6 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 
 
     $scope.getMatches = function( toolSearchText ){
       $http.get( '/api/tools?q=' + toolSearchText ).success( function( data ){
-
         // returns an array of objects with Tools and associated categories and tags
          $scope.searchTools = data;
       })

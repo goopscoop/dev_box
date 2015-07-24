@@ -189,6 +189,7 @@ class ToolsController < ApplicationController
   def tags_and_cats
     popular_tags_and_cats = db_popular_tags_and_cats
     render json: { categories: popular_tags_and_cats[:cats], tags: popular_tags_and_cats[:tags] }
+    # render json: { success: true }
   end
 
   private
