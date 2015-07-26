@@ -1,5 +1,5 @@
-DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 'buildUrl', 'devAlert', 'devSearchFn',
-  function( $scope, $http, $location, $rootScope, buildUrl, devAlert, devSearchFn ){
+DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 'buildUrl', 'devAlert', 'devSearchFn', 'devInit',
+  function( $scope, $http, $location, $rootScope, buildUrl, devAlert, devSearchFn, devInit ){
 
     $scope.toolSearchText; // String the search bar is binding to.
     $scope.selectedTool = {}; // Object returned after search is completed
@@ -88,12 +88,17 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 
     }
 
     var loadCatsAndTags = function(){
-      if( !$scope.categories || !$scope.tags ){
-        $http.get( '/api/tools' ).success( function( data ){
+      if( tagsAndCatsNotLoaded() ){
+        devInit.loadCatsAndTags()
+        .then( function( data ){
           $scope.categories = data.categories;
           $scope.tags = data.tags;
         })
       }
+    }
+
+    var tagsAndCatsNotLoaded = function(){
+      return !$scope.categories || !$scope.tags ? true : false;
     }
 
     var isNotEmpty = function(ob){

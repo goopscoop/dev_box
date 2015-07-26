@@ -48,6 +48,10 @@ DevBox.config(['$routeProvider', '$locationProvider', function($routeProvider, $
     templateUrl: '<%= asset_path("reviews/edit.html") %>',
     controller: 'ReviewsCtrl'
   })
+  .when('/collections', {
+    templateUrl: '<%= asset_path("collections/index.html") %>',
+    controller: 'CollectionsCtrl'
+  })
   .when('/collections/new', {
     templateUrl: '<%= asset_path("collections/new.html") %>',
     controller: 'CollectionsNewCtrl'
