@@ -1,5 +1,7 @@
-DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$location', '$routeParams', '$rootScope', 'showdown', 'UserService', 'devAlert',
- function( $scope, $resource, $http, $location, $routeParams, $rootScope, showdown, UserService, devAlert ){
+DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$location', '$routeParams',
+  '$rootScope', 'showdown', 'UserService', 'devAlert', 'devInit',
+  function( $scope, $resource, $http, $location, $routeParams, $rootScope, showdown, UserService, devAlert, devInit ){
+
   $rootScope.isAuthenticated;
 
   $scope.editingReview = false;
@@ -12,6 +14,59 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
   $scope.$watchCollection('UserService', function() {
     $scope.currentUser = UserService.currentUser;
   });
+
+  var init = function(){
+    loadCatsAndTags();
+    loadTool();
+  }
+
+  var loadTool = function(){
+    Tool.get({id:$routeParams.id},function(data) {
+      $scope.tool = data.result;
+      isToolFree();
+      initUserReview();
+
+      $scope.userRating = $scope.userRating || 0;
+      $scope.originalRating = $scope.userRating;
+
+    },function(err){
+      console.log(err);
+    });
+  }
+
+  var loadCatsAndTags = function(){
+    if( devInit.notLoaded( $scope.categories, $scope.tags ) ){
+      devInit.loadCatsAndTags()
+      .then(function(data){
+        $scope.tags = data.tags;
+        $scope.categories = data.categories
+      })
+    }
+  }
+
+  var isToolFree = function(){
+    if ($scope.tool.tool.is_free == -1) {
+        $scope.is_free = 'freemium'
+      } else if ($scope.tool.tool.is_free == 0) {
+        $scope.is_free = 'paid'
+      } else if ($scope.tool.tool.is_free == 1) {
+        $scope.is_free = 'free'
+      }
+  }
+
+  var initUserReview = function(){
+    for(var i = 0; i < $scope.tool.reviews_users.length; i++) {
+      if ($scope.tool.reviews_users[i].review.user_id == $scope.currentUser.id) {
+        $scope.userRating = $scope.tool.reviews_users[i].review.rating;
+        // Set a variable so that we know this user has already rated
+        // or reviewed the tool
+        $scope.userRated = true;
+        $scope.userReviewId = $scope.tool.reviews_users[i].review.id
+        $scope.userPost = $scope.tool.reviews_users[i].review.post
+        $scope.userReviewCreatedAt = $scope.tool.reviews_users[i].review.created_at
+      }
+    }
+  }
 
   $scope.getNumber = function( num ) {
       return new Array(num);
@@ -48,39 +103,7 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
     $scope.isFormattingHelpOpen = action;
   }
 
-  var init = function(){
-      Tool.get({id:$routeParams.id},function(data) {
-        $scope.categories = data.navCats;
-        $scope.tags = data.navTags;
-        $scope.tool = data.result;
 
-        if ($scope.tool.tool.is_free == -1) {
-          $scope.is_free = 'freemium'
-        } else if ($scope.tool.tool.is_free == 0) {
-          $scope.is_free = 'paid'
-        } else if ($scope.tool.tool.is_free == 1) {
-          $scope.is_free = 'free'
-        }
-
-        for(var i = 0; i < $scope.tool.reviews_users.length; i++) {
-          if ($scope.tool.reviews_users[i].review.user_id == $scope.currentUser.id) {
-            $scope.userRating = $scope.tool.reviews_users[i].review.rating;
-            // Set a variable so that we know this user has already rated
-            // or reviewed the tool
-            $scope.userRated = true;
-            $scope.userReviewId = $scope.tool.reviews_users[i].review.id
-            $scope.userPost = $scope.tool.reviews_users[i].review.post
-            $scope.userReviewCreatedAt = $scope.tool.reviews_users[i].review.created_at
-          }
-        }
-
-        $scope.userRating = $scope.userRating || 0;
-        $scope.originalRating = $scope.userRating;
-
-      },function(err){
-        console.log(err);
-      });
-    }
 
   init()
 

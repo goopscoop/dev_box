@@ -1,7 +1,20 @@
 class CollectionsController < ApplicationController
 
   def index
-    # get collection info
+    if current_user
+      collections = current_user.collections
+      collections_info = []
+      collections.each do |col|
+        tools = []
+        col.tools.each do |tool|
+          tools.push({title: tool.title, id: tool.id })
+        end
+        collections_info.push({collection: col, tools: tools})
+      end
+      render json: { result: { collections: collections_info } }
+    else
+      render json: { result: false }
+    end
   end
 
   def new
@@ -13,7 +26,6 @@ class CollectionsController < ApplicationController
     if current_user
       collection = Collection.create( name: params[:name], description: params[:description], is_public: params[:is_public] )
       current_user.collections << collection
-
       user_tools = current_user.tools
 
       params[:tools].each do |tool|

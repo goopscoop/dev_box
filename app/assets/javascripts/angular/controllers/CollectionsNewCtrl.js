@@ -1,5 +1,6 @@
-DevBox.controller('CollectionsNewCtrl', ['$scope', '$http', 'devValidate', 'devSearchFn', '$location', 'devAlert',
- function( $scope, $http, devValidate, devSearchFn, $location, devAlert ){
+DevBox.controller('CollectionsNewCtrl', ['$scope', '$http', 'devValidate', 'devSearchFn',
+  '$location', 'devAlert', 'devInit',
+  function( $scope, $http, devValidate, devSearchFn, $location, devAlert, devInit ){
 
   $scope.searchTools = []
   $scope.toolsInCollection = []
@@ -30,12 +31,13 @@ DevBox.controller('CollectionsNewCtrl', ['$scope', '$http', 'devValidate', 'devS
   }
 
   var loadCatsAndTags = function(){
-    $http.get('/api/tags-and-cats/').success( function( data ){
-      $scope.categories = data.categories;
-      $scope.tags = data.tags;
-    }).error(function( data ){
-      console.error( 'Error:', data );
-    });
+    if( devInit.notLoaded( $scope.categories, $scope.tags ) ){
+      devInit.loadCatsAndTags()
+      .then(function(data){
+        $scope.categories = data.categories;
+        $scope.tags = data.tags;
+      })
+    }
   }
 
   var isCollectionValidated = function(){

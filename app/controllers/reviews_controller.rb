@@ -20,7 +20,6 @@ class ReviewsController < ApplicationController
 
   # tool_review PATCH or PUT
   def update
-
     if current_user
       review = Review.find(params[:id])
       review.rating = params[:rating]

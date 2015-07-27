@@ -52,8 +52,6 @@ class ToolsController < ApplicationController
 
   # tool GET
   def show
-    nav_cats = db_all_cats
-    nav_tags = get_popular_tags
     tool = db_find_by_tool_id params[:id]
     tags = tool.tags
     categories = tool.categories
@@ -69,7 +67,7 @@ class ToolsController < ApplicationController
     else
       tool_info = { tool: tool, tags: tags, categories: categories, reviews_users: reviews_users, favorited: false }
     end
-    render json: { result: tool_info, navCats: nav_cats, navTags: nav_tags }
+    render json: { result: tool_info }
   end
 
   # new_tool GET
@@ -113,10 +111,9 @@ class ToolsController < ApplicationController
   # edit_tool GET
   def edit
     tool = db_find_by_tool_id params[:id]
-    categories = tool.categories
     all_tags_and_cats = db_all_tags_and_cats
     tags = tool.tags
-    render json: { tool: tool, categories: categories, tags: tags, allCategories: all_tags_and_cats[:cats], allTags: all_tags_and_cats[:tags] }
+    render json: { tool: tool, tags: tags, allCategories: all_tags_and_cats[:cats], allTags: all_tags_and_cats[:tags] }
   end
 
   # PATCH or PUT
@@ -264,32 +261,6 @@ class ToolsController < ApplicationController
         end
       end
     end
-  end
-
-  def add_tool_info array_of_tools
-    tool_info = []
-    array_of_tools.each do |tool|
-      cats = []
-      tool.categories.each do |cat|
-        cats.push({ id: cat[:id] , category: cat[:category] })
-      end
-      tags = []
-      tool.tags.each do |tag|
-        tags.push({ id: tag[:id] , tag: tag[:tag]})
-      end
-      tvotes = 0
-      has_voted = false
-      vote_id = nil
-      tool.tvotes.each do |vote|
-        tvotes += vote.vote
-        if current_user && vote.user_id == current_user.id
-          has_voted = true
-          vote_id = vote.id
-        end
-      end
-      tool_info.push({ id: tool.id, title: tool.title, avg_rating: tool.avg_rating, language: tool.language, tags: tags, categories: cats, votes: tvotes, hasVoted: has_voted, voteId: vote_id, web_url: tool.web_url, repo_url: tool.repo_url, doc_url: tool.doc_url })
-    end
-    return tool_info
   end
 
   def add_single_tool_info tool

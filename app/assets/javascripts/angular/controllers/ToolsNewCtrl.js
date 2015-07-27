@@ -82,8 +82,6 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', '$http
     }
   }
 
-
-
   $scope.newTag = function(chip) {
     if ( chip.tag ) {
       return chip;

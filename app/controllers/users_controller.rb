@@ -9,7 +9,6 @@ class UsersController < ApplicationController
 
   # user GET
   def show
-    categories = db_all_cats
     tags = db_all_tags
     tools = current_user.tools
     tool_info = []
@@ -17,7 +16,7 @@ class UsersController < ApplicationController
       tool_info.push(add_tool_info tool)
     end
 
-    render json: { tools: tool_info, categories: categories, tags: get_popular_tags }
+    render json: { tools: tool_info }
   end
 
   # new_user GET

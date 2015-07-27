@@ -66,7 +66,6 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 
                 return
               }
            }
-           // Materialize.toast( 'voted', 4000)
         })
       }
     }
@@ -88,17 +87,13 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 
     }
 
     var loadCatsAndTags = function(){
-      if( tagsAndCatsNotLoaded() ){
+      if( devInit.notLoaded( $scope.categories, $scope.tags ) ){
         devInit.loadCatsAndTags()
         .then( function( data ){
           $scope.categories = data.categories;
           $scope.tags = data.tags;
         })
       }
-    }
-
-    var tagsAndCatsNotLoaded = function(){
-      return !$scope.categories || !$scope.tags ? true : false;
     }
 
     var isNotEmpty = function(ob){

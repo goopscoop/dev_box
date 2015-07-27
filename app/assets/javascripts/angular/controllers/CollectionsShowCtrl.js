@@ -10,12 +10,13 @@ DevBox.controller('CollectionsShowCtrl', [ '$scope', '$http', '$routeParams', 'd
   }
 
   var loadCatsAndTags = function(){
-    devInit.loadCatsAndTags()
-    .then(function(data){
-      console.log('controller side data',data)
-      $scope.categories = data.categories;
-      $scope.tags = data.tags;
-    })
+    if( devInit.notLoaded( $scope.categories, $scope.tags ) ){
+      devInit.loadCatsAndTags()
+      .then(function(data){
+        $scope.categories = data.categories;
+        $scope.tags = data.tags;
+      })
+    }
   }
 
   var loadCollection = function(){
@@ -26,16 +27,6 @@ DevBox.controller('CollectionsShowCtrl', [ '$scope', '$http', '$routeParams', 'd
       console.error( err.message )
     })
   }
-
-
-  // var loadCatsAndTags = function(){
-  //   $http.get('/api/tags-and-cats/').success( function( data ){
-  //     $scope.categories = data.categories;
-  //     $scope.tags = data.tags;
-  //   }).error(function( data ){
-  //     console.error( 'Error:', data );
-  //   });
-  // }
 
   init()
 

@@ -17,7 +17,6 @@ DevBox.factory('buildUrl', function(){
     }
   }
 })
-
   .factory('devValidate',[ 'devAlert', function( devAlert ){
 
     var isValidated = function( testEl, errMessage, optionalTestEl, optionalTestEl2 ){
@@ -80,33 +79,42 @@ DevBox.factory('buildUrl', function(){
   }])
 
   .factory('devInit', [ '$http', '$q', function( $http, $q ){
-      return {
-        categories: [],
-        tags: [],
-        errorMsg: "Something went wrong with the devInit loading service",
-        loadCatsAndTags: function(){
-          var that = this;
-          if( this.categories == false || this.tags == false ){
-            return $http.get('/api/tags-and-cats/')
-            .then(function(data){
-              that.categories = data.data.categories;
-              that.tags = data.data.tags;
-              return {
-                categories: data.data.categories,
-                tags: data.data.tags }
-              }
-            )
-          } else {
-            var deferred = $q.defer()
-            deferred.resolve({
-              categories: this.categories,
-              tags: this.tags
-            });
-            deferred.reject( that.errorMsg )
-            console.log( that.errorMsg )
-            return deferred.promise;
-          }
+    return {
+      categories: [],
+      tags: [],
+      errorMsg: "Something went wrong with the devInit loading service",
+      loadCatsAndTags: function(){
+        var that = this;
+        if( this.categories == false || this.tags == false ){
+          return $http.get( '/api/tags-and-cats/' )
+          .then( function( data ){
+            that.categories = data.data.categories;
+            that.tags = data.data.tags;
+            return {
+              categories: data.data.categories,
+              tags: data.data.tags }
+            }
+          )
+        } else {
+          var deferred = $q.defer()
+          deferred.resolve({
+            categories: this.categories,
+            tags: this.tags
+          });
+          deferred.reject( that.errorMsg )
+          return deferred.promise;
         }
+      },
+      notLoaded: function(categories, tags){
+        return !categories || !tags ? true : false;
+      },
+      apiGet: function( url ){
+        return $http.get( url )
+        .then( function( data ){
+          return data.data;
+        } )
       }
-    }])
+    }
+  }])
+
 

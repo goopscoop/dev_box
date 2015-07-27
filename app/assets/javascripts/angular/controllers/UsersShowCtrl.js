@@ -1,24 +1,34 @@
-DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl', '$location', 'devSearchFn',
-  function( $scope, $http, buildUrl, $location, devSearchFn ){
+DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl', '$location', 'devSearchFn', 'devInit',
+  function( $scope, $http, buildUrl, $location, devSearchFn, devInit ){
+
+  var init = function(){
+    loadToolsCatsAndTags(); //Also calls narrowTools() function in callback
+    loadCatsAndTags()
+  }
 
   $scope.userToolBox = {
     searchTools: []
   }
   // $scope.searchTools = []
 
-  var init = function(){
-    loadToolsCatsAndTags(); //Also calls narrowTools() function in callback
-  }
 
   var loadToolsCatsAndTags = function(){
     if ( !$scope.tools || !$scope.categories || !$scope.tags ) {
       $http.get('/api/users/profile').success( function( data ){
-        $scope.categories = data.categories;
-        $scope.tags = data.tags;
         $scope.tools = data.tools;
         console.log($scope.tools)
       } ).success(function(){
         narrowTools()
+      })
+    }
+  }
+
+  var loadCatsAndTags = function(){
+    if( devInit.notLoaded( $scope.categories, $scope.tags ) ){
+      devInit.loadCatsAndTags()
+      .then(function(data){
+        $scope.tags = data.tags;
+        $scope.categories = data.categories;
       })
     }
   }
@@ -109,8 +119,6 @@ DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl', '$location', '
       $scope.getMatches(toolSearchText)
     }
   }
-
-
 
   $scope.focusOnSelectedTool = function( ){
     $scope.userToolBox.searchTools = devSearchFn.focus( $scope.selectedTool )
