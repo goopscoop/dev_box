@@ -49,10 +49,72 @@ DevBox.factory('buildUrl', function(){
       }
     }
   }])
-  .factory('devAlert', function(){
+
+  .factory('devAlert',  function(){
     return {
       alert: function( message, optionalDuration ){
         Materialize.toast( message, optionalDuration || 4000)
       }
     }
   })
+
+  .factory('devSearchFn', [ '$http', function( $http ){
+
+    return {
+      focus: function( selectedTool ){
+        if ( selectedTool ) {
+          searchTools = [];
+          searchTools.push(selectedTool);
+          return searchTools;
+        }
+      },
+      check: function( toolSearchText){
+        if( toolSearchText ){
+          return true
+        } else {
+          return false
+        }
+      }
+    }
+  }])
+
+  .factory('devInit', [ '$http', '$q', function( $http, $q ){
+    return {
+      categories: [],
+      tags: [],
+      errorMsg: "Something went wrong with the devInit loading service",
+      loadCatsAndTags: function(){
+        var that = this;
+        if( this.categories == false || this.tags == false ){
+          return $http.get( '/api/tags-and-cats/' )
+          .then( function( data ){
+            that.categories = data.data.categories;
+            that.tags = data.data.tags;
+            return {
+              categories: data.data.categories,
+              tags: data.data.tags }
+            }
+          )
+        } else {
+          var deferred = $q.defer()
+          deferred.resolve({
+            categories: this.categories,
+            tags: this.tags
+          });
+          deferred.reject( that.errorMsg )
+          return deferred.promise;
+        }
+      },
+      notLoaded: function(categories, tags){
+        return !categories || !tags ? true : false;
+      },
+      apiGet: function( url ){
+        return $http.get( url )
+        .then( function( data ){
+          return data.data;
+        } )
+      }
+    }
+  }])
+
+

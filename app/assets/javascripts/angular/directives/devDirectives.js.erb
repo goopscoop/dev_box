@@ -1,0 +1,37 @@
+DevBox.directive( 'devMarkdownHelper', function(){
+  var helperLogic = function(scope, element, attrs ){
+    scope.isFormattingHelpOpen = false;
+
+    scope.formattingHelp = function(action){
+      console.log('boop')
+      scope.isFormattingHelpOpen = action;
+    }
+  }
+  return {
+    restrict: 'A',
+    template: 'markdownHelper.html',
+
+    scope: {
+      // newclass: '='
+    },
+    link: helperLogic
+  }
+} )
+
+
+.directive('devLeftSidebar', [ '$http', function( $http ){
+  var logic = function(scope, element, attrs){
+
+  }
+
+  return {
+    restrict: 'E',
+    templateUrl: '<%= asset_path("templates/devLeftSidebar.html") %>',
+    transclude: true,
+    link: logic,
+    scope: {
+      categories: '=',
+      tags: '='
+    }
+  }
+}])

@@ -1,5 +1,5 @@
-DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 'buildUrl', 'devAlert',
-  function( $scope, $http, $location, $rootScope, buildUrl, devAlert ){
+DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 'buildUrl', 'devAlert', 'devSearchFn', 'devInit',
+  function( $scope, $http, $location, $rootScope, buildUrl, devAlert, devSearchFn, devInit ){
 
     $scope.toolSearchText; // String the search bar is binding to.
     $scope.selectedTool = {}; // Object returned after search is completed
@@ -22,18 +22,14 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 
 
     $scope.getMatches = function( toolSearchText ){
       $http.get( '/api/tools?q=' + toolSearchText ).success( function( data ){
-
-        // returns an array of objects with Tools and associated categories and tags
-         $scope.searchTools = data;
+        $scope.searchTools = data;
       })
         return $scope.searchTools;
-        // console.log("get matches function",$scope.searchTools)
     }
 
     $scope.searchTextChanged = function( toolSearchText ){
-      if(toolSearchText){
-        $scope.getMatches( toolSearchText )
-      }
+       if ( devSearchFn.check( toolSearchText ) ) $scope.getMatches( toolSearchText );
+       return $scope.searchTools
     }
 
      $scope.focusOnSelectedTool = function( ){
@@ -70,7 +66,6 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 
                 return
               }
            }
-           // Materialize.toast( 'voted', 4000)
         })
       }
     }
@@ -92,8 +87,9 @@ DevBox.controller( 'ToolsCtrl', [ '$scope', '$http', '$location', '$rootScope', 
     }
 
     var loadCatsAndTags = function(){
-      if( !$scope.categories || !$scope.tags ){
-        $http.get( '/api/tools' ).success( function( data ){
+      if( devInit.notLoaded( $scope.categories, $scope.tags ) ){
+        devInit.loadCatsAndTags()
+        .then( function( data ){
           $scope.categories = data.categories;
           $scope.tags = data.tags;
         })

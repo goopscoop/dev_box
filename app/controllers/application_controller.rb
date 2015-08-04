@@ -34,7 +34,43 @@ class ApplicationController < ActionController::Base
     super || valid_authenticity_token?(session, request.headers['X-XSRF-TOKEN'])
   end
 
+  def add_tool_info array_of_tools
+    tool_info = []
+    array_of_tools.each do |tool|
+      cats = []
+      tool.categories.each do |cat|
+        cats.push({ id: cat[:id] , category: cat[:category] })
+      end
+      tags = []
+      tool.tags.each do |tag|
+        tags.push({ id: tag[:id] , tag: tag[:tag]})
+      end
+      tvotes = 0
+      has_voted = false
+      vote_id = nil
+      tool.tvotes.each do |vote|
+        tvotes += vote.vote
+        if current_user && vote.user_id == current_user.id
+          has_voted = true
+          vote_id = vote.id
+        end
+      end
+      tool_info.push({ id: tool.id, title: tool.title, avg_rating: tool.avg_rating, language: tool.language, tags: tags, categories: cats, votes: tvotes, hasVoted: has_voted, voteId: vote_id, web_url: tool.web_url, repo_url: tool.repo_url, doc_url: tool.doc_url })
+    end
+    return tool_info
+  end
 
+  def add_tool_categories array_of_tools
+    tool_info = []
+    array_of_tools.each do |tool|
+      cats = []
+      tool.categories.each do |cat|
+        cats.push({ id: cat[:id] , category: cat[:category] })
+      end
+      tool_info.push({ id: tool.id, title: tool.title, avg_rating: tool.avg_rating, language: tool.language, categories: cats, web_url: tool.web_url, repo_url: tool.repo_url, doc_url: tool.doc_url })
+    end
+    return tool_info
+  end
 
   def get_popular_tags
     Tag.find_by_sql("SELECT    tt.tag_id, t.tag, count(tt.tag_id)
@@ -44,6 +80,18 @@ class ApplicationController < ActionController::Base
                       GROUP BY tt.tag_id, t.tag
                       ORDER BY count(tag_id) desc
                       LIMIT 10")
+  end
+
+  def db_get_tool tool_id
+    Tool.find_by_id( tool_id )
+  end
+
+  def db_all_tags_and_cats
+    { tags: db_all_tags, cats: db_all_cats }
+  end
+
+  def db_popular_tags_and_cats
+    { tags: get_popular_tags, cats: db_all_cats }
   end
 
   def db_all_tags
@@ -56,6 +104,10 @@ class ApplicationController < ActionController::Base
 
   def db_find_by_tool_title search_title
     Tool.where('title ilike ?', "%#{search_title}%")
+  end
+
+  def db_get_collection id
+    Collection.find_by_id( id )
   end
 
 end

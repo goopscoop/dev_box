@@ -43,7 +43,7 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', '$http
           }
         })
     } else {
-      devAlert.alert("A title is required")
+      devAlert.alert("a title is required")
     }
   }
 
@@ -56,39 +56,31 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', '$http
   }
 
   $scope.saveTool = function() {
-    if ( devValidate.title($scope.title) &&
-        devValidate.description($scope.description) &&
-        devValidate.category($scope.category01) &&
-        devValidate.tags( $scope.selectedTags[0] ) &&
-        devValidate.urls( $scope.web_url, $scope.repo_url, $scope.doc_url ) ) {
-
-          var tool = new Tool();
-          tool.title = $scope.title;
-          tool.description = $scope.description;
-          tool.language = $scope.language;
-          tool.is_open = $scope.is_open? true : false;
-          tool.is_free = $scope.is_free;
-          tool.web_url = $scope.web_url;
-          tool.repo_url = $scope.repo_url;
-          tool.doc_url = $scope.doc_url;
-          tool.avg_rating = null;
-          tool.categories = [$scope.category01];
-          tool.tags = $scope.selectedTags;
-          tool.$save(function(data) {
-            if(data.result.id === null){
-                     // ... error_message comes from the server
-                     // NOT WORKING YET!!! but validations make chances of error unlikely
-                devAlert.alert( 'Oops. Something happened');
-                devAlert.alert( 'Please make sure this tool is a unique entry');
-              } else {
-                $location.url("/tools/" + data.result.id)
-              }
-          })
-
+    if ( toolIsValidated() ) {
+      var tool = new Tool();
+      tool.title = $scope.title;
+      tool.description = $scope.description;
+      tool.language = $scope.language;
+      tool.is_open = $scope.is_open? true : false;
+      tool.is_free = $scope.is_free;
+      tool.web_url = $scope.web_url;
+      tool.repo_url = $scope.repo_url;
+      tool.doc_url = $scope.doc_url;
+      tool.avg_rating = null;
+      tool.categories = [$scope.category01];
+      tool.tags = $scope.selectedTags;
+      tool.$save(function(data) {
+        if(data.result.id === null){
+                 // ... error_message comes from the server
+                 // NOT WORKING YET!!! but validations make chances of error unlikely
+            devAlert.alert( 'oops. something happened');
+            devAlert.alert( 'please make sure this tool is a unique entry');
+          } else {
+            $location.url("/tools/" + data.result.id)
+          }
+      })
     }
   }
-
-
 
   $scope.newTag = function(chip) {
     if ( chip.tag ) {
@@ -102,7 +94,7 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', '$http
    * Search for Tags.
    */
   function querySearch (query) {
-    var results = query ? $scope.tags.filter(createFilterFor(query)) : [];
+    var results = query ? $scope.tags.filter( createFilterFor( query ) ) : [];
     return results;
   }
   /**
@@ -113,6 +105,14 @@ DevBox.controller( 'ToolsNewCtrl', [ '$scope' , '$resource', '$location', '$http
     return function filterFn(tag) {
       return (tag.tag.indexOf(lowercaseQuery) === 0);
     };
+  }
+
+  var toolIsValidated = function(){
+    if( devValidate.title($scope.title) &&
+        devValidate.description($scope.description) &&
+        devValidate.category($scope.category01) &&
+        devValidate.tags( $scope.selectedTags[0] ) &&
+        devValidate.urls( $scope.web_url, $scope.repo_url, $scope.doc_url ) ) return true;
   }
 
 }])

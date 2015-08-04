@@ -45,17 +45,14 @@ class ToolsController < ApplicationController
       sort_by_votes tool_info
       render json: tool_info
     else
-      all_categories = db_all_cats
-      all_tags = get_popular_tags
-      render json: { categories: all_categories, tags: all_tags }
+      all_tags_and_cats = db_all_tags_and_cats
+      render json: { categories: all_tags_and_cats[:cats], tags: all_tags_and_cats[:tags] }
     end
   end
 
   # tool GET
   def show
-    nav_cats = db_all_cats
-    nav_tags = get_popular_tags
-    tool = db_find_by_tool_id params[:id]
+    tool = db_get_tool params[:id]
     tags = tool.tags
     categories = tool.categories
     reviews = tool.reviews.order(created_at: :desc)
@@ -70,24 +67,17 @@ class ToolsController < ApplicationController
     else
       tool_info = { tool: tool, tags: tags, categories: categories, reviews_users: reviews_users, favorited: false }
     end
-    render json: { result: tool_info, navCats: nav_cats, navTags: nav_tags }
+    render json: { result: tool_info }
   end
 
   # new_tool GET
   def new
-    categories = db_all_cats
-    tags = db_all_tags
-    tag_tags = tags.map do |tag|
-      {tag: tag[:tag]}
-    end
-
-    render json: {result: {categories: categories, tags: tag_tags} || false}
-
+    all_tags_and_cats = db_all_tags_and_cats
+    render json: {result: {categories: all_tags_and_cats[:cats], tags: all_tags_and_cats[:tags] } || false}
   end
 
   # POST
   def create
-
     # Create the tool
     tool = Tool.create(title: params[:title], description: params[:description],
                       language: params[:language], is_open: params[:is_open],
@@ -108,11 +98,9 @@ class ToolsController < ApplicationController
     # and then associate it to the new tool
     params[:tags].each do |tag_obj|
       t = Tag.find_by_tag(tag_obj[:tag].downcase)
-
       unless t
         t = Tag.create(tag: tag_obj[:tag].downcase)
       end
-
       tool.tags << t
     end
 
@@ -122,12 +110,10 @@ class ToolsController < ApplicationController
 
   # edit_tool GET
   def edit
-    tool = db_find_by_tool_id params[:id]
-    categories = tool.categories
-    all_categories = db_all_cats
+    tool = db_get_tool params[:id]
+    all_tags_and_cats = db_all_tags_and_cats
     tags = tool.tags
-    all_tags = db_all_tags
-    render json: { tool: tool, categories: categories, tags: tags, allCategories: all_categories, allTags: all_tags }
+    render json: { tool: tool, tags: tags, allCategories: all_tags_and_cats[:cats], allTags: all_tags_and_cats[:tags] }
   end
 
   # PATCH or PUT
@@ -196,11 +182,13 @@ class ToolsController < ApplicationController
   def destroy
   end
 
-  private
-
-  def db_find_by_tool_id tool_id
-    Tool.find_by_id( tool_id )
+  def tags_and_cats
+    popular_tags_and_cats = db_popular_tags_and_cats
+    render json: { categories: popular_tags_and_cats[:cats], tags: popular_tags_and_cats[:tags] }
+    # render json: { success: true }
   end
+
+  private
 
   def db_find_by_tag_partial_match search_tag
     Tag.where('tag ilike ?', "%#{search_tag}%")
@@ -269,32 +257,6 @@ class ToolsController < ApplicationController
         end
       end
     end
-  end
-
-  def add_tool_info array_of_tools
-    tool_info = []
-    array_of_tools.each do |tool|
-      cats = []
-      tool.categories.each do |cat|
-        cats.push({ id: cat[:id] , category: cat[:category] })
-      end
-      tags = []
-      tool.tags.each do |tag|
-        tags.push({ id: tag[:id] , tag: tag[:tag]})
-      end
-      tvotes = 0
-      has_voted = false
-      vote_id = nil
-      tool.tvotes.each do |vote|
-        tvotes += vote.vote
-        if current_user && vote.user_id == current_user.id
-          has_voted = true
-          vote_id = vote.id
-        end
-      end
-      tool_info.push({ id: tool.id, title: tool.title, avg_rating: tool.avg_rating, language: tool.language, tags: tags, categories: cats, votes: tvotes, hasVoted: has_voted, voteId: vote_id, web_url: tool.web_url, repo_url: tool.repo_url, doc_url: tool.doc_url })
-    end
-    return tool_info
   end
 
   def add_single_tool_info tool

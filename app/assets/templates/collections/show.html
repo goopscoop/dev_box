@@ -1,0 +1,50 @@
+<dev-left-sidebar categories="categories" tags="tags"></dev-left-sidebar>
+<div class="row">
+  <div class="col s12 m7 offset-m4 card-panel blue-grey darken-1">
+    <div class="row">
+      <h2>{{collection.name}} </h2>
+    </div>
+    <div class="row">
+      <div class="col s12 m10 offset-m1">
+        <div class="card-panel blue-grey darken-2 review">
+          <p>{{collection.description}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="row">
+    <div class="row">
+      <!-- <div class="col m10 offset-m1 s12"> -->
+        <div class="card-panel blue-grey darken-2">
+          <ul class="collection" >
+            <li dir-paginate="tool in collectionTools | itemsPerPage: 10" class="collection-item">
+            <span class="user-tool-title"><a ng-href="/tools/{{tool.id}}">{{tool.title}}<md-tooltip md-direction="left">tool page</md-tooltip></a></span> <span class="tool-language">[{{tool.language}}]</span>
+              <a href="#" ng-click="removeTool(tool.id)" class="secondary-content btn-floating waves-effect waves-light pink"><i class="mdi-content-clear "></i><md-tooltip>remove from toolbox</md-tooltip></a>
+            <br>
+
+                <span class="tool-search-results" ng-repeat="category in tool.categories"><a ng-href="/tools/?c={{category.category}}" class="tool-category">{{category.category}}</a></span>
+
+              <a class="user-tool-link" ng-show="tool.web_url" ng-href="{{tool.web_url}}">
+                <i class="mdi-social-public"></i>
+                <md-tooltip>website</md-tooltip>
+              </a>
+              <a class="user-tool-link" ng-show="tool.repo_url" ng-href="{{tool.repo_url}}">
+                <i class="mdi-communication-call-split"></i>
+                <md-tooltip>repo</md-tooltip>
+              </a>
+              <a class="user-tool-link" ng-show="tool.doc_url" ng-href="{{tool.doc_url}}">
+                <i class="mdi-action-description"></i>
+                <md-tooltip>docs</md-tooltip>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s4 m4 offset-s4 offset-m4">
+          <dir-pagination-controls></dir-pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

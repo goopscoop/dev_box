@@ -1,0 +1,68 @@
+<div>
+  <dev-left-sidebar categories="categories" tags="tags"></dev-left-sidebar>
+
+<div class="row">
+  <form class="col s12 m7 offset-m4 card-panel blue-grey darken-1">
+    <h4>Create a Collection</h4>
+    <div class="card-pannel blue-grey " ng-if="isAuthenticated === false">
+      <p class="center-align">please log in to create a collection, otherwise current changes will not be saved</p>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input placeholder="Collection Name" ng-model="name" id="name" type="text" autofocus>
+        <label for="name">Collection Name</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <textarea ng-model="description" ng-keypress="descCharCount = description.length + 1 || 0" id="description" class="materialize-textarea"></textarea>
+        <label for="description">Description (limit {{descCharCount}} of 200 chars)</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <div class="switch">
+          <label>
+            <input ng-model="is_public" name="is_public" type="checkbox" disabled>
+            <span class="lever"></span>
+            Private (coming soon...)
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s10 offset-s1">
+        <md-autocomplete md-autofocus="true" md-selected-item="selectedTool" md-selected-item-change="addToolToCollection()" placeholder="Optional: Add tools to collection. Can be done later." md-delay="200" md-min-length="1" md-search-text="toolSearchText"  md-search-text-change="searchTextChanged(toolSearchText)"  md-items="tool in getMatches(toolSearchText)" md-item-text="tool.title" md-no-cache="true">
+          <md-item-template>
+            <span md-highlight-text="searchText">{{tool.title}}</span>
+          </md-item-template>
+          <md-not-found>
+            No matches found.
+          </md-not-found>
+        </md-autocomplete>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s10 offset-s1 card-panel blue-grey darken-2">
+        <h6>Tools to be added to collection (will also be added to your toolbox)</h6>
+
+          <div ng-repeat="collectionTool in toolsInCollection" ><p><i ng-click="removeFromCollection( collectionTool.id )" class="mdi-content-clear waves-effect waves-light pink"></i> {{collectionTool.title}}</p></div>
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s12">
+        <button ng-click="saveCollection()" id="save-tool-btn" class="btn waves-effect waves-light deep-purple lighten-1" type="button">
+          Submit
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+</div>

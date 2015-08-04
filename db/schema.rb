@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150704053759) do
+ActiveRecord::Schema.define(version: 20150720181032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,34 @@ ActiveRecord::Schema.define(version: 20150704053759) do
   end
 
   add_index "categories_tools", ["tool_id"], name: "index_categories_tools_on_tool_id", unique: true, using: :btree
+
+  create_table "collections", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "is_public"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "collections_tools", force: :cascade do |t|
+    t.integer  "collection_id"
+    t.integer  "tool_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "collections_tools", ["collection_id"], name: "index_collections_tools_on_collection_id", using: :btree
+  add_index "collections_tools", ["tool_id"], name: "index_collections_tools_on_tool_id", using: :btree
+
+  create_table "collections_users", force: :cascade do |t|
+    t.integer  "collection_id"
+    t.integer  "user_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "collections_users", ["collection_id"], name: "index_collections_users_on_collection_id", using: :btree
+  add_index "collections_users", ["user_id"], name: "index_collections_users_on_user_id", using: :btree
 
   create_table "reviews", force: :cascade do |t|
     t.text     "post"
@@ -121,6 +149,10 @@ ActiveRecord::Schema.define(version: 20150704053759) do
 
   add_foreign_key "categories_tools", "categories"
   add_foreign_key "categories_tools", "tools"
+  add_foreign_key "collections_tools", "collections"
+  add_foreign_key "collections_tools", "tools"
+  add_foreign_key "collections_users", "collections"
+  add_foreign_key "collections_users", "users"
   add_foreign_key "reviews", "tools"
   add_foreign_key "reviews", "users"
   add_foreign_key "tags_tools", "tags"

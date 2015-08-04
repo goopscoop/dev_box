@@ -1,0 +1,28 @@
+<dev-left-sidebar categories="categories" tags="tags"></dev-left-sidebar>
+<div class="row">
+  <div class="col s12 m7 offset-m4 card-panel blue-grey darken-1">
+    <div class="row">
+      <h2>My Collections </h2>
+    </div>
+    <div class="divider"></div>
+    <div class="row">
+      <div class="card-panel blue-grey darken-2">
+        <ul class="collection" >
+          <li dir-paginate="collection in collections | itemsPerPage: 10" class="collection-item">
+            <span class="user-tool-title"><a ng-href="/collections/{{collection.collection.id}}"><i class="material-icons">list</i> {{collection.collection.name}}<md-tooltip md-direction="left">see collection</md-tooltip></a></span> <span class="tool-language">[<span ng-if="collection.collection.is_public">public collection</span><span ng-if="collection.collection.is_public === false">private collection</span>]</span>
+            <p>{{collection.collection.description}}</p>
+            <ul>
+              <li class="tool-title" ng-repeat="tool in collection.tools"><a href="/tools/{{tool.id}}" class="tool-category">{{tool.title}}</a></li>
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+      <div class="row">
+        <div class="col s4 m4 offset-s4 offset-m4">
+          <dir-pagination-controls></dir-pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

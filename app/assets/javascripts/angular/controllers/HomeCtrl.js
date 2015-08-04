@@ -1,7 +1,7 @@
-DevBox.controller('HomeCtrl',['$scope', '$http', '$rootScope', function( $scope, $http, $rootScope ){
+DevBox.controller('HomeCtrl',['$scope', '$http', '$rootScope', 'devInit',
+  function( $scope, $http, $rootScope, devInit ){
+
   $scope.popular = [];
-  $scope.categories = [];
-  $scope.tags = [];
   $scope.recent = [];
   $rootScope.isAuthenticated;
 
@@ -10,12 +10,21 @@ DevBox.controller('HomeCtrl',['$scope', '$http', '$rootScope', function( $scope,
     }
 
   var init = function(){
+    loadCatsAndTags()
     $http.get('/api/home').success( function( data ){
-      $scope.categories = data.categories;
-      $scope.tags = data.tags;
       $scope.popular = data.popular;
       $scope.recent = data.recent;
     } )
+  }
+
+  var loadCatsAndTags = function(){
+    if( devInit.notLoaded( $scope.categories, $scope.tags ) ){
+      devInit.loadCatsAndTags()
+      .then(function(data){
+        $scope.categories = data.categories;
+        $scope.tags = data.tags;
+      })
+    }
   }
 
   $scope.upVotePopular = function( toolId ){

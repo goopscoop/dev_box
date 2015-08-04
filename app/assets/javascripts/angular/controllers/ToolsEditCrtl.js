@@ -1,5 +1,7 @@
-DevBox.controller( 'ToolsEditCtrl', [ '$scope' , '$resource', '$location', '$http', '$routeParams', '$rootScope', 'devValidate', 'devAlert',
-  function( $scope, $resource, $location, $http, $routeParams, $rootScope, devValidate, devAlert ){
+DevBox.controller( 'ToolsEditCtrl', [ '$scope' , '$resource', '$location', '$http', '$routeParams',
+  '$rootScope', 'devValidate', 'devAlert', 'devInit',
+  function( $scope, $resource, $location, $http, $routeParams, $rootScope, devValidate, devAlert, devInit ){
+
   $rootScope.isAuthenticated;
     // Vars needed for tags
   $scope.readonly = false;
@@ -13,20 +15,8 @@ DevBox.controller( 'ToolsEditCtrl', [ '$scope' , '$resource', '$location', '$htt
   $scope.tool = {};
   $scope.$watch.isFormattingHelpOpen = false;
 
-  $scope.formattingHelp = function(action){
-    console.log('boop')
-    $scope.isFormattingHelpOpen = action;
-  }
-
-  var Tool = $resource('/api/tools/:id', null, {
-    'update': { method:'PUT' }
-  });
-
-  var ToolEdit = $resource('/api/tools/:id/edit', null, {
-    'update': { method:'PUT' }
-  });
-
   var init = function(){
+    loadCatsAndTags()
     $http.get('/api/tools/' + $routeParams.id + '/edit').success( function( data ){
       $scope.title = data.tool.title;
       $scope.description = data.tool.description;
@@ -38,10 +28,32 @@ DevBox.controller( 'ToolsEditCtrl', [ '$scope' , '$resource', '$location', '$htt
       $scope.doc_url = data.tool.doc_url;
       $scope.selectedTags = data.tags;
       $scope.tags = data.allTags;
-      $scope.category01Pre = data.categories[0] || null;
-      $scope.categories = data.allCategories;
     })
   }
+
+  var loadCatsAndTags = function(){
+    if( devInit.notLoaded( $scope.categories, $scope.sidebarTags ) ){
+      devInit.loadCatsAndTags()
+      .then(function(data){
+        $scope.sidebarTags = data.tags;
+        $scope.categories = data.categories;
+        $scope.category01Pre = data.categories[0] || null;
+      })
+    }
+  }
+
+  $scope.formattingHelp = function(action){
+    $scope.isFormattingHelpOpen = action;
+  }
+
+  var Tool = $resource('/api/tools/:id', null, {
+    'update': { method:'PUT' }
+  });
+
+  var ToolEdit = $resource('/api/tools/:id/edit', null, {
+    'update': { method:'PUT' }
+  });
+
 
   $scope.updateTool = function() {
     if ( devValidate.description($scope.description) &&
@@ -73,12 +85,8 @@ DevBox.controller( 'ToolsEditCtrl', [ '$scope' , '$resource', '$location', '$htt
   }
 
   $scope.newTag = function(chip) {
-    if ( chip.tag ) {
-      return chip;
-    }
-    return {
-      tag: chip
-    };
+    if ( chip.tag )  return chip;
+    return { tag: chip };
   }
 
   function querySearch (query) {
