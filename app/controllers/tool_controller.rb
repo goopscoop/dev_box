@@ -2,7 +2,7 @@ class ToolController < ApplicationController
 
   def create
     if current_user
-      # params[:user_id] is actually the tool id. THIS IS NOT A BUG, ITS A FEATURE
+      # params[:user_id] is actually the tool id.
       tool = Tool.find_by_id(params[:user_id])
       current_user.tools << tool
       render json: {result:true}

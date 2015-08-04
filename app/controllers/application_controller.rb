@@ -82,6 +82,10 @@ class ApplicationController < ActionController::Base
                       LIMIT 10")
   end
 
+  def db_get_tool tool_id
+    Tool.find_by_id( tool_id )
+  end
+
   def db_all_tags_and_cats
     { tags: db_all_tags, cats: db_all_cats }
   end
@@ -100,6 +104,10 @@ class ApplicationController < ActionController::Base
 
   def db_find_by_tool_title search_title
     Tool.where('title ilike ?', "%#{search_title}%")
+  end
+
+  def db_get_collection id
+    Collection.find_by_id( id )
   end
 
 end

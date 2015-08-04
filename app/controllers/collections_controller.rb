@@ -43,7 +43,7 @@ class CollectionsController < ApplicationController
   end
 
   def show
-    collection = Collection.find_by_id( params[:id] )
+    collection = db_get_collection params[:id]
     if collection[:is_public] == true
       tools = add_tool_categories collection.tools
       render json: { result: true, collection: collection, tools: tools }

@@ -52,7 +52,7 @@ class ToolsController < ApplicationController
 
   # tool GET
   def show
-    tool = db_find_by_tool_id params[:id]
+    tool = db_get_tool params[:id]
     tags = tool.tags
     categories = tool.categories
     reviews = tool.reviews.order(created_at: :desc)
@@ -110,7 +110,7 @@ class ToolsController < ApplicationController
 
   # edit_tool GET
   def edit
-    tool = db_find_by_tool_id params[:id]
+    tool = db_get_tool params[:id]
     all_tags_and_cats = db_all_tags_and_cats
     tags = tool.tags
     render json: { tool: tool, tags: tags, allCategories: all_tags_and_cats[:cats], allTags: all_tags_and_cats[:tags] }
@@ -189,10 +189,6 @@ class ToolsController < ApplicationController
   end
 
   private
-
-  def db_find_by_tool_id tool_id
-    Tool.find_by_id( tool_id )
-  end
 
   def db_find_by_tag_partial_match search_tag
     Tag.where('tag ilike ?', "%#{search_tag}%")

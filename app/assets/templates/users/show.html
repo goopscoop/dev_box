@@ -9,7 +9,7 @@
     <div class="divider"></div>
     <h4>Popular Tags</h4>
     <ul ng-repeat="tag in tags">
-        <li ng-class="{activeSidebar: activeTag === tag.tag}"><a href="#" ng-click="addTag(tag.tag)">{{tag.tag}}</a></li>
+      <li ng-class="{activeSidebar: activeTag === tag.tag}"><a href="#" ng-click="addTag(tag.tag)">{{tag.tag}}</a></li>
     </ul>
   </div>
 
@@ -35,56 +35,92 @@
     <div class="row">
       <!-- <div class="col m10 offset-m1 s12"> -->
         <div class="card-panel blue-grey darken-2">
-          <ul class="collection" >
-            <!-- If user is searching -->
-            <li ng-if="userToolBox.searchTools" dir-paginate="tool in userToolBox.searchTools | itemsPerPage: 10" class="collection-item">
-            <span class="user-tool-title"><a ng-href="/tools/{{tool.id}}">{{tool.title}}<md-tooltip md-direction="left">tool page</md-tooltip></a></span> <span class="tool-language">[{{tool.language}}]</span>
-              <a href="#" ng-click="removeTool(tool.id)" class="secondary-content btn-floating waves-effect waves-light pink"><i class="mdi-content-clear "></i><md-tooltip>remove from toolbox</md-tooltip></a>
-            <br>
+          <div ng-show="showResults === true">
+            <ul class="collection" >
+              <!-- If user is searching -->
+              <li ng-if="userToolBox.searchTools" dir-paginate="tool in userToolBox.searchTools | itemsPerPage: 10" class="collection-item">
+                <span class="user-tool-title">
+                  <a ng-href="/tools/{{tool.id}}">{{tool.title}}<md-tooltip md-direction="left">tool page</md-tooltip></a>
+                </span>
+                <span class="tool-language">[{{tool.language}}]</span>
+                <a href="#" ng-click="removeTool(tool.id)" class="secondary-content btn-floating waves-effect waves-light pink">
+                  <i class="mdi-content-clear "></i><md-tooltip>remove from toolbox</md-tooltip>
+                </a>
+                <br>
 
                 <span class="tool-search-results" ng-repeat="category in tool.categories"><a ng-href="/tools/?c={{category.category}}" class="tool-category">{{category.category}}</a></span>
 
-              <a class="user-tool-link" ng-show="tool.web_url" ng-href="{{tool.web_url}}">
-                <i class="mdi-social-public"></i>
-                <md-tooltip>website</md-tooltip>
-              </a>
-              <a class="user-tool-link" ng-show="tool.repo_url" ng-href="{{tool.repo_url}}">
-                <i class="mdi-communication-call-split"></i>
-                <md-tooltip>repo</md-tooltip>
-              </a>
-              <a class="user-tool-link" ng-show="tool.doc_url" ng-href="{{tool.doc_url}}">
-                <i class="mdi-action-description"></i>
-                <md-tooltip>docs</md-tooltip>
-              </a>
-            </li>
-            <!-- If nothing has been searched for -->
-            <div ng-if="userToolBox.searchTools == false">
-            <li dir-paginate="tool in tools | itemsPerPage: 10" class="collection-item">
-            <span class="user-tool-title"><a ng-href="/tools/{{tool.id}}">{{tool.title}}<md-tooltip md-direction="left">tool page</md-tooltip></a></span> <span class="tool-language">[{{tool.language}}]</span>
-              <a href="#" ng-click="removeTool(tool.id)" class="secondary-content btn-floating waves-effect waves-light pink"><i class="mdi-content-clear "></i><md-tooltip>remove from toolbox</md-tooltip></a>
-            <br>
+                <a class="user-tool-link" ng-show="tool.web_url" ng-href="{{tool.web_url}}">
+                  <i class="mdi-social-public"></i>
+                  <md-tooltip>website</md-tooltip>
+                </a>
+                <a class="user-tool-link" ng-show="tool.repo_url" ng-href="{{tool.repo_url}}">
+                  <i class="mdi-communication-call-split"></i>
+                  <md-tooltip>repo</md-tooltip>
+                </a>
+                <a class="user-tool-link" ng-show="tool.doc_url" ng-href="{{tool.doc_url}}">
+                  <i class="mdi-action-description"></i>
+                  <md-tooltip>docs</md-tooltip>
+                </a>
+              </li>
 
-                <span class="tool-search-results" ng-repeat="category in tool.categories"><a ng-href="/tools/?c={{category.category}}" class="tool-category">{{category.category}}</a></span>
+              <!-- If nothing has been searched for -->
+              <div ng-if="userToolBox.searchTools == false">
+                <li dir-paginate="tool in tools | itemsPerPage: 10" class="collection-item">
+                  <span class="user-tool-title">
+                    <a ng-href="/tools/{{tool.id}}">{{tool.title}}<md-tooltip md-direction="left">tool page</md-tooltip></a>
+                  </span>
+                  <span class="tool-language">[{{tool.language}}]</span>
 
-              <a class="user-tool-link" ng-show="tool.web_url" ng-href="{{tool.web_url}}">
-                <i class="mdi-social-public"></i>
-                <md-tooltip>website</md-tooltip>
-              </a>
-              <a class="user-tool-link" ng-show="tool.repo_url" ng-href="{{tool.repo_url}}">
-                <i class="mdi-communication-call-split"></i>
-                <md-tooltip>repo</md-tooltip>
-              </a>
-              <a class="user-tool-link" ng-show="tool.doc_url" ng-href="{{tool.doc_url}}">
-                <i class="mdi-action-description"></i>
-                <md-tooltip>docs</md-tooltip>
-              </a>
-            </li>
+                  <!-- Options dropdown menu -->
+                  <md-select ng-model="selectedOption" class="secondary-content">
+                    <md-select-label><i class="material-icons secondary-content small">settings</i></md-select-label>
+                    <md-option ng-value="option" ng-repeat="option in toolOptions" ng-click="option.action(tool.id, tool.title)">
+                      <i class="material-icons">{{option.icon}}</i>
+                      {{option.name}}
+                    </md-option>
+                  </md-select>
+
+                  <!-- Second line of tool list -->
+                  <br>
+
+                  <span class="tool-search-results" ng-repeat="category in tool.categories"><a ng-href="/tools/?c={{category.category}}" class="tool-category">{{category.category}}</a></span>
+
+                  <a class="user-tool-link" ng-show="tool.web_url" ng-href="{{tool.web_url}}">
+                    <i class="mdi-social-public"></i>
+                    <md-tooltip>website</md-tooltip>
+                  </a>
+                  <a class="user-tool-link" ng-show="tool.repo_url" ng-href="{{tool.repo_url}}">
+                    <i class="mdi-communication-call-split"></i>
+                    <md-tooltip>repo</md-tooltip>
+                  </a>
+                  <a class="user-tool-link" ng-show="tool.doc_url" ng-href="{{tool.doc_url}}">
+                    <i class="mdi-action-description"></i>
+                    <md-tooltip>docs</md-tooltip>
+                  </a>
+                </li>
+              </div>
+            </ul>
+            <div class="row">
+              <div class="col s4 m4 offset-s4 offset-m4">
+                <dir-pagination-controls></dir-pagination-controls>
+              </div>
             </div>
-          </ul>
-          <div class="row">
-            <div class="col s4 m4 offset-s4 offset-m4">
-              <dir-pagination-controls></dir-pagination-controls>
-            </div>
+          </div>
+
+          <!-- Collection -->
+          <div ng-hide="showResults === true">
+            <h4>Choose collection</h4>
+            <p>Simply click the collection to add {{toolForCollection.title}}. Or <a href="/collections/new">create a new collection</a>.</p>
+            <ul class="collection" >
+              <li ng-repeat="col in collectionList"  class="collection-item">
+                <span class="user-tool-title"><a ng-href="#" ng-click="addToolToCollection(col.collection.id, toolForCollection.id)"><i class="material-icons">list</i> {{col.collection.name}}<md-tooltip md-direction="left">add to collection</md-tooltip></a></span> <span class="tool-language">[<span ng-if="col.collection.is_public">public collection</span><span ng-if="collection.col.is_public === false">private collection</span>]</span>
+                <p>{{col.collection.description}}</p>
+                <ul>
+                  <li class="tool-title" ng-repeat="tool in col.tools"><a href="/tools/{{tool.id}}" class="tool-category">{{tool.title}}</a></li>
+                </ul>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

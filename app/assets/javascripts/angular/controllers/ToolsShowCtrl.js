@@ -25,10 +25,8 @@ DevBox.controller( 'ToolsShowCtrl', [ '$scope' , '$resource', '$http', '$locatio
       $scope.tool = data.result;
       isToolFree();
       initUserReview();
-
       $scope.userRating = $scope.userRating || 0;
       $scope.originalRating = $scope.userRating;
-
     },function(err){
       console.log(err);
     });

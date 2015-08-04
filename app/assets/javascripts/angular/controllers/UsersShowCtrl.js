@@ -1,10 +1,25 @@
-DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl', '$location', 'devSearchFn', 'devInit',
-  function( $scope, $http, buildUrl, $location, devSearchFn, devInit ){
+DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl', '$location', 'devSearchFn', 'devInit', 'devAlert',
+  function( $scope, $http, buildUrl, $location, devSearchFn, devInit, devAlert ){
+
+  $scope.showResults = true;
 
   var init = function(){
     loadToolsCatsAndTags(); //Also calls narrowTools() function in callback
     loadCatsAndTags()
   }
+
+  $scope.toolOptions = [
+    { name: 'add to collection',
+      icon: 'list',
+      action: function( toolId, toolName ){
+        loadCollectionList(toolId, toolName)
+      } },
+    { name: 'remove from toolbox',
+      icon: 'delete',
+      action: function( toolId ){
+        removeTool(toolId);
+      } }
+  ]
 
   $scope.userToolBox = {
     searchTools: []
@@ -88,18 +103,55 @@ DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl', '$location', '
     }
   }
 
-  $scope.removeTool = function( toolId ){
+  var removeTool = function( toolId ){
     $http.delete( '/api/users/delete/tool/' + toolId ).success( function( data ){
-        for (var i = 0; i < $scope.tools.length; i++){
-          if ($scope.tools[i].id === toolId ) {
-            $scope.tools.splice(i,1);
-          }
+      for (var i = 0; i < $scope.tools.length; i++){
+        if ($scope.tools[i].id === toolId ) {
+          $scope.tools.splice(i,1);
         }
-      } );
+      }
+    });
+  }
+
+  var loadCollectionList = function( toolId, toolName ){
+    $http.get( '/api/collections' ).then( function( data ){
+      console.log(data.data.result)
+      $scope.toolForCollection = {id: toolId, title: toolName}
+      $scope.showResults = false;
+      $scope.collectionList = data.data.result.collections;
+    }, function( err ){
+      console.log(err)
+    } )
+  }
+
+  $scope.addToolToCollection = function(collectionId, toolId){
+    var collectionToValidate = $.grep($scope.collectionList, function( collection ){ return collection.collection.id === collectionId; })
+    console.log(collectionToValidate[0])
+    if ( isToolInCollection( collectionToValidate[0], toolId ) ){
+      $http.put( '/api/collections/' + collectionId + '/collection_tools/' + toolId)
+      .then( function(data){
+          devAlert.alert("Tool added to collection")
+          $scope.showResults = true;
+        },
+          function(err){
+          console.log(err)
+        }
+      )
+    }
+  }
+
+  var isToolInCollection = function(collection, toolId){
+    for(var i = 0; i < collection.tools.length; i++){
+      if( collection.tools[i].id === toolId ){
+        devAlert.alert( collection.tools[i].title + " is already in this collection" );
+        return false;
+      }
+    }
+    return true;
   }
 
   $scope.getMatches = function( toolSearchText ){
-      return $scope.userToolBox.searchTools = $.grep($scope.tools, function(tool){
+      return $scope.userToolBox.searchTools = $.grep($scope.tools, function( tool ){
         // Searching for tool by name
         if ( tool.title.toLowerCase().indexOf( toolSearchText.toLowerCase() ) !== -1 ) {
           return true;
