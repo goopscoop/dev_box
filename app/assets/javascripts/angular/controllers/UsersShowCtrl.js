@@ -193,7 +193,9 @@ DevBox.controller('UsersShowCtrl',['$scope', '$http', 'buildUrl', '$location', '
     $location.search(localUrl);
   }
 
-
+  $scope.hideCollections = function(){
+    $scope.showResults = true;
+  }
 
   init()
 }]);
